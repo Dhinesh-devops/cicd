@@ -37,6 +37,11 @@
         </div>
       </div>
     </div>
+
+    <% if DataSheet.last.stock_items.present? %>
+      <%= render partial: "imported_data", :locals => {:stock_items => DataSheet.last.stock_items} %>
+    <% end %>
+
     <!-- content ends -->
   </div>
   <!-- content-wrapper ends -->
@@ -51,6 +56,7 @@
 }
 </style>
 <script src="../assets/modules/file-upload.js"></script>
+<script src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
 <script>
 $(document).ready(function() {
   $("form#importDataSheetForm").validate({

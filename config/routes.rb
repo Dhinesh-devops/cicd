@@ -17,6 +17,10 @@ Rails.application.routes.draw do
       post '/register', :to => 'user_registrations#create'
       post '/forgot_password', :to => 'user_passwords#create'
       patch '/change_password', :to => 'user_passwords#update'
+
+      # data sheets
+      get '/get_sheet_details', :to => 'data_sheets#get_daily_sheet_details'
+      get '/get_stock_items/:id', :to => 'data_sheets#get_daily_stock_items'
     end
   end
 

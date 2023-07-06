@@ -59,6 +59,11 @@ gem 'rspec-rails', '~> 6.0', '>= 6.0.3'
 # Handle .env file
 gem 'dotenv-rails'
 
+# Access the contents of various spreadsheet files
+gem 'roo', '~> 2.10'
+
+gem 'jquery-datatables-rails', '~> 3.4.0'
+
 # Use Rack CORS for handling Cross-Origin Resource Sharing (CORS), making cross-origin AJAX possible
 gem "rack-cors"
 

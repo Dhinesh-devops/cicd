@@ -14,4 +14,5 @@ import "./modules/settings"
 import "./modules/todolist"
 import "./modules/dashboard"
 import "./modules/Chart.roundedBarCharts"
+import "./dataTables/jquery.dataTables";
 

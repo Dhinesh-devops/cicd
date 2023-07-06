@@ -13,6 +13,7 @@ class DataSheetsController < ApplicationController
       data_sheet = DataSheet.new(data_sheet_params)
       data_sheet.file.attach(params[:data_sheet][:file]) if params[:data_sheet][:file].present?
       if data_sheet.save
+        ImportDataService.new(data_sheet.file_path, data_sheet.id).process
         flash[:notice] = 'Data sheet uploaded successfully.'
         redirect_to new_data_sheet_path
       else
