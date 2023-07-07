@@ -19,22 +19,22 @@ class ImportDataService
   def create_stock_items(row)
     StockItem.create(
       data_sheet_id: @data_sheet_id,
-      plant: cell_format(row[:plant]),
+      plant: cell_format(row[:plant]).to_i,
       plant2: cell_format(row[:plant2]),
       plant3: cell_format(row[:plant3]),
       retek_class: cell_format(row[:retek_class]),
       retek_subclass: cell_format(row[:retek_subclass]),
       season: cell_format(row[:season]),
-      ean_number: cell_format(row[:ean_number]),
-      variant_size: cell_format(row[:variant_size]),
+      ean_number: cell_format(row[:ean_number]).to_i,
+      variant_size: cell_format(row[:variant_size]).to_i,
       style_code: cell_format(row[:style_code]),
-      st_loc: cell_format(row[:st_loc]),
+      st_loc: cell_format(row[:st_loc]).to_i,
       variant: cell_format(row[:variant]),
-      mrp: cell_format(row[:mrp]),
-      soh_blocked_stock: cell_format(row[:soh_blocked_stock]),
-      soh_without_blocked_stock: cell_format(row[:soh_without_blocked_stock]),
-      soh_quantity: cell_format(row[:soh_quantity]),
-      soh_value: cell_format(row[:soh_value])
+      mrp: cell_format(row[:mrp]).to_i,
+      soh_blocked_stock: cell_format(row[:soh_blocked_stock]).to_i,
+      soh_without_blocked_stock: cell_format(row[:soh_without_blocked_stock]).to_i,
+      soh_quantity: cell_format(row[:soh_quantity]).to_i,
+      soh_value: cell_format(row[:soh_value]).to_i
     )
   end
 
