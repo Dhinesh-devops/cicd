@@ -5,8 +5,8 @@ admin_user_array =
   "last_name": "Admin",
   "role_id": 2, # Admin
   "email": "admin@rim.com",
-  "password": "password123",
-  "password_confirmation": "password123"
+  "password": "Password@123",
+  "password_confirmation": "Password@123"
 } ]
 
 puts("------------------------------------")
