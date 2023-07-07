@@ -3,7 +3,7 @@ class ManagersController < ApplicationController
   before_action :find_user, only: [:edit, :update]
 
   def index
-    @managers = User.managers.order(:created_at)
+    @managers = User.managers.order(created_at: :desc)
   end
 
   def new
@@ -14,14 +14,18 @@ class ManagersController < ApplicationController
     resource.save
 
     if resource.persisted? && resource.errors.empty?
-      redirect_to new_manager_path, notice: "Manager created successfully" 
+      flash[:notice] = 'Manager created successfully'
+      redirect_to new_manager_path
     else
-      redirect_to new_manager_path, error: "Unable to create manager now, please try again"
+      flash[:error] = resource.errors.full_messages.to_sentence
+      redirect_to new_manager_path
     end
   rescue ActiveRecord::RecordInvalid => e
-    redirect_to new_manager_path, notice: e.record.errors.full_messages.to_sentence
+    flash[:error] = e.record.errors.full_messages.to_sentence
+    redirect_to new_manager_path
   rescue Exception => e
-    redirect_to new_manager_path, notice: e.record.errors.full_messages.to_sentence
+    flash[:error] = e.record.errors.full_messages.to_sentence
+    redirect_to new_manager_path
   end
 
   def edit
@@ -29,18 +33,21 @@ class ManagersController < ApplicationController
 
   def update
     if @manager.update(first_name: params[:first_name], last_name: params[:last_name])
-      redirect_to managers_path, notice: "Manager details updated successfully"
+      flash[:notice] = "Manager details updated successfully"
+      redirect_to managers_path
     else
-      redirect_to edit_manager_path(@manager), notice: "Unable to update manager now, please try again"
+      flash[:error] = "Unable to update manager now, please try again"
+      redirect_to edit_manager_path(@manager)
     end
   rescue Exception => e
-    redirect_to edit_manager_path(@manager), notice: e.record.errors.full_messages.to_sentence
+    flash[:error] = e.record.errors.full_messages.to_sentence
+    redirect_to edit_manager_path(@manager)
   end
 
   private
 
   def user_params
-    params.permit(:first_name, :last_name, :email).merge(role_id: 1, password: 'password123', password_confirmation: 'password123')
+    params.permit(:first_name, :last_name, :email).merge(role_id: 1, password: 'Password@123', password_confirmation: 'Password@123')
   end
 
   def find_user
