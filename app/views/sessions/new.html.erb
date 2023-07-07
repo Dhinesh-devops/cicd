@@ -66,8 +66,7 @@ $(document).ready( function() {
     rules: {
       'user[email]': {
         required: true,
-        email: true,
-        checkEmail: true
+        email: true
       },
       'user[password]': 'required'
     },
@@ -75,15 +74,6 @@ $(document).ready( function() {
       error.insertAfter(element);
     }
   });
-  $.validator.addMethod('checkEmail', (function(value, element) {
-    var user_email = $('#user_email').val();
-    var email_arr = user_email.split('@');
-    if (email_arr[1] === "spritle.com") {
-      return true;
-    } else {
-      return false;
-    }
-  }), 'Please enter valid spritle email Id');
 
   $("#loginSubmit").on("click", function() {
     if($('form#loginForm').valid()) {

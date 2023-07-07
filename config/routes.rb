@@ -40,8 +40,8 @@ Rails.application.routes.draw do
   
   get '/dashboard', :to => 'dashboard#index'
   resources :data_sheets, :only => [:new, :create]
+  resources :managers, :only => [:index, :new, :create, :edit, :update]
   get '/sheet_management', :to => 'sheet_management#index'
-
   # Defines the root path route ("/")
   # root to: "sessions#new"
 end

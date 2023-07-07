@@ -7,7 +7,6 @@ class ImportDataService
 
   def process
     xlsx = Roo::Spreadsheet.open(@xlsx_path, extension: :xlsx)
-    binding.pry
     if xlsx
       clear_stock_items
       xlsx.sheet(0).each_with_index(plant: 'Plant', plant2: 'Retek Group', plant3: 'Retek Dept.', retek_class: 'Retek Class', retek_subclass: 'Retek Subclass', season: 'Season', ean_number: 'EAN', variant_size: 'Size', style_code: 'Style Code', st_loc: 'St.Loc', variant: 'Variant', mrp: 'MRP', soh_blocked_stock: 'SOH blocked stock', soh_without_blocked_stock: 'SOH without Blocked Stk', soh_quantity: 'SOH Qty.', soh_value: 'Value') do |row, row_index|   

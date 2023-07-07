@@ -11,5 +11,7 @@ class User < ApplicationRecord
 
   belongs_to :role
 
-  validates :email, format: { with: /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i, on: :create }
+  validates :email, format: { with: /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i, on: :create }, uniqueness: true
+
+  scope :managers, -> { where(role_id: 1) }
 end
