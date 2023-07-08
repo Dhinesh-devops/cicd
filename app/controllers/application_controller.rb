@@ -39,8 +39,7 @@ class ApplicationController < ActionController::Base
   end
 
   def hmac_secret
-    # ENV["API_SECRET"]
-    'secret'
+    ENV["API_SECRET"]
   end
 
   def client_has_valid_token?
