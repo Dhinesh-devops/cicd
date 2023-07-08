@@ -6,7 +6,11 @@ class Api::V1::DataSheetsController < ApplicationController
   # To get daily sheet details imported by admin
   #
   def get_daily_sheet_details
-    response_success('Daily sheet details ready!', 200, ActiveModelSerializers::SerializableResource.new(DataSheet.last, serializer: DataSheetSerializer))
+    if DataSheet.daily_sheet_uploaded?
+      response_success('Daily sheet details ready!', 200, ActiveModelSerializers::SerializableResource.new(DataSheet.last, serializer: DataSheetSerializer))
+    else
+      response_failure('Daily data sheet not uploaded by super admin!', 409)
+    end
   rescue Exception => e
     response_failure(e, 500)
   end
