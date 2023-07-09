@@ -15,7 +15,7 @@ class ManagersController < ApplicationController
 
     if resource.persisted? && resource.errors.empty?
       flash[:notice] = 'Manager created successfully'
-      redirect_to new_manager_path
+      redirect_to managers_path
     else
       flash[:error] = resource.errors.full_messages.to_sentence
       redirect_to new_manager_path

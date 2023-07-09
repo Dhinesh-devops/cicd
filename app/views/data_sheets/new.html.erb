@@ -40,7 +40,7 @@
       </div>
     </div>
 
-    <% if DataSheet.last.present? %>
+    <% if DataSheet.daily_sheet_uploaded? && DataSheet.last.present? %>
       <%= render partial: "imported_data", :locals => {:stock_items => DataSheet.last.stock_items} %>
     <% end %>
 

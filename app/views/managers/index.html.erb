@@ -21,6 +21,10 @@
             </div>
             <div class="row">
               <div class="col-12">
+                <% flash.each do |key, value| %>
+                  <% alert_class = (key == "notice") ? 'alert-success' : 'alert-danger' %>
+                  <%= content_tag :div, value, class: "alert #{alert_class} alert-dismissible fade show" %>
+                <% end %>
                 <div class="table-responsive">
                   <table id="users_list" class="display expandable-table dataTable" style="width:100%">
                     <thead>
@@ -74,7 +78,6 @@
 #users_list_info {
   float: left;
 }
-#users_list_wrapper input[type= "text"], 
 #users_list_wrapper input[type= "search"] {
   width: 100%;
   height: 2rem;
@@ -144,8 +147,9 @@ $(document).ready(function(){
   $('.dataTable').DataTable({
     pagingType: 'full_numbers',
     lengthChange: false,
+    order: [[3, 'desc']],
     "aoColumnDefs": [
-        { "bSortable": false, "aTargets": [ 3, 4 ] }, 
+        { "bSortable": false, "aTargets": [ 4 ] },
         { "bSearchable": false, "aTargets": [ 4 ] }
     ]
   });
