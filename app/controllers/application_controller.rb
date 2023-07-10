@@ -1,6 +1,10 @@
 class ApplicationController < ActionController::Base
   before_action :set_cache_buster
   
+  #
+  # set_cache_buster
+  # this will set cache buster values
+  #
   def set_cache_buster
     response.headers["Cache-Control"] = "no-cache, no-store, max-age=0, must-revalidate"
     response.headers["Pragma"] = "no-cache"
@@ -29,6 +33,16 @@ class ApplicationController < ActionController::Base
     end
 
     render json: { error: exception_msg }, status: status
+  end
+
+  #
+  # authenticate_user
+  # this will check and allow only authenticated user inside app
+  #
+  def authenticate_user!
+    unless current_user
+      redirect_to root_path, notice: 'You need to sign in to access'
+    end
   end
 
   private
