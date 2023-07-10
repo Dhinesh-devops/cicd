@@ -8,10 +8,11 @@ class ImportDataService
   def process
     xlsx = Roo::Spreadsheet.open(@xlsx_path, extension: :xlsx)
     if xlsx
-      clear_stock_items
       xlsx.sheet(0).each_with_index(plant: 'Plant', plant2: 'Retek Group', plant3: 'Retek Dept.', retek_class: 'Retek Class', retek_subclass: 'Retek Subclass', season: 'Season', ean_number: 'EAN', variant_size: 'Size', style_code: 'Style Code', st_loc: 'St.Loc', variant: 'Variant', mrp: 'MRP', soh_blocked_stock: 'SOH blocked stock', soh_without_blocked_stock: 'SOH without Blocked Stk', soh_quantity: 'SOH Qty.', soh_value: 'Value') do |row, row_index|   
         next if row_index == 0
-        create_stock_items(row)
+
+        stock_item_exist = check_stock_item(row)
+        create_stock_items(row) unless stock_item_exist
       end
     end
   end
@@ -38,8 +39,10 @@ class ImportDataService
     )
   end
 
-  def clear_stock_items
-    StockItem.delete_all
+  def check_stock_item(row)
+    stock_item = StockItem.find_by(ean_number: cell_format(row[:ean_number]).to_i)
+    StockItem.update(data_sheet_id: @data_sheet_id) if stock_item.present?
+    return stock_item.present?
   end
 
   def cell_format(data)
