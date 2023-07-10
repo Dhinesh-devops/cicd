@@ -1,16 +1,5 @@
 Rails.application.routes.draw do
 
-  # namespace :api do
-  #   namespace :v1 do
-  #     devise_for :users,
-  #     controllers: {
-  #       sessions: 'api/v1/authentications',
-  #       registrations: 'api/v1/user_registrations',
-  #       passwords: 'api/v1/user_passwords'
-  #     }
-  #   end
-  # end
-
   namespace :api do
     namespace :v1 do
       post '/login', :to => 'authentications#login'
@@ -21,6 +10,7 @@ Rails.application.routes.draw do
       # data sheets
       get '/get_sheet_details', :to => 'data_sheets#get_daily_sheet_details'
       get '/get_stock_items/:id', :to => 'data_sheets#get_daily_stock_items'
+      put '/update_stock_status', :to => 'data_sheets#update_stock_status'
     end
   end
 
@@ -36,8 +26,6 @@ Rails.application.routes.draw do
   end
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
-  
-  
   get '/dashboard', :to => 'dashboard#index'
   resources :data_sheets, :only => [:new, :create]
   resources :managers, :only => [:index, :new, :create, :edit, :update]
