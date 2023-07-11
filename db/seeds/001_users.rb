@@ -19,7 +19,7 @@ users =
 puts("------------------------------------")
 users.each_with_index do |user, index|
   puts ("User #{index + 1} creation started")
-  user = User.find_by(email: user.email, role_id: user.role_id)
+  user = User.find_by(email: user['email'], role_id: user['role_id'])
 end
 puts ("User creation completed")
 puts("------------------------------------")
