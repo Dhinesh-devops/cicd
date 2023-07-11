@@ -9,7 +9,8 @@ Rails.application.routes.draw do
 
       # data sheets
       get '/get_sheet_details', :to => 'data_sheets#get_daily_sheet_details'
-      get '/get_stock_items/:id', :to => 'data_sheets#get_daily_stock_items'
+      get '/get_stock_items', :to => 'data_sheets#get_daily_stock_items'
+      get '/get_report_data', :to => 'data_sheets#get_report_data'
       put '/update_stock_status', :to => 'data_sheets#update_stock_status'
     end
   end
