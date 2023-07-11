@@ -15,10 +15,6 @@
         <div class="card">
           <div class="card-body">
             <h4 class="card-title">Import Data Sheet</h4>
-            <% flash.each do |key, value| %>
-              <% alert_class = (key == "notice") ? 'alert-success' : 'alert-danger' %>
-              <%= content_tag :div, value, class: "alert #{alert_class} alert-dismissible fade show" %>
-            <% end %>
             <%= form_with(model: @data_sheet, class: "form-group", id:"importDataSheetForm", local: true) do |form| %>
               <%= form.hidden_field :sheet_name %>
               <%= form.hidden_field :imported_by, value: current_user.id %>

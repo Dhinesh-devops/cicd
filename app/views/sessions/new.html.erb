@@ -9,10 +9,6 @@
             </div>
             <h4>Hello Admin! let's get started</h4>
             <h6 class="font-weight-light">Sign in to continue.</h6>
-            <% flash.each do |key, value| %>
-              <%= content_tag :div, value, class: "alert alert-danger alert-dismissible fade show" %>
-            <% end %>
-            
             <%= form_with(url: '/create_session', class: "pt-3", id: "loginForm") do |f| %>
               <div class="form-group">
                 <input placeholder="Email ID" autofocus="autofocus" class="form-control form-control-lg login-input" autocomplete="email" type="email" value="" name="user[email]" id="user_email">

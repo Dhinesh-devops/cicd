@@ -10,10 +10,6 @@
               <div class="col-md-6"><%= link_to "Back to Users List", managers_path,
               :class => "btn btn-primary float-right" %></div>
             </div>
-            <% flash.each do |key, value| %>
-              <% alert_class = (key == "notice") ? 'alert-success' : 'alert-danger' %>
-              <%= content_tag :div, value, class: "alert #{alert_class} alert-dismissible fade show" %>
-            <% end %>
             <%= form_with(url: '/managers', method: :post, class: "form-group", id:"userManageForm", local: true) do |form| %>
               <div class="form-group">
                 <label for="exampleInputName1">First Name</label>

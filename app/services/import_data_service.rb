@@ -14,6 +14,7 @@ class ImportDataService
         stock_item_exist = check_stock_item(row)
         create_stock_items(row) unless stock_item_exist
       end
+      StockItem.update(data_sheet_id: @data_sheet_id)
     end
   end
 
@@ -41,7 +42,6 @@ class ImportDataService
 
   def check_stock_item(row)
     stock_item = StockItem.find_by(ean_number: cell_format(row[:ean_number]).to_i)
-    StockItem.update(data_sheet_id: @data_sheet_id) if stock_item.present?
     return stock_item.present?
   end
 

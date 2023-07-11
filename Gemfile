@@ -54,8 +54,6 @@ gem 'jwt'
 gem 'jquery-rails'
 gem 'bootstrap', '~> 5.3.0.alpha3'
 
-gem 'rspec-rails', '~> 6.0', '>= 6.0.3'
-
 # Handle .env file
 gem 'dotenv-rails'
 
@@ -69,12 +67,15 @@ gem "rack-cors"
 
 gem 'active_model_serializers', '~> 0.10.13'
 
+gem 'toastr-rails', '~> 1.0', '>= 1.0.3'
+
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
   gem "debug", platforms: %i[ mri mingw x64_mingw ]
   gem "pry-rails"
   gem 'pry', '~> 0.14.2'
   gem "pry-byebug"
+  gem 'rspec-rails', '~> 6.0', '>= 6.0.3'
 end
 
 group :development do

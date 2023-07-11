@@ -10,10 +10,6 @@
               <div class="col-md-6"><%= button_to "Back to Users List", managers_path,
               :class => "btn btn-primary float-right", :method => :get %></div>
             </div>
-            <% flash.each do |key, value| %>
-              <% alert_class = (key == "notice") ? 'alert-success' : 'alert-danger' %>
-              <%= content_tag :div, value, class: "alert #{alert_class} alert-dismissible fade show" %>
-            <% end %>
             <%= form_with(url: '/managers/' + @manager.id.to_s, method: :patch, class: "form-group", id:"userManageForm", local: true) do |form| %>
               <%= form.hidden_field :id, value: @manager.id %>
               <div class="form-group">

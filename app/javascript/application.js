@@ -4,6 +4,8 @@ import "controllers"
 
 import "jquery"
 import "script"
+import "toastr"
+global.toastr = require("toastr")
 import "jquery_ujs"
 import "popper"
 import "bootstrap"
