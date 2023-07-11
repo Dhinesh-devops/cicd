@@ -30,6 +30,7 @@ Rails.application.routes.draw do
   resources :data_sheets, :only => [:new, :create]
   resources :managers, :only => [:index, :new, :create, :edit, :update]
   get '/sheet_management', :to => 'sheet_management#index'
+  get '/download_report', :to => 'sheet_management#download_report'
   post '/update_rfid_number', :to => 'data_sheets#update_rfid_number'
   # Defines the root path route ("/")
   # root to: "sessions#new"
