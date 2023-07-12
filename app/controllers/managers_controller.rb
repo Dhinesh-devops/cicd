@@ -1,4 +1,5 @@
 class ManagersController < ApplicationController
+  skip_before_action :verify_authenticity_token, only: [:create, :update]
   before_action :authenticate_user!
   before_action :find_user, only: [:edit, :update]
 
