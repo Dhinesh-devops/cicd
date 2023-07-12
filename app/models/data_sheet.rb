@@ -19,7 +19,7 @@ class DataSheet < ApplicationRecord
     CSV.generate(headers: true) do |csv|
       csv << ["Total", stock_items.count]
       csv << ["Scanned", stock_items.where(status: "scanned").count]
-      csv << ["Missed", stock_items.where(status: "missed").count]
+      csv << ["Missed", stock_items.count - stock_items.where(status: "scanned").count]
       csv << []
       csv << headers
       stock_items.each do |stock_item|
