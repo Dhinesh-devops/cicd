@@ -2,9 +2,10 @@
   <div class="col-md-12 grid-margin stretch-card">
     <div class="card">
       <div class="card-body">
+        <%= render partial: "stock_count_tiles", :locals => {:total_count => stock_items.count, :with_rfid_count => stock_items.with_rfid.count, :without_rfid_count => stock_items.without_rfid.count} %>
         <div class="row" style="margin-bottom: 20px;">
           <div class="col-md-6"><p class="card-title">Imported Data</p></div>
-          <div class="col-md-6"><button class="btn btn-primary save-import-data" style="float: right; margin-left: 10px; display: none;">Submit</button> <button class="btn btn-primary edit-import-data" style="float: right;">Edit</button></div>
+          <div class="col-md-6"><button class="btn btn-primary edit-import-data" style="float: right;">Edit</button><button class="btn btn-primary save-import-data" style="float: right; margin-right: 10px; display: none;">Submit</button></div>
         </div>
         <div class="row">
           <div class="col-12">
@@ -20,7 +21,7 @@
                     <th>Retek Subclass</th>
                     <th>Season</th>
                     <th>EAN</th>
-                    <th class="rfid_field">RFID Number</th>
+                    <th>RFID Number</th>
                     <th>Size</th>
                     <th>Style Code</th>
                     <th>St.Loc</th>
@@ -44,7 +45,10 @@
                     <td><%= stock_item.retek_subclass %></td>
                     <td><%= stock_item.season %></td>
                     <td><%= stock_item.ean_number %></td>
-                    <td class="rfid_field"><input type="text" name="rfid_number" style="width: 150px;" value="<%= stock_item.rfid_number %>" /><%= hidden_field_tag "stock_item_id", stock_item.id %></td>
+                    <td>
+                      <span class="rfid_text"><%= stock_item.rfid_number %></span>
+                      <span class="rfid_field" style="display: none;"><input type="text" name="rfid_number" style="width: 150px;" value="<%= stock_item.rfid_number %>" /><%= hidden_field_tag "stock_item_id", stock_item.id %></span>
+                    </td>
                     <td><%= stock_item.variant_size %></td>
                     <td><%= stock_item.style_code %></td>
                     <td><%= stock_item.st_loc %></td>
@@ -67,9 +71,6 @@
   </div>
 </div>
 <style>
-  #imported_data_wrapper .rfid_field {
-    display: none;
-  }
   #imported_data_wrapper .dataTables_paginate {
     margin-bottom: 20px;
     font-size: 14px;
@@ -140,8 +141,6 @@
     background: linear-gradient(to bottom, #2b2b2b 0%, #0c0c0c 100%);
     box-shadow: inset 0 0 3px #111;
   }
-  .pull-left{float:left!important;}
-  .pull-right{float:right!important;}
 </style>
 <script>
 $(document).ready(function(){
@@ -149,7 +148,6 @@ $(document).ready(function(){
     pagingType: 'full_numbers',
     lengthChange: false,
     order: [[0, 'asc']],
-    dom: '<"pull-left"f><"pull-right"l>tip',
     drawCallback: function(){
       if ($('.edit-import-data').is(":hidden")) {
         $(".rfid_field").show();
@@ -158,9 +156,17 @@ $(document).ready(function(){
   });
 
   $(".edit-import-data").on('click', function() {
-    $(".rfid_field").show();
-    $(".save-import-data").show();
-    $(".edit-import-data").hide();
+    if ($(this).text() == "Edit") {
+      $(".rfid_field").show();
+      $(".rfid_text").hide();
+      $(".save-import-data").show();
+      $(".edit-import-data").text("Hide");
+    } else {
+      $(".rfid_field").hide();
+      $(".rfid_text").show();
+      $(".save-import-data").hide();
+      $(".edit-import-data").text("Edit");
+    }
   })
 
   $('.save-import-data').on('click', function (e) {
@@ -181,6 +187,9 @@ $(document).ready(function(){
       data: { authenticity_token: $('[name="csrf-token"]')[0].content, rfid_values: rfid_values, stock_item_ids: stock_item_ids},
       success: function(result) {
         if (result.message) {
+          $("#total_stock_count").html(result.data.total);
+          $("#with_rfid_count").html(result.data.with_rfid);
+          $("#without_rfid_count").html(result.data.without_rfid);
           toastr.success(result.message);
           changeRowColor();
         }

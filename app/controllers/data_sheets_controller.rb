@@ -37,7 +37,7 @@ class DataSheetsController < ApplicationController
         end
       end
     end
-    response_success('RFID numbers updated successfully.', 200)
+    response_success('RFID numbers updated successfully.', 200, ActiveModelSerializers::SerializableResource.new(DataSheet.last, serializer: RfidCountSerializer))
   rescue Exception => e
     response_failure(e, 500)
   end
