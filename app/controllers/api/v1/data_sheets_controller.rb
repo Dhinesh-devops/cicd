@@ -41,10 +41,9 @@ class Api::V1::DataSheetsController < ApplicationController
   # To update stock item status as scanned or missed
   #
   def update_stock_status
-    binding.pry
     stock_items = params[:stock_items]
     stock_items.present? && stock_items.each do | stock |
-      stock_item = StockItem.find_by(id: stock[:id])
+      stock_item = StockItem.find_by(rfid_number: stock[:id])
       stock_item.update(status: stock[:status]) if stock_item.present?
     end
     response_success('Stock item status updated!', 200)

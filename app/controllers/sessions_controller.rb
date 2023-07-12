@@ -1,6 +1,7 @@
 class SessionsController < Devise::SessionsController
   skip_before_action :verify_authenticity_token
   protect_from_forgery :except => [:create]
+  before_action :check_login, only: [:new]
   layout 'devise'
 
   #
@@ -37,5 +38,13 @@ class SessionsController < Devise::SessionsController
   def logout
     sign_out(current_user) if current_user.present?
     redirect_to root_path, notice: 'Logout successful.'
+  end
+
+  private
+
+  def check_login
+    if current_user.present?
+      redirect_to dashboard_path
+    end
   end
 end

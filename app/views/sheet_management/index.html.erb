@@ -38,7 +38,7 @@
                           <td><%= link_to data_sheet.sheet_name, rails_blob_path(data_sheet.file, disposition: "attachment") %></td>
                           <td><%= link_to "Download", "/download_report", class: "btn btn-primary btn-sm" %></td>
                           <td><!--<div class="badge badge-success">Passed</div>--><div class="badge badge-warning">Processing</div><!-- <div class="badge badge-danger">Failed</div> --></td>
-                          <td><%= data_sheet.stock_items.missed.count %></td>
+                          <td><%= data_sheet.stock_items.count - data_sheet.stock_items.scanned.count %></td>
                           <td>0</td>
                           <td>0</td>
                           <td>0</td>

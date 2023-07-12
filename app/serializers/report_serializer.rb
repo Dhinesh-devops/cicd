@@ -10,7 +10,7 @@ class ReportSerializer < ActiveModel::Serializer
   end
 
   def missed
-    object.stock_items.missed.count
+    object.stock_items.count - object.stock_items.scanned.count
   end
 
   def stock_items
