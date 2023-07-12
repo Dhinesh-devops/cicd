@@ -1,22 +1,17 @@
 Rails.application.routes.draw do
 
-  # namespace :api do
-  #   namespace :v1 do
-  #     devise_for :users,
-  #     controllers: {
-  #       sessions: 'api/v1/authentications',
-  #       registrations: 'api/v1/user_registrations',
-  #       passwords: 'api/v1/user_passwords'
-  #     }
-  #   end
-  # end
-
   namespace :api do
     namespace :v1 do
       post '/login', :to => 'authentications#login'
       post '/register', :to => 'user_registrations#create'
       post '/forgot_password', :to => 'user_passwords#create'
       patch '/change_password', :to => 'user_passwords#update'
+
+      # data sheets
+      get '/get_sheet_details', :to => 'data_sheets#get_daily_sheet_details'
+      get '/get_stock_items', :to => 'data_sheets#get_daily_stock_items'
+      get '/get_report_data', :to => 'data_sheets#get_report_data'
+      put '/update_stock_status', :to => 'data_sheets#update_stock_status'
     end
   end
 
@@ -32,12 +27,12 @@ Rails.application.routes.draw do
   end
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
-  
-  
   get '/dashboard', :to => 'dashboard#index'
   resources :data_sheets, :only => [:new, :create]
+  resources :managers, :only => [:index, :new, :create, :edit, :update]
   get '/sheet_management', :to => 'sheet_management#index'
-
+  get '/download_report', :to => 'sheet_management#download_report'
+  post '/update_rfid_number', :to => 'data_sheets#update_rfid_number'
   # Defines the root path route ("/")
   # root to: "sessions#new"
 end

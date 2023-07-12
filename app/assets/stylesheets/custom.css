@@ -1,0 +1,9 @@
+.navbar .navbar-brand-wrapper .navbar-brand img {
+  height: 65px !important;
+}
+.auth .brand-logo {
+  margin-bottom: 1rem !important;
+}
+.auth .brand-logo img {
+  width: 220px !important;
+}

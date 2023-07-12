@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_07_03_103846) do
+ActiveRecord::Schema[7.0].define(version: 2023_07_11_064129) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -47,6 +47,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_03_103846) do
     t.integer "imported_by"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "stock_count"
   end
 
   create_table "jwt_denylist", force: :cascade do |t|
@@ -62,6 +63,30 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_03_103846) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["id", "name"], name: "index_roles_on_required_columns"
+  end
+
+  create_table "stock_items", force: :cascade do |t|
+    t.integer "data_sheet_id"
+    t.string "plant"
+    t.string "plant2"
+    t.string "plant3"
+    t.string "retek_class"
+    t.string "retek_subclass"
+    t.string "season"
+    t.string "ean_number"
+    t.string "variant_size"
+    t.string "style_code"
+    t.string "st_loc"
+    t.string "variant"
+    t.string "mrp"
+    t.string "soh_blocked_stock"
+    t.string "soh_without_blocked_stock"
+    t.string "soh_quantity"
+    t.string "soh_value"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "rfid_number"
+    t.integer "status"
   end
 
   create_table "users", force: :cascade do |t|

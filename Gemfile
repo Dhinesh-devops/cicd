@@ -54,15 +54,20 @@ gem 'jwt'
 gem 'jquery-rails'
 gem 'bootstrap', '~> 5.3.0.alpha3'
 
-gem 'rspec-rails', '~> 6.0', '>= 6.0.3'
-
 # Handle .env file
 gem 'dotenv-rails'
+
+# Access the contents of various spreadsheet files
+gem 'roo', '~> 2.10'
+
+gem 'jquery-datatables-rails', '~> 3.4.0'
 
 # Use Rack CORS for handling Cross-Origin Resource Sharing (CORS), making cross-origin AJAX possible
 gem "rack-cors"
 
 gem 'active_model_serializers', '~> 0.10.13'
+
+gem 'toastr-rails', '~> 1.0', '>= 1.0.3'
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
@@ -70,6 +75,7 @@ group :development, :test do
   gem "pry-rails"
   gem 'pry', '~> 0.14.2'
   gem "pry-byebug"
+  gem 'rspec-rails', '~> 6.0', '>= 6.0.3'
 end
 
 group :development do

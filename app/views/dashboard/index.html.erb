@@ -5,6 +5,7 @@
         <div class="row">
           <div class="col-12 col-xl-8 mb-4 mb-xl-0">
             <h3 class="font-weight-bold">Welcome Admin</h3>
+            <h6 class="font-weight-normal mb-0">Today stock details on <span class="text-primary"><%= Time.now().strftime('%d-%m-%Y'); %></span></h6>
           </div>
         </div>
       </div>
@@ -15,8 +16,8 @@
           <div class="col-md-4 mb-4 stretch-card transparent">
             <div class="card card-tale">
               <div class="card-body">
-                <p class="mb-4">Today Number of Stocks</p>
-                <p class="fs-30 mb-2">200</p>
+                <p class="mb-4">Total Number of Stocks</p>
+                <p class="fs-30 mb-2"><%= @total_stock_count %></p>
               </div>
             </div>
           </div>
@@ -24,7 +25,7 @@
             <div class="card card-dark-blue">
               <div class="card-body">
                 <p class="mb-4">Total Number of Scanned Stocks(%)</p>
-                <p class="fs-30 mb-2">90.00%</p>
+                <p class="fs-30 mb-2"><%= @scanned_stocks %></p>
               </div>
             </div>
           </div>
@@ -32,7 +33,7 @@
             <div class="card card-light-danger">
               <div class="card-body">
                 <p class="mb-4">Total Number of Missed Stocks(%)</p>
-                <p class="fs-30 mb-2">10.00%</p>
+                <p class="fs-30 mb-2"><%= @missed_stocks %></p>
               </div>
             </div>
           </div>
@@ -42,7 +43,7 @@
             <div class="card card-light-blue">
               <div class="card-body">
                 <p class="mb-4">Total Number of Sold Stocks(%)</p>
-                <p class="fs-30 mb-2">70.00%</p>
+                <p class="fs-30 mb-2"><%= @sold_stocks %></p>
               </div>
             </div>
           </div>
@@ -50,7 +51,7 @@
             <div class="card card-light-danger">
               <div class="card-body">
                 <p class="mb-4">Category-Wise Stocks - Size(%)</p>
-                <p class="fs-30 mb-2">40.00%</p>
+                <p class="fs-30 mb-2"><%= @size_wise_stocks %></p>
               </div>
             </div>
           </div>
@@ -58,44 +59,32 @@
             <div class="card card-tale">
               <div class="card-body">
                 <p class="mb-4">Category-Wise Stocks - Season(%)</p>
-                <p class="fs-30 mb-2">60.00%</p>
+                <p class="fs-30 mb-2"><%= @season_wise_stocks %></p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-lg-6 grid-margin grid-margin-lg-0 stretch-card">
+            <div class="card">
+              <div class="card-body">
+                <h4 class="card-title">Size-wise chart</h4>
+                <canvas id="pieChart"></canvas>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-6 grid-margin grid-margin-lg-0 stretch-card">
+            <div class="card">
+              <div class="card-body">
+                <h4 class="card-title">Season-wise chart</h4>
+                <canvas id="doughnutChart"></canvas>
               </div>
             </div>
           </div>
         </div>
       </div>
     </div>
-    
-    <div class="row">
-      <div class="col-md-12 grid-margin stretch-card">
-        <!-- <div class="card">
-          <div class="card-body">
-            <p class="card-title">Advanced Table</p>
-            <div class="row">
-              <div class="col-12">
-                <div class="table-responsive">
-                  <table id="example" class="display expandable-table" style="width:100%">
-                    <thead>
-                      <tr>
-                        <th>Quote#</th>
-                        <th>Product</th>
-                        <th>Business type</th>
-                        <th>Policy holder</th>
-                        <th>Premium</th>
-                        <th>Status</th>
-                        <th>Updated at</th>
-                        <th></th>
-                      </tr>
-                    </thead>
-                </table>
-                </div>
-              </div>
-            </div>
-            </div>
-          </div>
-        </div> -->
-      </div>
-  </div>
   <!-- content-wrapper ends -->
   <!-- partial:partials/_footer.html -->
     <%# render partial: "layouts/footer" %>
@@ -103,3 +92,104 @@
   <!-- partial -->
 </div>
 <!-- main-panel ends -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
+<%
+  seasons = StockItem.pluck(:season).uniq
+  season_with_count = seasons.map { |season| StockItem.where(season: season).size }
+  sizes = StockItem.pluck(:variant_size).uniq
+  size_count = sizes.map { |size| StockItem.where(variant_size: size).size }
+%>
+<script>
+$(document).ready(function() {
+  seasons = JSON.parse("<%= seasons %>".replaceAll('&quot;', '"'));
+  sizes =  JSON.parse("<%= sizes %>".replaceAll('&quot;', '"'));
+
+  var pieData = {
+    datasets: [{
+      data: <%= size_count %>,
+      backgroundColor: [
+        'rgba(255, 99, 132, 0.5)',
+        'rgba(54, 162, 235, 0.5)',
+        'rgba(255, 206, 86, 0.5)',
+        'rgba(75, 192, 192, 0.5)',
+        'rgba(153, 102, 255, 0.5)',
+        'rgba(255, 159, 64, 0.5)'
+      ],
+      borderColor: [
+        'rgba(255,99,132,1)',
+        'rgba(54, 162, 235, 1)',
+        'rgba(255, 206, 86, 1)',
+        'rgba(75, 192, 192, 1)',
+        'rgba(153, 102, 255, 1)',
+        'rgba(255, 159, 64, 1)'
+      ],
+    }],
+
+    // These labels appear in the legend and in the tooltips when hovering different arcs
+    labels: sizes
+  };
+  var pieOptions = {
+    responsive: true,
+    animation: {
+      animateScale: true,
+      animateRotate: true
+    },
+    legend: {
+      display: false
+    },
+  };
+
+  var doughnutData = {
+    datasets: [{
+      data: <%= season_with_count %>,
+      backgroundColor: [
+        'rgba(255, 99, 132, 0.5)',
+        'rgba(54, 162, 235, 0.5)',
+        'rgba(255, 206, 86, 0.5)',
+        'rgba(75, 192, 192, 0.5)',
+        'rgba(153, 102, 255, 0.5)',
+        'rgba(255, 159, 64, 0.5)'
+      ],
+      borderColor: [
+        'rgba(255,99,132,1)',
+        'rgba(54, 162, 235, 1)',
+        'rgba(255, 206, 86, 1)',
+        'rgba(75, 192, 192, 1)',
+        'rgba(153, 102, 255, 1)',
+        'rgba(255, 159, 64, 1)'
+      ],
+    }],
+
+    // These labels appear in the legend and in the tooltips when hovering different arcs
+    labels: seasons
+  };
+  var doughnutOptions = {
+    responsive: true,
+    animation: {
+      animateScale: true,
+      animateRotate: true
+    },
+    legend: {
+      display: false
+    },
+  };
+
+  if ($("#pieChart").length) {
+    var pieChartCanvas = $("#pieChart").get(0).getContext("2d");
+    var pieChart = new Chart(pieChartCanvas, {
+      type: 'pie',
+      data: pieData,
+      options: pieOptions
+    });
+  }
+
+  if ($("#doughnutChart").length) {
+    var doughnutChartCanvas = $("#doughnutChart").get(0).getContext("2d");
+    var doughnutChart = new Chart(doughnutChartCanvas, {
+      type: 'doughnut',
+      data: doughnutData,
+      options: doughnutOptions
+    });
+  }
+})
+</script>
