@@ -60,6 +60,7 @@ Rails.application.configure do
   config.assets.quiet = true
 
   config.force_ssl = true
+  config.hosts = "greenfuturz.spritle.com"
   # Raises error for missing translations.
   # config.i18n.raise_on_missing_translations = true
 
