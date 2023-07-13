@@ -27,4 +27,8 @@ class DataSheet < ApplicationRecord
       end
     end
   end
+
+  def self.cal_percent(total, stock_count)
+    return (stock_count.to_f / total.to_f) * 100
+  end
 end
