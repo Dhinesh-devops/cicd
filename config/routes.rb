@@ -3,6 +3,7 @@ Rails.application.routes.draw do
   namespace :api do
     namespace :v1 do
       post '/login', :to => 'authentications#login'
+      get '/logout', :to => 'authentications#logout'
       post '/register', :to => 'user_registrations#create'
       post '/forgot_password', :to => 'user_passwords#create'
       patch '/change_password', :to => 'user_passwords#update'

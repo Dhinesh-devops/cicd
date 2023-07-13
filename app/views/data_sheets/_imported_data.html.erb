@@ -210,6 +210,7 @@ $(document).ready(function(){
           tr.addClass("table-danger");
         }
       } else {
+        tr.find('span[class="rfid_text"]').html(tr.find('input[name="rfid_number"]').val())
         if (tr.hasClass("table-danger")) {
           tr.removeClass("table-danger");
           tr.addClass("table-success");
@@ -228,7 +229,9 @@ $(document).ready(function(){
         success: function(result) {
           if (result.message) {
             toastr.success(result.message);
-            window.location.reload();
+            setTimeout(function() {
+              window.location.reload();
+            }, 1000);
           }
         },
         failure: function(e) {
