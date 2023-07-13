@@ -1,5 +1,5 @@
 class DataSheet < ApplicationRecord
-  has_many :stock_items
+  has_many :stock_items, dependent: :destroy
   has_one_attached :file
   # before_save: daily_sheet_uploaded?
 
@@ -26,5 +26,9 @@ class DataSheet < ApplicationRecord
         csv << attributes.map{ |attr| stock_item.send(attr) }
       end
     end
+  end
+
+  def self.cal_percent(total, stock_count)
+    return (stock_count.to_f / total.to_f) * 100
   end
 end

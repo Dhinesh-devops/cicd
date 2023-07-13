@@ -3,6 +3,7 @@ Rails.application.routes.draw do
   namespace :api do
     namespace :v1 do
       post '/login', :to => 'authentications#login'
+      get '/logout', :to => 'authentications#logout'
       post '/register', :to => 'user_registrations#create'
       post '/forgot_password', :to => 'user_passwords#create'
       patch '/change_password', :to => 'user_passwords#update'
@@ -12,6 +13,8 @@ Rails.application.routes.draw do
       get '/get_stock_items', :to => 'data_sheets#get_daily_stock_items'
       get '/get_report_data', :to => 'data_sheets#get_report_data'
       put '/update_stock_status', :to => 'data_sheets#update_stock_status'
+
+      patch '/update_new_password', :to => 'reset_passwords#update_new_password'
     end
   end
 
@@ -28,11 +31,14 @@ Rails.application.routes.draw do
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   get '/dashboard', :to => 'dashboard#index'
+  get '/reset_password', :to => 'dashboard#reset_password'
+  patch '/update_new_password', :to => 'dashboard#update_new_password'
   resources :data_sheets, :only => [:new, :create]
   resources :managers, :only => [:index, :new, :create, :edit, :update]
   get '/sheet_management', :to => 'sheet_management#index'
   get '/download_report', :to => 'sheet_management#download_report'
   post '/update_rfid_number', :to => 'data_sheets#update_rfid_number'
+  delete '/delete_data_sheet', :to => 'data_sheets#delete_data_sheet'
   # Defines the root path route ("/")
   # root to: "sessions#new"
 end

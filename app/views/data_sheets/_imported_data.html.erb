@@ -5,7 +5,7 @@
         <%= render partial: "stock_count_tiles", :locals => {:total_count => stock_items.count, :with_rfid_count => stock_items.with_rfid.count, :without_rfid_count => stock_items.without_rfid.count} %>
         <div class="row" style="margin-bottom: 20px;">
           <div class="col-md-6"><p class="card-title">Imported Data</p></div>
-          <div class="col-md-6"><button class="btn btn-primary edit-import-data" style="float: right;">Edit</button><button class="btn btn-primary save-import-data" style="float: right; margin-right: 10px; display: none;">Submit</button></div>
+          <div class="col-md-6"><button class="btn btn-primary edit-import-data" style="float: right;">Edit</button><button class="btn btn-success save-import-data" style="float: right; margin-right: 10px; display: none;">Submit</button><button type="button" class="btn btn-danger delete-data-sheet" id="deleteDataSheet" style="float: right; margin-right: 10px;">Delete Data Sheet</button></div>
         </div>
         <div class="row">
           <div class="col-12">
@@ -210,6 +210,7 @@ $(document).ready(function(){
           tr.addClass("table-danger");
         }
       } else {
+        tr.find('span[class="rfid_text"]').html(tr.find('input[name="rfid_number"]').val())
         if (tr.hasClass("table-danger")) {
           tr.removeClass("table-danger");
           tr.addClass("table-success");
@@ -217,5 +218,29 @@ $(document).ready(function(){
       }
     })
   }
+
+  $('#deleteDataSheet').on('click', function() {
+    var status = confirm("Are you sure, you want delete recently imported data sheet?");
+    if(status){
+      $.ajax({
+        type:'delete',
+        url:'/delete_data_sheet',
+        data: { authenticity_token: $('[name="csrf-token"]')[0].content },
+        success: function(result) {
+          if (result.message) {
+            toastr.success(result.message);
+            setTimeout(function() {
+              window.location.reload();
+            }, 1000);
+          }
+        },
+        failure: function(e) {
+          console.log(e);
+        }
+      });
+    } else {
+      return false;
+    }
+  });
 })
 </script>

@@ -1,10 +1,10 @@
 class Api::V1::AuthenticationsController < ApplicationController
   before_action :require_login_signature, except: :login
-  protect_from_forgery :except => [:create]
+  protect_from_forgery :except => [:login]
   respond_to :json
 
   #
-  # create
+  # login
   # this method checks the login and create the session
   #
   def login
@@ -22,6 +22,19 @@ class Api::V1::AuthenticationsController < ApplicationController
     response_failure(e.record.errors.full_messages.to_sentence, 409)  
   rescue Exception => e
     response_failure(e, 500)
+  end
+
+  #
+  # logout
+  # this method checks the token and send success response if user exists
+  #
+  def logout
+    user = User.find_by(id: current_user_id)
+    if user.present?
+      response_success('Logout successfully', 200)
+    else
+      response_failure("User not exist with this token", 409)
+    end
   end
 
   private
