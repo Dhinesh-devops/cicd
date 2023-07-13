@@ -14,4 +14,23 @@ class DashboardController < ApplicationController
     @size_wise_stocks = sheet_uploaded ? "0%" : "0%"
     @season_wise_stocks = sheet_uploaded ? "0%" : "0%"
   end
+
+  def reset_password
+  end
+
+  def update_new_password
+    @user = User.find_by(id: current_user.id)
+    current_password = params[:current_password]
+    user = User.find_by_email(@user.email)
+    if @user && user && user.valid_password?(current_password)
+      user.update(password: params[:password])
+      sign_in(user, :bypass => true)
+      flash[:notice] = "Password successfully changed!"
+      redirect_to reset_password_path
+    else
+      flash[:error] = "Your current password was incorrect. Please try again."
+      redirect_to reset_password_path
+    end
+  end
+
 end
