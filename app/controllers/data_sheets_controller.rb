@@ -42,6 +42,16 @@ class DataSheetsController < ApplicationController
     response_failure(e, 500)
   end
 
+  def delete_data_sheet
+    if DataSheet.last.destroy
+      response_success('Data sheet deleted successfully.', 200)
+    else
+      response_failure('Unable to delete data sheet', 409)
+    end
+  rescue Exception => e
+    response_failure(e, 500)
+  end
+
   private
 
   # Only allow a list of trusted parameters through.
