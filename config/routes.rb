@@ -41,4 +41,6 @@ Rails.application.routes.draw do
   delete '/delete_data_sheet', :to => 'data_sheets#delete_data_sheet'
   # Defines the root path route ("/")
   # root to: "sessions#new"
+
+  match '*path' => 'errors#404', via: :all
 end
