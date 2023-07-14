@@ -20,8 +20,8 @@ class DashboardController < ApplicationController
     @total_stock_count = total_count
     @scanned_stocks = sheet_uploaded ? scanned_percent.round(2).to_s + "%" : "0%"
     @missed_stocks = sheet_uploaded ? missed_percent.round(2).to_s + "%" : "0%"
-    @scanned_stocks_count = sheet_uploaded ? scanned_count : "0%"
-    @missed_stocks_count = sheet_uploaded ? missed_count : "0%"
+    @scanned_stocks_count = sheet_uploaded ? scanned_count : "0"
+    @missed_stocks_count = sheet_uploaded ? missed_count : "0"
     @sold_stocks = sheet_uploaded ? "0%" : "0%"
   end
 
