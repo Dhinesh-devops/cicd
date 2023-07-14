@@ -1,7 +1,7 @@
 <div class="main-panel">
   <div class="content-wrapper">
     <div class="row">
-      <div class="col-md-12">
+      <div class="col-md-12 grid-margin">
         <div class="row">
           <div class="col-12 col-xl-8 mb-4 mb-xl-0">
             <h3 class="font-weight-bold">Welcome Admin</h3>
@@ -12,26 +12,8 @@
     </div>
     <div class="row">
       <div class="col-md-12 grid-margin transparent">
-      <div class="row">
-        <div class="col-lg-4 grid-margin grid-margin-lg-0 stretch-card">
-          <div class="card">
-            <div class="card-body" align='center'>
-              <h4 class="card-title">Season-wise chart</h4>
-              <canvas id="doughnutChart"></canvas>
-            </div>
-          </div>
-        </div>
-        <div class="col-lg-4 grid-margin grid-margin-lg-0 stretch-card">
-          <div class="card">
-            <div class="card-body" align='center'>
-              <h4 class="card-title">Size-wise chart</h4>
-              <canvas id="pieChart"></canvas>
-            </div>
-          </div>
-        </div>
-      </div>
         <div class="row">
-          <div class="col-md-3 mb-4 stretch-card transparent">
+          <div class="col-md-4 mb-4 stretch-card transparent">
             <div class="card card-tale">
               <div class="card-body">
                 <p class="mb-4">Total Number of Stocks</p>
@@ -39,7 +21,7 @@
               </div>
             </div>
           </div>
-          <div class="col-md-3 mb-4 stretch-card transparent">
+          <div class="col-md-4 mb-4 stretch-card transparent">
             <div class="card card-dark-blue">
               <div class="card-body">
                 <p class="mb-4">Total Number of Scanned Stocks(%)</p>
@@ -47,7 +29,7 @@
               </div>
             </div>
           </div>
-          <div class="col-md-3 mb-4 stretch-card transparent">
+          <div class="col-md-4 mb-4 stretch-card transparent">
             <div class="card card-light-danger">
               <div class="card-body">
                 <p class="mb-4">Total Number of Missed Stocks(%)</p>
@@ -55,7 +37,9 @@
               </div>
             </div>
           </div>
-          <div class="col-md-3 mb-4 stretch-card transparent">
+        </div>
+        <div class="row">
+          <div class="col-md-4 mb-4 stretch-card transparent">
             <div class="card card-light-blue">
               <div class="card-body">
                 <p class="mb-4">Total Number of Sold Stocks(%)</p>
@@ -63,7 +47,42 @@
               </div>
             </div>
           </div>
+          <div class="col-md-4 mb-4 stretch-card transparent">
+            <div class="card card-light-danger">
+              <div class="card-body">
+                <p class="mb-4">Category-Wise Stocks - Size(%)</p>
+                <p class="fs-30 mb-2"><%= @size_wise_stocks %></p>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4 mb-4 stretch-card transparent">
+            <div class="card card-tale">
+              <div class="card-body">
+                <p class="mb-4">Category-Wise Stocks - Season(%)</p>
+                <p class="fs-30 mb-2"><%= @season_wise_stocks %></p>
+              </div>
+            </div>
+          </div>
         </div>
+
+        <!-- <div class="row">
+          <div class="col-lg-6 grid-margin grid-margin-lg-0 stretch-card">
+            <div class="card">
+              <div class="card-body">
+                <h4 class="card-title">Size-wise chart</h4>
+                <canvas id="pieChart"></canvas>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-6 grid-margin grid-margin-lg-0 stretch-card">
+            <div class="card">
+              <div class="card-body">
+                <h4 class="card-title">Season-wise chart</h4>
+                <canvas id="doughnutChart"></canvas>
+              </div>
+            </div>
+          </div>
+        </div> -->
       </div>
     </div>
   <!-- content-wrapper ends -->

@@ -8,7 +8,7 @@ class DashboardController < ApplicationController
     scanned_percent = DataSheet.cal_percent(total_count, stock_items.scanned.count)
     missed_percent = DataSheet.cal_percent(total_count, (total_count - stock_items.scanned.count))
     # @total_stock_count = sheet_uploaded ? total_count : 0
-    @total_stock_count = stock_items.count
+    @total_stock_count = total_count
     @scanned_stocks = sheet_uploaded ? scanned_percent.round(2).to_s + "%" : "0%"
     @missed_stocks = sheet_uploaded ? missed_percent.round(2).to_s + "%" : "0%"
     @sold_stocks = sheet_uploaded ? "0%" : "0%"
