@@ -1,0 +1,83 @@
+<div class="main-panel">
+  <div class="content-wrapper">
+    <div class="row">
+      <div class="col-md-12 grid-margin stretch-card">
+        <div class="card">
+          <div class="card-body">
+            <div class="row" style="margin-bottom: 20px;">
+              <div class="col-md-6"><p class="card-title">Reports</p></div>
+              <div class="col-md-6"></div>
+            </div>
+            <div class="row">
+              <div class="col-12">
+                <div class="table-responsive">
+                  <table id="report_data" class="display expandable-table dataTable" style="width:100%">
+                    <thead>
+                      <tr>
+                        <th>S.No.</th>
+                        <th>Plant</th>
+                        <th>Plant2</th>
+                        <th>Plant3</th>
+                        <th>Retek Class</th>
+                        <th>Retek Subclass</th>
+                        <th>Season</th>
+                        <th>EAN</th>
+                        <th>RFID Number</th>
+                        <th>Size</th>
+                        <th>Style Code</th>
+                        <th>St.Loc</th>
+                        <th>Variant</th>
+                        <th>MRP</th>
+                        <th>SOH blocked stock</th>
+                        <th>SOH without blocked stock</th>
+                        <th>SOH Qty.</th>
+                        <th>Value</th>
+                        <th>Status</th>
+                      </tr>
+                    </thead>
+
+                    <tbody>
+                      <% @stock_items && @stock_items.each_with_index do | stock_item, index | %>
+                      <tr>
+                        <td><%= index + 1  %></td>
+                        <td><%= stock_item.plant %></td>
+                        <td><%= stock_item.plant2 %></td>
+                        <td><%= stock_item.plant3 %></td>
+                        <td><%= stock_item.retek_class %></td>
+                        <td><%= stock_item.retek_subclass %></td>
+                        <td><%= stock_item.season %></td>
+                        <td><%= stock_item.ean_number %></td>
+                        <td><%= stock_item.rfid_number %></td>
+                        <td><%= stock_item.variant_size %></td>
+                        <td><%= stock_item.style_code %></td>
+                        <td><%= stock_item.st_loc %></td>
+                        <td><%= stock_item.variant %></td>
+                        <td><%= stock_item.mrp %></td>
+                        <td><%= stock_item.soh_blocked_stock %></td>
+                        <td><%= stock_item.soh_without_blocked_stock %></td>
+                        <td><%= stock_item.soh_quantity %></td>
+                        <td><%= stock_item.soh_value %></td>
+                        <td><%= stock_item.status.present? ? "Scanned" : "Missed" %></td>
+                      </tr>
+                      <% end %>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
+<script>
+$(document).ready(function(){
+  $('.dataTable').DataTable({
+    pagingType: 'full_numbers',
+    lengthChange: false
+  });
+})
+</script>

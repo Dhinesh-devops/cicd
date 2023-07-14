@@ -39,6 +39,8 @@ Rails.application.routes.draw do
   get '/download_report', :to => 'sheet_management#download_report'
   post '/update_rfid_number', :to => 'data_sheets#update_rfid_number'
   delete '/delete_data_sheet', :to => 'data_sheets#delete_data_sheet'
+
+  get '/reports', :to => 'reports#index'
   # Defines the root path route ("/")
   # root to: "sessions#new"
 

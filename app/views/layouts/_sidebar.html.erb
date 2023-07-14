@@ -19,6 +19,12 @@
         <span class="menu-title">Sheet Management</span>
       </a>
     </li>
+    <li class="nav-item <%= 'active' if url.include?(reports_path) %>">
+      <a class="nav-link" href="<%= reports_path %>">
+        <i class="icon-paper menu-icon"></i>
+        <span class="menu-title">Reports</span>
+      </a>
+    </li>
     <li class="nav-item <%= 'active' if url.include?(managers_path) %>">
       <a class="nav-link" href="<%= managers_path %>">
         <i class="icon-head menu-icon"></i>
