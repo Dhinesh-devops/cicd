@@ -23,12 +23,8 @@
                       <tr>
                         <th>Date</th>
                         <th>Data sheet</th>
-                        <th>Reports</th>
-                        <th>Report Status</th>
                         <th>Total no. of missed items</th>
                         <th>Total no. of sold items</th>
-                        <th>Size-wise count</th>
-                        <th>Season-wise count</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -36,11 +32,7 @@
                         <tr>
                           <td><%= data_sheet.created_at.to_date.strftime("%d-%m-%Y") %></td>
                           <td><%= link_to data_sheet.sheet_name, rails_blob_path(data_sheet.file, disposition: "attachment") %></td>
-                          <td><%= link_to "Download", "/download_report", class: "btn btn-primary btn-sm" %></td>
-                          <td><!--<div class="badge badge-success">Passed</div>--><div class="badge badge-warning">Processing</div><!-- <div class="badge badge-danger">Failed</div> --></td>
                           <td><%= data_sheet.stock_items.count - data_sheet.stock_items.scanned.count %></td>
-                          <td>0</td>
-                          <td>0</td>
                           <td>0</td>
                         </tr>
                       <% end %>

@@ -8,17 +8,21 @@ class DashboardController < ApplicationController
       total_count = stock_items.count
       scanned_percent = stock_items.present? ? DataSheet.cal_percent(total_count, stock_items.scanned.count) : 0
       missed_percent = stock_items.present? ? DataSheet.cal_percent(total_count, (total_count - stock_items.scanned.count)) : 0
+      scanned_count = stock_items.present? ? stock_items.scanned.count : 0
+      missed_count = stock_items.present? ? (total_count - stock_items.scanned.count) : 0
     else
       total_count = 0
       scanned_percent = 0
       missed_percent = 0
+      scanned_count = 0
+      missed_count = 0
     end
     @total_stock_count = total_count
     @scanned_stocks = sheet_uploaded ? scanned_percent.round(2).to_s + "%" : "0%"
     @missed_stocks = sheet_uploaded ? missed_percent.round(2).to_s + "%" : "0%"
+    @scanned_stocks_count = sheet_uploaded ? scanned_count : "0%"
+    @missed_stocks_count = sheet_uploaded ? missed_count : "0%"
     @sold_stocks = sheet_uploaded ? "0%" : "0%"
-    @size_wise_stocks = sheet_uploaded ? "0%" : "0%"
-    @season_wise_stocks = sheet_uploaded ? "0%" : "0%"
   end
 
   def reset_password
