@@ -7,10 +7,7 @@ class DataSheetsController < ApplicationController
   end
 
   def create
-    # if DataSheet.daily_sheet_uploaded?
-    #   flash[:error] = 'Daily data sheet already uploaded for today.'
-    #   redirect_to new_data_sheet_path
-    # else
+    if DataSheet.is_valid?(params[:data_sheet][:file])
       data_sheet = DataSheet.new(data_sheet_params)
       data_sheet.file.attach(params[:data_sheet][:file]) if params[:data_sheet][:file].present?
       if data_sheet.save
@@ -21,9 +18,12 @@ class DataSheetsController < ApplicationController
         flash[:error] = 'Unable to upload data sheet, Please try again.'
         redirect_to new_data_sheet_path
       end
-    # end
+    else
+      flash[:error] = 'Invalid data sheet, Please upload valid sheet.'
+      redirect_to new_data_sheet_path
+    end
   rescue Exception => e
-    flash[:error] = e.record.errors.full_messages.to_sentence
+    flash[:error] = "Something went wrong. Please try again."
     redirect_to new_data_sheet_path
   end
 

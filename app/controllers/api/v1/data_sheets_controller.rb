@@ -21,7 +21,8 @@ class Api::V1::DataSheetsController < ApplicationController
   # To get daily stock items imported by admin
   #
   def get_daily_stock_items
-    response_success('Daily stock items data ready!', 200, ActiveModelSerializers::SerializableResource.new(DataSheet.last.stock_items, each_serializer: StockItemSerializer))
+    stock_items = DataSheet.last.present? ? DataSheet.last.stock_items : []
+    response_success('Daily stock items data ready!', 200, ActiveModelSerializers::SerializableResource.new(stock_items, each_serializer: StockItemSerializer))
   rescue Exception => e
     response_failure(e, 500)
   end

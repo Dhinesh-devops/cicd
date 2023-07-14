@@ -31,4 +31,21 @@ class DataSheet < ApplicationRecord
   def self.cal_percent(total, stock_count)
     return (stock_count.to_f / total.to_f) * 100
   end
+
+  def self.is_valid?(file_path)
+    valid_headers = ["Plant", "Retek Group", "Retek Dept.", "Retek Class", "Retek Subclass", "Season", "EAN", "Size", "Sleeve", "Style Code", "St.Loc", "Variant", "MRP", "SOH blocked stock", "SOH without Blocked Stk", "SOH Qty.", "Value"]
+    xlsx = Roo::Spreadsheet.open(file_path, extension: :xlsx)
+    binding.pry
+    if xlsx
+      xlsx_headers = xlsx.row(1)
+      invalid_headers = (valid_headers - xlsx_headers)
+      if invalid_headers.present?
+        return false
+      else
+        return true
+      end
+    else
+      return true
+    end
+  end
 end
