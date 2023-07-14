@@ -12,8 +12,8 @@ class DataSheet < ApplicationRecord
   end
 
   def self.to_report_csv(data_sheet_id)
-    attributes = %w{plant plant2 plant3 retek_class retek_subclass season ean_number variant_size style_code st_loc variant mrp soh_blocked_stock soh_without_blocked_stock soh_quantity soh_value}
-    headers = ['Plant', 'Plant2', 'Plant3', 'Retek Class', 'Retek Subclass', 'Season', 'EAN', 'Size', 'Style Code', 'St.loc', 'Variant', 'MRP', 'SOH blocked stock', 'SOH without blocked stock', 'SOH Qty.', 'Value']
+    attributes = %w{plant plant2 plant3 retek_class retek_subclass season ean_number rfid_number variant_size style_code st_loc variant mrp soh_blocked_stock soh_without_blocked_stock soh_quantity soh_value status}
+    headers = ['Plant', 'Plant2', 'Plant3', 'Retek Class', 'Retek Subclass', 'Season', 'EAN', 'RFID Number', 'Size', 'Style Code', 'St.loc', 'Variant', 'MRP', 'SOH blocked stock', 'SOH without blocked stock', 'SOH Qty.', 'Value', 'Status']
     stock_items = StockItem.where(data_sheet_id: data_sheet_id)
 
     CSV.generate(headers: true) do |csv|
@@ -23,7 +23,7 @@ class DataSheet < ApplicationRecord
       csv << []
       csv << headers
       stock_items.each do |stock_item|
-        csv << attributes.map{ |attr| stock_item.send(attr) }
+        csv << attributes.map{ |attr| (attr == "status") && (stock_item.status == nil) ? 'missed' : stock_item.send(attr) }
       end
     end
   end
