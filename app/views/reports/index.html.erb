@@ -1,12 +1,44 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.10.0/css/bootstrap-datepicker.min.css" integrity="sha512-34s5cpvaNG3BknEWSuOncX28vz97bRI59UnVtEEpFX536A7BtZSJHsDyFoCl8S7Dt2TPzcrCEoHBGeM4SUBDBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 <div class="main-panel">
   <div class="content-wrapper">
     <div class="row">
       <div class="col-md-12 grid-margin stretch-card">
         <div class="card">
           <div class="card-body">
-            <div class="row" style="margin-bottom: 20px;">
-              <div class="col-md-6"><p class="card-title">Reports</p></div>
-              <div class="col-md-6"></div>
+            <div class="row">
+              <div class="col-md-2"><p class="card-title">Reports</p></div>
+              <div class="col-md-10">
+                <div class="row">
+                  <div class="col-md-2 pr-0 pl-0">
+                    <div class="form-group">
+                      <select class="form-select form-control form-control-sm" id="reportCategory">
+                        <option value="">Category</option>
+                        <option value="scanned">Scanned</option>
+                        <option value="missed">Missed</option>
+                        <option value="sold">Sold</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="input-daterange input-group" id="datepicker">
+                      <input type="text" class="input-sm form-control form-control-sm text-left" name="start" placeholder="Start Date" id="reportStartDate" />
+                      <div class="input-group-append">
+                        <span class="input-group-text"><i class="ti-calendar"></i></span>
+                      </div>
+                      <span class="input-group-addon">to</span>
+                      <input type="text" class="input-sm form-control form-control-sm text-left" name="end" placeholder="End Date" id="reportEndDate" />
+                      <div class="input-group-append">
+                        <span class="input-group-text"><i class="ti-calendar"></i></span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-4 pl-0">
+                    <button class="btn btn-primary" id="applyFilters">Apply</button>
+                    <button class="btn btn-success" id="exportData" style="float: right;">Export</button>
+                  </div>
+                </div>
+              </div>
+            </div>
             </div>
             <div class="row">
               <div class="col-12">
@@ -35,32 +67,6 @@
                         <th>Status</th>
                       </tr>
                     </thead>
-
-                    <tbody>
-                      <% @stock_items && @stock_items.each_with_index do | stock_item, index | %>
-                      <tr>
-                        <td><%= index + 1  %></td>
-                        <td><%= stock_item.plant %></td>
-                        <td><%= stock_item.plant2 %></td>
-                        <td><%= stock_item.plant3 %></td>
-                        <td><%= stock_item.retek_class %></td>
-                        <td><%= stock_item.retek_subclass %></td>
-                        <td><%= stock_item.season %></td>
-                        <td><%= stock_item.ean_number %></td>
-                        <td><%= stock_item.rfid_number %></td>
-                        <td><%= stock_item.variant_size %></td>
-                        <td><%= stock_item.style_code %></td>
-                        <td><%= stock_item.st_loc %></td>
-                        <td><%= stock_item.variant %></td>
-                        <td><%= stock_item.mrp %></td>
-                        <td><%= stock_item.soh_blocked_stock %></td>
-                        <td><%= stock_item.soh_without_blocked_stock %></td>
-                        <td><%= stock_item.soh_quantity %></td>
-                        <td><%= stock_item.soh_value %></td>
-                        <td><%= stock_item.status.present? ? "Scanned" : "Missed" %></td>
-                      </tr>
-                      <% end %>
-                    </tbody>
                   </table>
                 </div>
               </div>
@@ -73,11 +79,112 @@
   </div>
 </div>
 <script src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.10.0/js/bootstrap-datepicker.min.js" integrity="sha512-LsnSViqQyaXpD4mBBdRYeP6sRwJiJveh2ZIbW41EBrNmKxgr/LFZIiWT6yr+nycvhvauz8c2nYMhrP80YhG7Cw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script>
 $(document).ready(function(){
-  $('.dataTable').DataTable({
-    pagingType: 'full_numbers',
-    lengthChange: false
+  var category = "";
+  var start_date = "";
+  var end_date = "";
+
+  var report_table = loadDatatable(category, start_date, end_date);
+
+  function loadDatatable(category, start_date, end_date) {
+    var table = $('.dataTable').DataTable({
+      pagingType: 'full_numbers',
+      lengthChange: false,
+      retrieve: true,
+      ajax: {
+        url: '/get_stock',
+        type: 'GET',
+        data: {
+          category: category,
+          start_date: start_date,
+          end_date: end_date
+        }
+      },
+      columns: [
+        { "data": "id" },
+        { "data": "plant" },
+        { "data": "plant2" },
+        { "data": "plant3" },
+        { "data": "retek_class" },
+        { "data": "retek_subclass" },
+        { "data": "season" },
+        { "data": "ean_number" },
+        { "data": "rfid_number" },
+        { "data": "variant_size" },
+        { "data": "style_code" },
+        { "data": "st_loc" },
+        { "data": "variant" },
+        { "data": "mrp" },
+        { "data": "soh_blocked_stock" },
+        { "data": "soh_without_blocked_stock" },
+        { "data": "soh_quantity" },
+        { "data": "soh_value" },
+        { "data": "status"}
+      ],
+      "columnDefs": [
+        {
+            "render": function (data, type, row, meta) {
+              return meta.row + meta.settings._iDisplayStart + 1;
+            },
+            "targets": 0
+        },
+        {
+            "render": function ( data, type, row ) {
+              if(data == null) {
+                return "Missed";
+              } else if (data == "scanned") {
+                return "Scanned";
+              } else {
+                return "Sold";
+              }
+            },
+            "targets": 18
+        }
+      ]
+    });
+    return table;
+  }
+
+  $('.input-daterange').datepicker({
+    format: "dd/mm/yyyy"
+  });
+
+  $('#applyFilters').on('click', function() {
+    category = $("#reportCategory").val();
+    start_date = $("#reportStartDate").val();
+    end_date = $("#reportEndDate").val();
+
+    if ((category == "") && (start_date == "") && (end_date == "")) {
+      toastr.error("Please select any filter.");
+    } else {
+      var reportTable = report_table;
+      $.ajax({
+        type:'get',
+        url:'/get_stock',
+        data: { authenticity_token: $('[name="csrf-token"]')[0].content, category: category,
+        start_date: start_date,
+        end_date: end_date },
+        success: function(result) {
+          if (result) {
+            reportTable.clear().draw();
+            reportTable.rows.add(result.data);
+            reportTable.columns.adjust().draw();
+          }
+        },
+        failure: function(e) {
+          console.log(e);
+        }
+      });
+    }
+  })
+
+  $('#exportData').on('click', function() {
+    var category = $("#reportCategory").val();
+    var start_date = $("#reportStartDate").val();
+    var end_date = $("#reportEndDate").val();
+    window.location = "/download_report?category=" + category + "&start_date=" + start_date + "&end_date=" + end_date;
   });
 })
 </script>

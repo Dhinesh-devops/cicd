@@ -98,3 +98,18 @@
 #report_data_info {
   float: left;
 }
+.datepicker.datepicker-dropdown, .datepicker.datepicker-inline{
+  max-width: 250px !important;
+}
+.datepicker table {
+  width: 100% !important;
+}
+.input-group .input-group-append {
+  height: 41px !important;
+}
+.input-daterange .input-group-addon {
+  padding: 10px !important;
+}
+.input-group .input-group-append .input-group-text {
+  background: #4B49AC !important;
+}
