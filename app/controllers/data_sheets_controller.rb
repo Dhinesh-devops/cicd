@@ -28,20 +28,16 @@ class DataSheetsController < ApplicationController
   end
 
   def update_rfid_number
-    rfid_existed_values = []
     if params[:rfid_values].present? && params[:stock_item_ids].present?
       params[:rfid_values].each_with_index do | rfid_value, index |
         stock_item_id = params[:stock_item_ids][index]
         stock_item = StockItem.find_by(id: stock_item_id) if stock_item_id.present?
-        stock_item_with_same_rfid = StockItem.find_by(rfid_number: rfid_value)
-        if stock_item_with_same_rfid.present?
-          rfid_existed_values << rfid_value
-        else
+        if rfid_value.present?
           stock_item.update!(rfid_number: rfid_value)
         end
       end
     end
-    response_success('RFID numbers updated successfully.', 200, ActiveModelSerializers::SerializableResource.new(DataSheet.last, serializer: RfidCountSerializer, rfid_existed_values: rfid_existed_values))
+    response_success('RFID numbers updated successfully.', 200, ActiveModelSerializers::SerializableResource.new(DataSheet.last, serializer: RfidCountSerializer))
   rescue Exception => e
     response_failure(e, 500)
   end
