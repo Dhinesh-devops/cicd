@@ -194,7 +194,11 @@ $(document).ready(function(){
           $("#total_stock_count").html(result.data.total);
           $("#with_rfid_count").html(result.data.with_rfid);
           $("#without_rfid_count").html(result.data.without_rfid);
-          toastr.success(result.message);
+          if (result.data.existed_rfids == "") {
+            toastr.success(result.message);
+          } else {
+            toastr.success(result.message + " <br> Having duplicated RFID Numbers - " + result.data.existed_rfids);
+          }
           changeRowColor();
         }
       },
