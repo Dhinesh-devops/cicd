@@ -15,7 +15,7 @@ class ReportsController < ApplicationController
 
   def download_report
     if DataSheet.last.present?
-      send_data DataSheet.to_report_csv(params), filename: "report.csv"
+      send_data DataSheet.to_report_csv(params), filename: "report_" + Time.now.strftime('%d%m%Y%H%M%S') + ".csv"
     end
   end
 end
