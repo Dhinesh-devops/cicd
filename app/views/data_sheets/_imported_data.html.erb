@@ -197,7 +197,7 @@ $(document).ready(function(){
           if (result.data.existed_rfids == "") {
             toastr.success(result.message);
           } else {
-            toastr.success(result.message + " <br> Having duplicated RFID Numbers - " + result.data.existed_rfids);
+            toastr.error("Having duplicate RFID Numbers - " + result.data.existed_rfids);
           }
           changeRowColor();
         }
