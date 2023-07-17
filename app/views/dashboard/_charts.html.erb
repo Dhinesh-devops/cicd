@@ -1,0 +1,138 @@
+<script>
+$(document).ready(function() {
+  seasons = JSON.parse("<%= seasons %>".replaceAll('&quot;', '"'));
+  sizes =  JSON.parse("<%= sizes %>".replaceAll('&quot;', '"'));
+
+  var stockPieData = {
+    datasets: [{
+      data: [<%= scanned_count %>, <%= missed_count %>, <%= sold_count %>],
+      backgroundColor: [
+        'rgba(255, 99, 132, 0.5)',
+        'rgba(54, 162, 235, 0.5)',
+        'rgba(255, 206, 86, 0.5)',
+        'rgba(75, 192, 192, 0.5)',
+        'rgba(153, 102, 255, 0.5)',
+        'rgba(255, 159, 64, 0.5)'
+      ],
+      borderColor: [
+        'rgba(255,99,132,1)',
+        'rgba(54, 162, 235, 1)',
+        'rgba(255, 206, 86, 1)',
+        'rgba(75, 192, 192, 1)',
+        'rgba(153, 102, 255, 1)',
+        'rgba(255, 159, 64, 1)'
+      ],
+    }],
+
+    // These labels appear in the legend and in the tooltips when hovering different arcs
+    labels: ["Scanned", "Missed", "Sold"]
+  };
+  var stockPieOptions = {
+    responsive: true,
+    animation: {
+      animateScale: true,
+      animateRotate: true
+    },
+    legend: {
+      display: true
+    },
+  };
+
+  var pieData = {
+    datasets: [{
+      data: <%= size_count %>,
+      backgroundColor: [
+        'rgba(255, 99, 132, 0.5)',
+        'rgba(54, 162, 235, 0.5)',
+        'rgba(255, 206, 86, 0.5)',
+        'rgba(75, 192, 192, 0.5)',
+        'rgba(153, 102, 255, 0.5)',
+        'rgba(255, 159, 64, 0.5)'
+      ],
+      borderColor: [
+        'rgba(255,99,132,1)',
+        'rgba(54, 162, 235, 1)',
+        'rgba(255, 206, 86, 1)',
+        'rgba(75, 192, 192, 1)',
+        'rgba(153, 102, 255, 1)',
+        'rgba(255, 159, 64, 1)'
+      ],
+    }],
+
+    // These labels appear in the legend and in the tooltips when hovering different arcs
+    labels: sizes
+  };
+  var pieOptions = {
+    responsive: true,
+    animation: {
+      animateScale: true,
+      animateRotate: true
+    },
+    legend: {
+      display: false
+    },
+  };
+
+  var doughnutData = {
+    datasets: [{
+      data: <%= season_with_count %>,
+      backgroundColor: [
+        'rgba(255, 99, 132, 0.5)',
+        'rgba(54, 162, 235, 0.5)',
+        'rgba(255, 206, 86, 0.5)',
+        'rgba(75, 192, 192, 0.5)',
+        'rgba(153, 102, 255, 0.5)',
+        'rgba(255, 159, 64, 0.5)'
+      ],
+      borderColor: [
+        'rgba(255,99,132,1)',
+        'rgba(54, 162, 235, 1)',
+        'rgba(255, 206, 86, 1)',
+        'rgba(75, 192, 192, 1)',
+        'rgba(153, 102, 255, 1)',
+        'rgba(255, 159, 64, 1)'
+      ],
+    }],
+
+    // These labels appear in the legend and in the tooltips when hovering different arcs
+    labels: seasons
+  };
+  var doughnutOptions = {
+    responsive: true,
+    animation: {
+      animateScale: true,
+      animateRotate: true
+    },
+    legend: {
+      display: false
+    },
+  };
+
+  if ($("#stockPieChart").length) {
+    var stockPieChartCanvas = $("#stockPieChart").get(0).getContext("2d");
+    var stockPieChart = new Chart(stockPieChartCanvas, {
+      type: 'pie',
+      data: stockPieData,
+      options: stockPieOptions
+    });
+  }
+
+  if ($("#pieChart").length) {
+    var pieChartCanvas = $("#pieChart").get(0).getContext("2d");
+    var pieChart = new Chart(pieChartCanvas, {
+      type: 'pie',
+      data: pieData,
+      options: pieOptions
+    });
+  }
+
+  if ($("#doughnutChart").length) {
+    var doughnutChartCanvas = $("#doughnutChart").get(0).getContext("2d");
+    var doughnutChart = new Chart(doughnutChartCanvas, {
+      type: 'doughnut',
+      data: doughnutData,
+      options: doughnutOptions
+    });
+  }
+})
+</script>

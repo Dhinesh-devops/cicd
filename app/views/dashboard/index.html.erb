@@ -24,7 +24,7 @@
           <div class="col-md-4 mb-4 stretch-card transparent">
             <div class="card card-dark-blue">
               <div class="card-body">
-                <p class="mb-4">Total Number of Scanned Stocks(%)</p>
+                <p class="mb-4">Total Number of Scanned in Stock(%)</p>
                 <p class="fs-30 mb-2"><%= @scanned_stocks %></p>
               </div>
             </div>
@@ -32,7 +32,7 @@
           <div class="col-md-4 mb-4 stretch-card transparent">
             <div class="card card-light-danger">
               <div class="card-body">
-                <p class="mb-4">Total Number of Scanned Stocks Count</p>
+                <p class="mb-4">Total Number of Scanned in Stock Count</p>
                 <p class="fs-30 mb-2"><%= @scanned_stocks_count %></p>
               </div>
             </div>
@@ -42,7 +42,7 @@
           <div class="col-md-4 mb-4 stretch-card transparent">
             <div class="card card-light-blue">
               <div class="card-body">
-                <p class="mb-4">Total Number of Missed Stocks(%)</p>
+                <p class="mb-4">Total Number of Missed in Stock(%)</p>
                 <p class="fs-30 mb-2"><%= @missed_stocks %></p>
               </div>
             </div>
@@ -50,7 +50,7 @@
           <div class="col-md-4 mb-4 stretch-card transparent">
             <div class="card card-light-danger">
               <div class="card-body">
-                <p class="mb-4">Total Number of Missed Stocks Count</p>
+                <p class="mb-4">Total Number of Missed in Stock Count</p>
                 <p class="fs-30 mb-2"><%= @missed_stocks_count %></p>
               </div>
             </div>
@@ -58,15 +58,23 @@
           <div class="col-md-4 mb-4 stretch-card transparent">
             <div class="card card-tale">
               <div class="card-body">
-                <p class="mb-4">Total Number of Sold Stocks(%)</p>
+                <p class="mb-4">Total Number of Sold in Stock(%)</p>
                 <p class="fs-30 mb-2"><%= @sold_stocks %></p>
               </div>
             </div>
           </div>
         </div>
 
-        <!-- <div class="row">
-          <div class="col-lg-6 grid-margin grid-margin-lg-0 stretch-card">
+        <div class="row">
+          <div class="col-lg-6 grid-margin stretch-card">
+            <div class="card">
+              <div class="card-body">
+                <h4 class="card-title">Stock-wise chart</h4>
+                <canvas id="stockPieChart" style="width: 421px; height: 210px;"></canvas>
+              </div>
+            </div>
+          </div>
+          <!-- <div class="col-lg-6 grid-margin stretch-card">
             <div class="card">
               <div class="card-body">
                 <h4 class="card-title">Size-wise chart</h4>
@@ -74,15 +82,15 @@
               </div>
             </div>
           </div>
-          <div class="col-lg-6 grid-margin grid-margin-lg-0 stretch-card">
+          <div class="col-lg-6 grid-margin stretch-card">
             <div class="card">
               <div class="card-body">
                 <h4 class="card-title">Season-wise chart</h4>
                 <canvas id="doughnutChart"></canvas>
               </div>
             </div>
-          </div>
-        </div> -->
+          </div> -->
+        </div>
       </div>
     </div>
   <!-- content-wrapper ends -->
@@ -99,97 +107,4 @@
   sizes = StockItem.pluck(:variant_size).uniq
   size_count = sizes.map { |size| StockItem.where(variant_size: size).size }
 %>
-<script>
-$(document).ready(function() {
-  seasons = JSON.parse("<%= seasons %>".replaceAll('&quot;', '"'));
-  sizes =  JSON.parse("<%= sizes %>".replaceAll('&quot;', '"'));
-
-  var pieData = {
-    datasets: [{
-      data: <%= size_count %>,
-      backgroundColor: [
-        'rgba(255, 99, 132, 0.5)',
-        'rgba(54, 162, 235, 0.5)',
-        'rgba(255, 206, 86, 0.5)',
-        'rgba(75, 192, 192, 0.5)',
-        'rgba(153, 102, 255, 0.5)',
-        'rgba(255, 159, 64, 0.5)'
-      ],
-      borderColor: [
-        'rgba(255,99,132,1)',
-        'rgba(54, 162, 235, 1)',
-        'rgba(255, 206, 86, 1)',
-        'rgba(75, 192, 192, 1)',
-        'rgba(153, 102, 255, 1)',
-        'rgba(255, 159, 64, 1)'
-      ],
-    }],
-
-    // These labels appear in the legend and in the tooltips when hovering different arcs
-    labels: sizes
-  };
-  var pieOptions = {
-    responsive: true,
-    animation: {
-      animateScale: true,
-      animateRotate: true
-    },
-    legend: {
-      display: false
-    },
-  };
-
-  var doughnutData = {
-    datasets: [{
-      data: <%= season_with_count %>,
-      backgroundColor: [
-        'rgba(255, 99, 132, 0.5)',
-        'rgba(54, 162, 235, 0.5)',
-        'rgba(255, 206, 86, 0.5)',
-        'rgba(75, 192, 192, 0.5)',
-        'rgba(153, 102, 255, 0.5)',
-        'rgba(255, 159, 64, 0.5)'
-      ],
-      borderColor: [
-        'rgba(255,99,132,1)',
-        'rgba(54, 162, 235, 1)',
-        'rgba(255, 206, 86, 1)',
-        'rgba(75, 192, 192, 1)',
-        'rgba(153, 102, 255, 1)',
-        'rgba(255, 159, 64, 1)'
-      ],
-    }],
-
-    // These labels appear in the legend and in the tooltips when hovering different arcs
-    labels: seasons
-  };
-  var doughnutOptions = {
-    responsive: true,
-    animation: {
-      animateScale: true,
-      animateRotate: true
-    },
-    legend: {
-      display: false
-    },
-  };
-
-  if ($("#pieChart").length) {
-    var pieChartCanvas = $("#pieChart").get(0).getContext("2d");
-    var pieChart = new Chart(pieChartCanvas, {
-      type: 'pie',
-      data: pieData,
-      options: pieOptions
-    });
-  }
-
-  if ($("#doughnutChart").length) {
-    var doughnutChartCanvas = $("#doughnutChart").get(0).getContext("2d");
-    var doughnutChart = new Chart(doughnutChartCanvas, {
-      type: 'doughnut',
-      data: doughnutData,
-      options: doughnutOptions
-    });
-  }
-})
-</script>
+<%= render partial: "charts", :locals => {:seasons => seasons, :season_with_count => season_with_count, :sizes => sizes, :size_count => size_count, :scanned_count => @scanned_stocks_count, :missed_count => @missed_stocks_count, :sold_count => @sold_stocks_count } %>
