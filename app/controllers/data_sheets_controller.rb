@@ -31,15 +31,13 @@ class DataSheetsController < ApplicationController
     rfid_existed_values = []
     if params[:rfid_values].present? && params[:stock_item_ids].present?
       params[:rfid_values].each_with_index do | rfid_value, index |
-        if (rfid_value != "")
-          stock_item_id = params[:stock_item_ids][index]
-          stock_item = StockItem.find_by(id: stock_item_id) if stock_item_id.present?
-          stock_item_with_same_rfid = StockItem.find_by(rfid_number: rfid_value)
-          if stock_item_with_same_rfid.present?
-            rfid_existed_values << rfid_value
-          else
-            stock_item.update!(rfid_number: rfid_value)
-          end
+        stock_item_id = params[:stock_item_ids][index]
+        stock_item = StockItem.find_by(id: stock_item_id) if stock_item_id.present?
+        stock_item_with_same_rfid = StockItem.find_by(rfid_number: rfid_value)
+        if stock_item_with_same_rfid.present?
+          rfid_existed_values << rfid_value
+        else
+          stock_item.update!(rfid_number: rfid_value)
         end
       end
     end
