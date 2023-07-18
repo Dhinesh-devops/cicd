@@ -42,6 +42,10 @@ Rails.application.routes.draw do
   get '/reports', :to => 'reports#index'
   get '/get_stock', :to => 'reports#get_stock'
   get '/download_report', :to => 'reports#download_report'
+
+  get '/sold_items', :to => 'sold_items#index'
+  patch '/update_sold_status', :to => 'sold_items#update_sold_status'
+
   # Defines the root path route ("/")
   # root to: "sessions#new"
 

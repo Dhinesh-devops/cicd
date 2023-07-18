@@ -1,6 +1,7 @@
 <script>
 $(document).ready(function() {
-  seasons = JSON.parse("<%= seasons %>".replaceAll('&quot;', '"'));
+  autumn_seasons = JSON.parse("<%= autumn_seasons %>".replaceAll('&quot;', '"'));
+  spring_seasons = JSON.parse("<%= spring_seasons %>".replaceAll('&quot;', '"'));
   sizes =  JSON.parse("<%= sizes %>".replaceAll('&quot;', '"'));
   sold_dates =  JSON.parse("<%= sold_dates %>".replaceAll('&quot;', '"'));
 
@@ -8,91 +9,21 @@ $(document).ready(function() {
     datasets: [{
       data: [<%= scanned_count %>, <%= missed_count %>, <%= sold_count %>],
       backgroundColor: [
-        'rgb(243, 121, 126, 0.5)',
+        'rgb(71, 71, 161, 0.5)',
         'rgb(236, 84, 141, 0.5)',
-        'rgb(25, 171, 222, 0.5)'
+        'rgb(71, 161, 134, 0.5)'
       ],
       borderColor: [
-        'rgb(243, 121, 126, 1)',
+        'rgb(71, 71, 161, 1)',
         'rgb(236, 84, 141, 1)',
-        'rgb(25, 171, 222, 1)'
+        'rgb(71, 161, 134, 1)'
       ],
     }],
 
     // These labels appear in the legend and in the tooltips when hovering different arcs
-    labels: ["Scanned", "Missed", "Sold"]
+    labels: ["Stock", "Missed", "Sold"]
   };
   var stockPieOptions = {
-    responsive: true,
-    animation: {
-      animateScale: true,
-      animateRotate: true
-    },
-    legend: {
-      display: true
-    },
-  };
-
-  var pieData = {
-    datasets: [{
-      data: <%= size_count %>,
-      backgroundColor: [
-        'rgba(255, 99, 132, 0.5)',
-        'rgba(54, 162, 235, 0.5)',
-        'rgba(255, 206, 86, 0.5)',
-        'rgba(75, 192, 192, 0.5)',
-        'rgba(153, 102, 255, 0.5)',
-        'rgba(255, 159, 64, 0.5)'
-      ],
-      borderColor: [
-        'rgba(255,99,132,1)',
-        'rgba(54, 162, 235, 1)',
-        'rgba(255, 206, 86, 1)',
-        'rgba(75, 192, 192, 1)',
-        'rgba(153, 102, 255, 1)',
-        'rgba(255, 159, 64, 1)'
-      ],
-    }],
-
-    // These labels appear in the legend and in the tooltips when hovering different arcs
-    labels: sizes
-  };
-  var pieOptions = {
-    responsive: true,
-    animation: {
-      animateScale: true,
-      animateRotate: true
-    },
-    legend: {
-      display: true
-    },
-  };
-
-  var doughnutData = {
-    datasets: [{
-      data: <%= season_with_count %>,
-      backgroundColor: [
-        'rgba(255, 99, 132, 0.5)',
-        'rgba(54, 162, 235, 0.5)',
-        'rgba(255, 206, 86, 0.5)',
-        'rgba(75, 192, 192, 0.5)',
-        'rgba(153, 102, 255, 0.5)',
-        'rgba(255, 159, 64, 0.5)'
-      ],
-      borderColor: [
-        'rgba(255,99,132,1)',
-        'rgba(54, 162, 235, 1)',
-        'rgba(255, 206, 86, 1)',
-        'rgba(75, 192, 192, 1)',
-        'rgba(153, 102, 255, 1)',
-        'rgba(255, 159, 64, 1)'
-      ],
-    }],
-
-    // These labels appear in the legend and in the tooltips when hovering different arcs
-    labels: seasons
-  };
-  var doughnutOptions = {
     responsive: true,
     animation: {
       animateScale: true,
@@ -112,35 +43,17 @@ $(document).ready(function() {
     });
   }
 
-  if ($("#pieChart").length) {
-    var pieChartCanvas = $("#pieChart").get(0).getContext("2d");
-    var pieChart = new Chart(pieChartCanvas, {
-      type: 'pie',
-      data: pieData,
-      options: pieOptions
-    });
-  }
-
-  if ($("#doughnutChart").length) {
-    var doughnutChartCanvas = $("#doughnutChart").get(0).getContext("2d");
-    var doughnutChart = new Chart(doughnutChartCanvas, {
-      type: 'doughnut',
-      data: doughnutData,
-      options: doughnutOptions
-    });
-  }
-
-  if ($("#sales-chart").length) {
-    var SalesChartCanvas = $("#sales-chart").get(0).getContext("2d");
-    var SalesChart = new Chart(SalesChartCanvas, {
+  if ($("#sizes-chart").length) {
+    var SizeChartCanvas = $("#sizes-chart").get(0).getContext("2d");
+    var SizesChart = new Chart(SizeChartCanvas, {
       type: 'bar',
       data: {
-        labels: sold_dates,
+        labels: sizes,
         datasets: [
            {
-            label: 'Sold',
-            data: <%= sold_date_wise_count %>,
-            backgroundColor: '#4B49AC'
+            label: 'Sizes',
+            data: <%= size_count  %>,
+            backgroundColor: '#5050B2'
           }
         ]
       },
@@ -167,7 +80,79 @@ $(document).ready(function() {
             ticks: {
               display: true,
               min: 0,
-              max: <%= sold_date_wise_count.present? ? (sold_date_wise_count.max * 10) : 10 %>,
+              max: <%= size_count.present? ? (size_count.max + 10) : 10 %>,
+              callback: function(value, index, values) {
+                return  value ;
+              },
+              autoSkip: true,
+              maxTicksLimit: 10,
+              fontColor:"#6C7383"
+            }
+          }],
+          xAxes: [{
+            stacked: false,
+            ticks: {
+              beginAtZero: true,
+              fontColor: "#6C7383"
+            },
+            gridLines: {
+              color: "rgba(0, 0, 0, 0)",
+              display: false
+            },
+            barPercentage: 1
+          }]
+        },
+        legend: {
+          display: false
+        },
+        elements: {
+          point: {
+            radius: 0
+          }
+        }
+      },
+    });
+    document.getElementById('sizes-legend').innerHTML = SizesChart.generateLegend();
+  }
+
+  if ($("#sales-chart").length) {
+    var SalesChartCanvas = $("#sales-chart").get(0).getContext("2d");
+    var SalesChart = new Chart(SalesChartCanvas, {
+      type: 'bar',
+      data: {
+        labels: sold_dates,
+        datasets: [
+           {
+            label: 'Sold',
+            data: <%= sold_date_wise_count %>,
+            backgroundColor: '#47A186'
+          }
+        ]
+      },
+      options: {
+        cornerRadius: 5,
+        responsive: true,
+        maintainAspectRatio: true,
+        layout: {
+          padding: {
+            left: 0,
+            right: 0,
+            top: 20,
+            bottom: 0
+          }
+        },
+        scales: {
+          yAxes: [{
+            display: true,
+            gridLines: {
+              display: true,
+              drawBorder: false,
+              color: "#F2F2F2"
+            },
+            ticks: {
+              display: true,
+              min: 0,
+              max: <%= sold_date_wise_count.present? ? (sold_date_wise_count.max + 20) : 10 %>,
               callback: function(value, index, values) {
                 return  value ;
               },
@@ -200,6 +185,150 @@ $(document).ready(function() {
       },
     });
     document.getElementById('sales-legend').innerHTML = SalesChart.generateLegend();
+  }
+
+  if ($("#autumn-chart").length) {
+    var AutumnChartCanvas = $("#autumn-chart").get(0).getContext("2d");
+    var AutumnChart = new Chart(AutumnChartCanvas, {
+      type: 'bar',
+      data: {
+        labels: autumn_seasons,
+        datasets: [
+           {
+            label: 'Autumn Winter Season',
+            data: <%= autumn_with_count %>,
+            backgroundColor: '#D69C12'
+          }
+        ]
+      },
+      options: {
+        cornerRadius: 5,
+        responsive: true,
+        maintainAspectRatio: true,
+        layout: {
+          padding: {
+            left: 0,
+            right: 0,
+            top: 20,
+            bottom: 0
+          }
+        },
+        scales: {
+          yAxes: [{
+            display: true,
+            gridLines: {
+              display: true,
+              drawBorder: false,
+              color: "#F2F2F2"
+            },
+            ticks: {
+              display: true,
+              min: 0,
+              max: <%= autumn_with_count.present? ? (autumn_with_count.max + 10) : 10 %>,
+              callback: function(value, index, values) {
+                return  value ;
+              },
+              autoSkip: true,
+              maxTicksLimit: 10,
+              fontColor:"#6C7383"
+            }
+          }],
+          xAxes: [{
+            stacked: false,
+            ticks: {
+              beginAtZero: true,
+              fontColor: "#6C7383"
+            },
+            gridLines: {
+              color: "rgba(0, 0, 0, 0)",
+              display: false
+            },
+            barPercentage: 1
+          }]
+        },
+        legend: {
+          display: false
+        },
+        elements: {
+          point: {
+            radius: 0
+          }
+        }
+      },
+    });
+    document.getElementById('autumn-legend').innerHTML = AutumnChart.generateLegend();
+  }
+
+  if ($("#spring-chart").length) {
+    var SpringChartCanvas = $("#spring-chart").get(0).getContext("2d");
+    var SpringChart = new Chart(SpringChartCanvas, {
+      type: 'bar',
+      data: {
+        labels: spring_seasons,
+        datasets: [
+           {
+            label: 'Spring Summer Season',
+            data: <%= spring_with_count %>,
+            backgroundColor: '#81366D'
+          }
+        ]
+      },
+      options: {
+        cornerRadius: 5,
+        responsive: true,
+        maintainAspectRatio: true,
+        layout: {
+          padding: {
+            left: 0,
+            right: 0,
+            top: 20,
+            bottom: 0
+          }
+        },
+        scales: {
+          yAxes: [{
+            display: true,
+            gridLines: {
+              display: true,
+              drawBorder: false,
+              color: "#F2F2F2"
+            },
+            ticks: {
+              display: true,
+              min: 0,
+              max: <%= spring_with_count.present? ? (spring_with_count.max + 10) : 10 %>,
+              callback: function(value, index, values) {
+                return  value ;
+              },
+              autoSkip: true,
+              maxTicksLimit: 10,
+              fontColor:"#6C7383"
+            }
+          }],
+          xAxes: [{
+            stacked: false,
+            ticks: {
+              beginAtZero: true,
+              fontColor: "#6C7383"
+            },
+            gridLines: {
+              color: "rgba(0, 0, 0, 0)",
+              display: false
+            },
+            barPercentage: 1
+          }]
+        },
+        legend: {
+          display: false
+        },
+        elements: {
+          point: {
+            radius: 0
+          }
+        }
+      },
+    });
+    document.getElementById('spring-legend').innerHTML = SpringChart.generateLegend();
   }
 })
 </script>
