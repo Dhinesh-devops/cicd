@@ -15,6 +15,8 @@ Rails.application.routes.draw do
       put '/update_stock_status', :to => 'data_sheets#update_stock_status'
 
       patch '/update_new_password', :to => 'reset_passwords#update_new_password'
+
+      patch '/update_sold_items', :to => 'sold_items#update_sold_items'
     end
   end
 

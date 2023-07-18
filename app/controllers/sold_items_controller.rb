@@ -6,13 +6,23 @@ class SoldItemsController < ApplicationController
   end
 
   def update_sold_status
+    errors = []
     rfid_values = params[:rfid_values].split(',') if params[:rfid_values].present?
     rfid_values.present? && rfid_values.each_with_index do | rfid_value, index |
       stock_item = StockItem.find_by(rfid_number: rfid_value)
-      stock_item.update!(status: 2) if stock_item.present? && (stock_item.status != "sold")
+      if stock_item.present?
+        stock_item.update!(status: 2) if (stock_item.status != "sold")
+      else
+        errors << rfid_value
+      end
     end
-    flash[:notice] = 'Updated sold items successfully.'
-    redirect_to sold_items_path
+    if errors.present?
+      flash[:error] = 'Stock is not present with these RFID numbers ' + errors.uniq.to_sentence
+      redirect_to sold_items_path
+    else
+      flash[:notice] = 'Updated sold items successfully.'
+      redirect_to sold_items_path
+    end
   rescue Exception => e
     flash[:error] = "Something went wrong. Please try again."
     redirect_to sold_items_path
