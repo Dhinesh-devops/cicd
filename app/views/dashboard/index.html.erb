@@ -11,9 +11,17 @@
       </div>
     </div>
     <div class="row">
-      <div class="col-md-12 grid-margin transparent">
+      <div class="col-md-6 grid-margin stretch-card">
+        <div class="card">
+          <div class="card-body">
+            <h4 class="card-title">Stock-wise chart</h4>
+            <canvas id="stockPieChart" style="width: 421px; height: 210px;"></canvas>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6 grid-margin transparent">
         <div class="row">
-          <div class="col-md-4 mb-4 stretch-card transparent">
+          <div class="col-md-6 mb-4 stretch-card transparent">
             <div class="card card-tale">
               <div class="card-body">
                 <p class="mb-4">Total Number of Stocks</p>
@@ -21,90 +29,100 @@
               </div>
             </div>
           </div>
-          <div class="col-md-4 mb-4 stretch-card transparent">
+          <div class="col-md-6 mb-4 stretch-card transparent">
             <div class="card card-dark-blue">
               <div class="card-body">
-                <p class="mb-4">Total Number of Scanned in Stock(%)</p>
-                <p class="fs-30 mb-2"><%= @scanned_stocks %></p>
-              </div>
-            </div>
-          </div>
-          <div class="col-md-4 mb-4 stretch-card transparent">
-            <div class="card card-light-danger">
-              <div class="card-body">
-                <p class="mb-4">Total Number of Scanned in Stock Count</p>
+                <p class="mb-4">Total Number of Scanned In-Stock Count</p>
                 <p class="fs-30 mb-2"><%= @scanned_stocks_count %></p>
               </div>
             </div>
           </div>
         </div>
         <div class="row">
-          <div class="col-md-4 mb-4 stretch-card transparent">
+          <div class="col-md-6 mt-4 stretch-card transparent">
             <div class="card card-light-blue">
               <div class="card-body">
-                <p class="mb-4">Total Number of Missed in Stock(%)</p>
-                <p class="fs-30 mb-2"><%= @missed_stocks %></p>
-              </div>
-            </div>
-          </div>
-          <div class="col-md-4 mb-4 stretch-card transparent">
-            <div class="card card-light-danger">
-              <div class="card-body">
-                <p class="mb-4">Total Number of Missed in Stock Count</p>
+                <p class="mb-4">Total Number of Missed Stock Count</p>
                 <p class="fs-30 mb-2"><%= @missed_stocks_count %></p>
               </div>
             </div>
           </div>
-          <div class="col-md-4 mb-4 stretch-card transparent">
-            <div class="card card-tale">
+          <div class="col-md-6 mt-4 stretch-card transparent">
+            <div class="card" style="background: #47A186; color: #FFFFFF;">
               <div class="card-body">
-                <p class="mb-4">Total Number of Sold in Stock(%)</p>
-                <p class="fs-30 mb-2"><%= @sold_stocks %></p>
+                <p class="mb-4">Total Number of Sold Stock Count</p>
+                <p class="fs-30 mb-2"><%= @sold_stocks_count %></p>
               </div>
             </div>
           </div>
-        </div>
-
-        <div class="row">
-          <div class="col-lg-6 grid-margin stretch-card">
-            <div class="card">
-              <div class="card-body">
-                <h4 class="card-title">Stock-wise chart</h4>
-                <canvas id="stockPieChart" style="width: 421px; height: 210px;"></canvas>
-              </div>
-            </div>
-          </div>
-          <!-- <div class="col-lg-6 grid-margin stretch-card">
-            <div class="card">
-              <div class="card-body">
-                <h4 class="card-title">Size-wise chart</h4>
-                <canvas id="pieChart"></canvas>
-              </div>
-            </div>
-          </div>
-          <div class="col-lg-6 grid-margin stretch-card">
-            <div class="card">
-              <div class="card-body">
-                <h4 class="card-title">Season-wise chart</h4>
-                <canvas id="doughnutChart"></canvas>
-              </div>
-            </div>
-          </div> -->
         </div>
       </div>
     </div>
+    <div class="row">
+      <div class="col-md-4 mb-4 stretch-card transparent">
+        <div class="card  card-light-danger">
+          <div class="card-body">
+            <p class="mb-4">Total Number of Scanned In-Stock(%)</p>
+            <p class="fs-30 mb-2"><%= @scanned_stocks %></p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4 mb-4 stretch-card transparent">
+        <div class="card" style="background: #EC548D; color: #ffffff;">
+          <div class="card-body">
+            <p class="mb-4">Total Number of Missed Stock(%)</p>
+            <p class="fs-30 mb-2"><%= @missed_stocks %></p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4 mb-4 stretch-card transparent">
+        <div class="card" style="background: #19ABDE; color: #ffffff;">
+          <div class="card-body">
+            <p class="mb-4">Total Number of Sold Stock(%)</p>
+            <p class="fs-30 mb-2"><%= @sold_stocks %></p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-lg-6 grid-margin stretch-card">
+        <div class="card">
+          <div class="card-body">
+            <h4 class="card-title">Size-wise chart</h4>
+            <p class="font-weight-500">The total number of scanned in-stock count in size-wise.</p>
+            <canvas id="pieChart" style="width: 421px; height: 210px;"></canvas>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-6 grid-margin stretch-card">
+        <div class="card">
+          <div class="card-body">
+            <h4 class="card-title">Season-wise chart</h4>
+            <p class="font-weight-500">The total number of scanned in-stock count in season-wise.</p>
+            <canvas id="doughnutChart" style="width: 421px; height: 210px;"></canvas>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-12 grid-margin stretch-card">
+        <div class="card">
+          <div class="card-body">
+            <div class="d-flex justify-content-between">
+            <p class="card-title">Sales Chart</p>
+            </div>
+            <p class="font-weight-500">The total number of sales within last 7 days of time showing as date-wise.</p>
+            <div id="sales-legend" class="chartjs-legend mt-2 mb-2"></div>
+            <canvas id="sales-chart"></canvas>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
   <!-- content-wrapper ends -->
-  <!-- partial:partials/_footer.html -->
-    <%# render partial: "layouts/footer" %>
-  <!--  -->
-  <!-- partial -->
 </div>
 <!-- main-panel ends -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
-<%
-  seasons = StockItem.pluck(:season).uniq
-  season_with_count = seasons.map { |season| StockItem.where(season: season).size }
-  sizes = StockItem.pluck(:variant_size).uniq
-  size_count = sizes.map { |size| StockItem.where(variant_size: size).size }
-%>
-<%= render partial: "charts", :locals => {:seasons => seasons, :season_with_count => season_with_count, :sizes => sizes, :size_count => size_count, :scanned_count => @scanned_stocks_count, :missed_count => @missed_stocks_count, :sold_count => @sold_stocks_count } %>
+<%= render partial: "charts", :locals => StockItem.get_chart_data(@scanned_stocks_count, @missed_stocks_count, @sold_stocks_count) %>

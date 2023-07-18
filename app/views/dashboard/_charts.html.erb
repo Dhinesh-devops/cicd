@@ -2,25 +2,20 @@
 $(document).ready(function() {
   seasons = JSON.parse("<%= seasons %>".replaceAll('&quot;', '"'));
   sizes =  JSON.parse("<%= sizes %>".replaceAll('&quot;', '"'));
+  sold_dates =  JSON.parse("<%= sold_dates %>".replaceAll('&quot;', '"'));
 
   var stockPieData = {
     datasets: [{
       data: [<%= scanned_count %>, <%= missed_count %>, <%= sold_count %>],
       backgroundColor: [
-        'rgba(255, 99, 132, 0.5)',
-        'rgba(54, 162, 235, 0.5)',
-        'rgba(255, 206, 86, 0.5)',
-        'rgba(75, 192, 192, 0.5)',
-        'rgba(153, 102, 255, 0.5)',
-        'rgba(255, 159, 64, 0.5)'
+        'rgb(243, 121, 126, 0.5)',
+        'rgb(236, 84, 141, 0.5)',
+        'rgb(25, 171, 222, 0.5)'
       ],
       borderColor: [
-        'rgba(255,99,132,1)',
-        'rgba(54, 162, 235, 1)',
-        'rgba(255, 206, 86, 1)',
-        'rgba(75, 192, 192, 1)',
-        'rgba(153, 102, 255, 1)',
-        'rgba(255, 159, 64, 1)'
+        'rgb(243, 121, 126, 1)',
+        'rgb(236, 84, 141, 1)',
+        'rgb(25, 171, 222, 1)'
       ],
     }],
 
@@ -69,7 +64,7 @@ $(document).ready(function() {
       animateRotate: true
     },
     legend: {
-      display: false
+      display: true
     },
   };
 
@@ -104,7 +99,7 @@ $(document).ready(function() {
       animateRotate: true
     },
     legend: {
-      display: false
+      display: true
     },
   };
 
@@ -133,6 +128,78 @@ $(document).ready(function() {
       data: doughnutData,
       options: doughnutOptions
     });
+  }
+
+  if ($("#sales-chart").length) {
+    var SalesChartCanvas = $("#sales-chart").get(0).getContext("2d");
+    var SalesChart = new Chart(SalesChartCanvas, {
+      type: 'bar',
+      data: {
+        labels: sold_dates,
+        datasets: [
+           {
+            label: 'Sold',
+            data: <%= sold_date_wise_count %>,
+            backgroundColor: '#4B49AC'
+          }
+        ]
+      },
+      options: {
+        cornerRadius: 5,
+        responsive: true,
+        maintainAspectRatio: true,
+        layout: {
+          padding: {
+            left: 0,
+            right: 0,
+            top: 20,
+            bottom: 0
+          }
+        },
+        scales: {
+          yAxes: [{
+            display: true,
+            gridLines: {
+              display: true,
+              drawBorder: false,
+              color: "#F2F2F2"
+            },
+            ticks: {
+              display: true,
+              min: 0,
+              max: <%= sold_date_wise_count.present? ? (sold_date_wise_count.max * 10) : 10 %>,
+              callback: function(value, index, values) {
+                return  value ;
+              },
+              autoSkip: true,
+              maxTicksLimit: 10,
+              fontColor:"#6C7383"
+            }
+          }],
+          xAxes: [{
+            stacked: false,
+            ticks: {
+              beginAtZero: true,
+              fontColor: "#6C7383"
+            },
+            gridLines: {
+              color: "rgba(0, 0, 0, 0)",
+              display: false
+            },
+            barPercentage: 1
+          }]
+        },
+        legend: {
+          display: false
+        },
+        elements: {
+          point: {
+            radius: 0
+          }
+        }
+      },
+    });
+    document.getElementById('sales-legend').innerHTML = SalesChart.generateLegend();
   }
 })
 </script>
