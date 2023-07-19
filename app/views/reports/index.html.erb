@@ -4,11 +4,11 @@
     <div class="row">
       <div class="col-md-12 grid-margin stretch-card">
         <div class="card">
-          <div class="card-body">
+          <div class="card-body" id="report_data_card">
             <div class="row">
               <div class="col-md-2"><p class="card-title">Reports</p></div>
               <div class="col-md-10">
-                <div class="row">
+                <div class="row" id="report-filters">
                   <div class="col-md-2 pr-0 pl-0">
                     <div class="form-group">
                       <select class="form-select form-control form-control-sm" id="reportCategory">
@@ -92,6 +92,7 @@ $(document).ready(function(){
     var table = $('.dataTable').DataTable({
       pagingType: 'full_numbers',
       lengthChange: false,
+      scrollX: true,
       retrieve: true,
       ajax: {
         url: '/get_stock',

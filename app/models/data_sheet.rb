@@ -1,5 +1,5 @@
 class DataSheet < ApplicationRecord
-  has_many :stock_items, dependent: :destroy
+  has_many :stock_items
   has_one_attached :file
   # before_save: daily_sheet_uploaded?
 

@@ -41,7 +41,7 @@ Rails.application.routes.draw do
   get '/download_sheet/:id', :to => 'sheet_management#download_sheet'
   post '/update_rfid_number', :to => 'data_sheets#update_rfid_number'
   delete '/delete_data_sheet', :to => 'data_sheets#delete_data_sheet'
-  # get '/get_stock_items', :to => 'data_sheets#get_stock_items'
+  get '/get_stock_items', :to => 'data_sheets#get_stock_items'
 
   get '/reports', :to => 'reports#index'
   get '/get_stock', :to => 'reports#get_stock'

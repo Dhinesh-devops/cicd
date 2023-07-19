@@ -11,16 +11,16 @@ class StockItem < ApplicationRecord
   enum status: {scanned: 1, sold: 2}
 
   def self.get_chart_data(scanned_count, missed_count, sold_count)
-    autumn_seasons = StockItem.scanned.where("season LIKE ?", "%Autumn Winter%").pluck(:season).uniq
+    autumn_seasons = StockItem.scanned.where("season LIKE ?", "%Autumn Winter%").pluck(:season).uniq.sort
     autumn_with_count = autumn_seasons.map { |season| StockItem.scanned.where(season: season).size }
 
-    spring_seasons = StockItem.scanned.where("season LIKE ?", "%Spring Summer%").pluck(:season).uniq
+    spring_seasons = StockItem.scanned.where("season LIKE ?", "%Spring Summer%").pluck(:season).uniq.sort
     spring_with_count = spring_seasons.map { |season| StockItem.scanned.where(season: season).size }
 
-    sizes = StockItem.scanned.pluck(:variant_size).uniq
+    sizes = StockItem.scanned.pluck(:variant_size).uniq.sort
     size_count = sizes.map { |size| StockItem.scanned.where(variant_size: size).size }
 
-    sold_dates = StockItem.last_week.sold.pluck("date(stock_items.updated_at)").uniq
+    sold_dates = StockItem.last_week.sold.pluck("date(stock_items.updated_at)").uniq.sort
     sold_format_dates = sold_dates.map { |sold_date| sold_date.strftime('%d-%m-%Y') }
     sold_date_wise_count = sold_dates.map { |sold_date| StockItem.sold.where(:updated_at => sold_date.to_date.beginning_of_day..sold_date.to_date.end_of_day).size }
 

@@ -32,9 +32,7 @@ class DataSheetsController < ApplicationController
       params[:rfid_values].each_with_index do | rfid_value, index |
         stock_item_id = params[:stock_item_ids][index]
         stock_item = StockItem.find_by(id: stock_item_id) if stock_item_id.present?
-        if rfid_value.present?
-          stock_item.update!(rfid_number: rfid_value)
-        end
+        stock_item.update!(rfid_number: rfid_value)
       end
     end
     response_success('RFID numbers updated successfully.', 200, ActiveModelSerializers::SerializableResource.new(DataSheet.last, serializer: RfidCountSerializer))
@@ -43,13 +41,22 @@ class DataSheetsController < ApplicationController
   end
 
   def delete_data_sheet
-    if DataSheet.last.destroy
+    if DataSheet.last.delete
       response_success('Data sheet deleted successfully.', 200)
     else
       response_failure('Unable to delete data sheet', 409)
     end
   rescue Exception => e
     response_failure(e, 500)
+  end
+
+  def get_stock_items
+    if DataSheet.last.present?
+      stock_items = DataSheet.last.stock_items.order(id: :desc)
+    else
+      stock_items = []
+    end
+    response_success("Data ready", 200, stock_items)
   end
 
   private

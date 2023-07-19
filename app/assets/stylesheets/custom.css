@@ -7,24 +7,33 @@
 .auth .brand-logo img {
   width: 220px !important;
 }
-#sheet_management_filter input[type= "search"] {
+#sheet_management_filter input[type= "search"],
+#users_list_filter input[type= "search"] {
   width: 75% !important;
 }
-#sheet_management_wrapper .dataTables_paginate {
+#sheet_management_wrapper .dataTables_paginate,
+#users_list_wrapper .dataTables_paginate {
   margin-bottom: 20px;
   font-size: 14px;
 }
-#sheet_management_wrapper a {
+#sheet_management_wrapper a,
+#users_list_wrapper a {
   text-decoration: none;
 }
 #sheet_management_wrapper .btn {
   padding: 0.5rem 0.81rem;
 }
-#sheet_management_info {
+#sheet_management_info,
+#imported_data_info,
+#report_data_info,
+#users_list_info {
   float: left;
 }
 #sheet_management_wrapper input[type= "search"],
-#report_data_wrapper input[type= "search"] {
+#report_data_wrapper input[type= "search"],
+#imported_data_wrapper input[type= "text"],
+#imported_data_wrapper input[type= "search"],
+#users_list_wrapper input[type= "search"] {
   width: 100%;
   height: 2rem;
   padding: 0.5rem;
@@ -39,7 +48,9 @@
   transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
 }
 #sheet_management_wrapper .dataTables_paginate .paginate_button,
-#report_data_wrapper .dataTables_paginate .paginate_button {
+#report_data_wrapper .dataTables_paginate .paginate_button,
+#imported_data_wrapper .dataTables_paginate .paginate_button,
+#users_list_wrapper .dataTables_paginate .paginate_button {
   box-sizing: border-box;
   display: inline-block;
   min-width: 1.5em;
@@ -54,7 +65,9 @@
   border-radius: 2px;
 }
 #sheet_management_wrapper .dataTables_paginate .paginate_button.current,#sheet_management_wrapper .dataTables_paginate .paginate_button.current:hover,
-#report_data_wrapper .dataTables_paginate .paginate_button.current,#report_data_wrapper .dataTables_paginate .paginate_button.current:hover {
+#report_data_wrapper .dataTables_paginate .paginate_button.current,#report_data_wrapper .dataTables_paginate .paginate_button.current:hover,
+#imported_data_wrapper .dataTables_paginate .paginate_button.current,#imported_data_wrapper .dataTables_paginate .paginate_button.current:hover,
+#users_list_wrapper .dataTables_paginate .paginate_button.current,#users_list_wrapper .dataTables_paginate .paginate_button.current:hover  {
   color: #333 !important;
   border: 1px solid #979797;
   background-color: white;
@@ -66,7 +79,9 @@
   background: linear-gradient(to bottom, #fff 0%, #dcdcdc 100%);
 }
 #sheet_management_wrapper .dataTables_paginate .paginate_button.disabled,#sheet_management_wrapper .dataTables_paginate .paginate_button.disabled:hover,#sheet_management_wrapper .dataTables_paginate .paginate_button.disabled:active,
-#report_data_wrapper .dataTables_paginate .paginate_button.disabled,#report_data_wrapper .dataTables_paginate .paginate_button.disabled:hover,#report_data_wrapper .dataTables_paginate .paginate_button.disabled:active {
+#report_data_wrapper .dataTables_paginate .paginate_button.disabled,#report_data_wrapper .dataTables_paginate .paginate_button.disabled:hover,#report_data_wrapper .dataTables_paginate .paginate_button.disabled:active,
+#imported_data_wrapper .dataTables_paginate .paginate_button.disabled,#imported_data_wrapper .dataTables_paginate .paginate_button.disabled:hover,#imported_data_wrapper .dataTables_paginate .paginate_button.disabled:active,
+#users_list_wrapper .dataTables_paginate .paginate_button.disabled,#users_list_wrapper .dataTables_paginate .paginate_button.disabled:hover,#users_list_wrapper .dataTables_paginate .paginate_button.disabled:active {
   cursor: default;
   color: #666 !important;
   border: 1px solid transparent;
@@ -74,13 +89,17 @@
   box-shadow: none;
 }
 #sheet_management_wrapper .dataTables_paginate .paginate_button:hover,
-#report_data_wrapper .dataTables_paginate .paginate_button:hover {
+#report_data_wrapper .dataTables_paginate .paginate_button:hover,
+#imported_data_wrapper .dataTables_paginate .paginate_button:hover,
+#users_list_wrapper .dataTables_paginate .paginate_button:hover {
   color: white !important;
   border: 1px solid #4B49AC;
   background-color: #4B49AC;
 }
 #sheet_management_wrapper .dataTables_paginate .paginate_button:active,
-#report_data_wrapper .dataTables_paginate .paginate_button:active {
+#report_data_wrapper .dataTables_paginate .paginate_button:active,
+#imported_data_wrapper .dataTables_paginate .paginate_button:active,
+#users_list_wrapper .dataTables_paginate .paginate_button:active {
   outline: none;
   background-color: #2b2b2b;
   background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #2b2b2b), color-stop(100%, #0c0c0c));
@@ -91,25 +110,46 @@
   background: linear-gradient(to bottom, #2b2b2b 0%, #0c0c0c 100%);
   box-shadow: inset 0 0 3px #111;
 }
+#report-filters .datepicker.datepicker-dropdown, .datepicker.datepicker-inline{
+  max-width: 250px !important;
+}
+#report-filters .datepicker table {
+  width: 100% !important;
+}
+#report-filters .input-group .input-group-append {
+  height: 41px !important;
+}
+#report-filters .input-daterange .input-group-addon {
+  padding: 10px !important;
+}
+#report-filters .input-group .input-group-append .input-group-text {
+  background: #4B49AC !important;
+}
+#imported_data_wrapper input[type= "search"] {
+  width: 77% !important;
+}
+#imported_data_wrapper .dataTables_paginate {
+  margin-top: 20px;
+  font-size: 14px;
+}
+#imported_data_info {
+  padding-top: 25px !important;
+}
+#imported_data_card .col-12 {
+  padding-left: 0px !important;
+  padding-right: 0px !important;
+}
+#report_data_wrapper input[type= "search"] {
+  width: 77% !important;
+}
 #report_data_wrapper .dataTables_paginate {
-  margin-bottom: 20px;
+  margin-top: 20px;
   font-size: 14px;
 }
 #report_data_info {
-  float: left;
+  padding-top: 25px !important;
 }
-.datepicker.datepicker-dropdown, .datepicker.datepicker-inline{
-  max-width: 250px !important;
-}
-.datepicker table {
-  width: 100% !important;
-}
-.input-group .input-group-append {
-  height: 41px !important;
-}
-.input-daterange .input-group-addon {
-  padding: 10px !important;
-}
-.input-group .input-group-append .input-group-text {
-  background: #4B49AC !important;
+#report_data_card .col-12 {
+  padding-left: 0px !important;
+  padding-right: 0px !important;
 }
