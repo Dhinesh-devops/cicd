@@ -24,7 +24,7 @@ class StockItem < ApplicationRecord
     sold_format_dates = sold_dates.map { |sold_date| sold_date.strftime('%d-%m-%Y') }
     sold_date_wise_count = sold_dates.map { |sold_date| StockItem.sold.where(:updated_at => sold_date.to_date.beginning_of_day..sold_date.to_date.end_of_day).size }
 
-    retek_subclasses = StockItem.pluck(:retek_subclass).uniq.sort
+    retek_subclasses = ["Basic", "Basic Plus", "Fashion", "High Fashion", "Staff Uniform"]
     retek_subclass_count = retek_subclasses.map { |retek_subclass| StockItem.scanned.where(retek_subclass: retek_subclass).size }
 
     {:autumn_seasons => autumn_seasons, :autumn_with_count => autumn_with_count, :spring_seasons => spring_seasons, :spring_with_count => spring_with_count, :sizes => sizes, :size_count => size_count, :scanned_count => scanned_count, :missed_count => missed_count, :sold_count => sold_count, :sold_dates => sold_format_dates, :sold_date_wise_count => sold_date_wise_count, :retek_subclasses => retek_subclasses, :retek_subclass_count => retek_subclass_count }
