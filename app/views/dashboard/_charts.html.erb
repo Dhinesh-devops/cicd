@@ -3,6 +3,7 @@ $(document).ready(function() {
   autumn_seasons = JSON.parse("<%= autumn_seasons %>".replaceAll('&quot;', '"'));
   spring_seasons = JSON.parse("<%= spring_seasons %>".replaceAll('&quot;', '"'));
   sizes =  JSON.parse("<%= sizes %>".replaceAll('&quot;', '"'));
+  retek_subclasses =  JSON.parse("<%= retek_subclasses %>".replaceAll('&quot;', '"'));
   sold_dates =  JSON.parse("<%= sold_dates %>".replaceAll('&quot;', '"'));
 
   var stockPieData = {
@@ -329,6 +330,91 @@ $(document).ready(function() {
       },
     });
     document.getElementById('spring-legend').innerHTML = SpringChart.generateLegend();
+  }
+
+  if ($("#retek-class-chart").length) {
+    var areaData = {
+      labels: retek_subclasses,
+      datasets: [{
+          data: <%= retek_subclass_count %>,
+          backgroundColor: [
+            "#63b4f5", "#1875d1", "#ee6b00", "#fed44e", "#445963",
+          ],
+          borderColor: "rgba(0,0,0,0)"
+        }
+      ]
+    };
+    var areaOptions = {
+      responsive: true,
+      maintainAspectRatio: true,
+      segmentShowStroke: false,
+      cutoutPercentage: 78,
+      elements: {
+        arc: {
+            borderWidth: 4
+        }
+      },
+      legend: {
+        display: false
+      },
+      tooltips: {
+        enabled: true
+      },
+      legendCallback: function(chart) {
+        var text = [];
+        <% if retek_subclasses.present? %>
+        text.push('<div class="report-chart">');
+          text.push('<div class="d-flex justify-content-between mx-4 mx-xl-5 mt-3"><div class="d-flex align-items-center"><div class="mr-3" style="width:20px; height:20px; border-radius: 50%; background-color: ' + chart.data.datasets[0].backgroundColor[0] + '"></div><p class="mb-0"><%= retek_subclasses[0] %></p></div>');
+          text.push('</div>');
+          text.push('<div class="d-flex justify-content-between mx-4 mx-xl-5 mt-3"><div class="d-flex align-items-center"><div class="mr-3" style="width:20px; height:20px; border-radius: 50%; background-color: ' + chart.data.datasets[0].backgroundColor[1] + '"></div><p class="mb-0"><%= retek_subclasses[1] %></p></div>');
+          text.push('</div>');
+          text.push('<div class="d-flex justify-content-between mx-4 mx-xl-5 mt-3"><div class="d-flex align-items-center"><div class="mr-3" style="width:20px; height:20px; border-radius: 50%; background-color: ' + chart.data.datasets[0].backgroundColor[2] + '"></div><p class="mb-0"><%= retek_subclasses[2] %></p></div>');
+          text.push('</div>');
+          text.push('<div class="d-flex justify-content-between mx-4 mx-xl-5 mt-3"><div class="d-flex align-items-center"><div class="mr-3" style="width:20px; height:20px; border-radius: 50%; background-color: ' + chart.data.datasets[0].backgroundColor[3] + '"></div><p class="mb-0"><%= retek_subclasses[3] %></p></div>');
+          text.push('</div>');
+          text.push('<div class="d-flex justify-content-between mx-4 mx-xl-5 mt-3"><div class="d-flex align-items-center"><div class="mr-3" style="width:20px; height:20px; border-radius: 50%; background-color: ' + chart.data.datasets[0].backgroundColor[4] + '"></div><p class="mb-0"><%= retek_subclasses[4] %></p></div>');
+          text.push('</div>');
+        text.push('</div>');
+        <% end %>
+        return text.join("");
+      },
+      plugins: {
+        customPlugin: {
+          consoleText: "76"
+        }
+      }
+    }
+    var retekClassChartPlugins = {
+      id: 'customPlugin',
+      beforeDraw: function(chart, args, options) {
+        if(chart.config.type=='doughnut') {
+          var width = chart.chart.width,
+              height = chart.chart.height,
+              ctx = chart.chart.ctx;
+
+          ctx.restore();
+          var fontSize = 3.125;
+          ctx.font = "600 " + fontSize + "em sans-serif";
+          ctx.textBaseline = "middle";
+          ctx.fillStyle = "#000";
+
+          var text = <%= retek_subclass_count.sum.to_s %>,
+              textX = Math.round((width - ctx.measureText(text).width) / 2),
+              textY = height / 2;
+          ctx.fillText(text, textX, textY);
+          ctx.save();
+        }
+      }
+    }
+    Chart.pluginService.register(retekClassChartPlugins);
+    var retekClassChartCanvas = $("#retek-class-chart").get(0).getContext("2d");
+    var retekClassChart = new Chart(retekClassChartCanvas, {
+      type: 'doughnut',
+      data: areaData,
+      options: areaOptions,
+      plugins: retekClassChartPlugins
+    });
+    document.getElementById('retek-class-legend').innerHTML = retekClassChart.generateLegend();
   }
 })
 </script>

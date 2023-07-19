@@ -31,9 +31,9 @@
                       <% @data_sheets && @data_sheets.each do | data_sheet | %>
                         <tr>
                           <td><%= data_sheet.created_at.to_date.strftime("%d-%m-%Y") %></td>
-                          <td><%= link_to data_sheet.sheet_name, rails_blob_path(data_sheet.file, disposition: "attachment") %></td>
+                          <td><%= link_to data_sheet.sheet_name, '/download_sheet/'+data_sheet.id.to_s %></td>
                           <td><%= data_sheet.stock_items.count - data_sheet.stock_items.scanned.count %></td>
-                          <td>0</td>
+                          <td><%= data_sheet.stock_items.sold.count %></td>
                         </tr>
                       <% end %>
                     </tbody>

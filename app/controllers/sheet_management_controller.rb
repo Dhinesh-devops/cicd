@@ -5,7 +5,12 @@ class SheetManagementController < ApplicationController
     @data_sheets = DataSheet.all.order(created_at: :desc)
   end
 
-  def download_report
-    send_data DataSheet.to_report_csv(DataSheet.last.id), filename: "report.csv"
+  def download_sheet
+    data_sheet = DataSheet.find_by(id: params[:id])
+    File.open(data_sheet.file_path, 'r', binmode: true) do |f|
+      send_data f.read, filename: data_sheet.sheet_name,
+                        type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+                        disposition: "attachment"
+    end
   end
 end
