@@ -21,12 +21,12 @@ class DataSheet < ApplicationRecord
     CSV.generate(headers: true) do |csv|
       csv << ["Total", stock_items.count]
       csv << ["Stock", stock_items.scanned.count]
-      csv << ["Missed", stock_items.count - stock_items.scanned.count]
+      csv << ["Missed", stock_items.count - (stock_items.scanned.count + stock_items.sold.count)]
       csv << ["Sold", stock_items.sold.count]
       csv << []
       csv << headers
       stock_items.each do |stock_item|
-        csv << attributes.map{ |attr| (attr == "status") && (stock_item.status == nil) ? 'missed' : stock_item.send(attr) }
+        csv << attributes.map{ |attr| (attr == "status") && (stock_item.status == nil) ? 'missed' : ((attr == "status") && (stock_item.status == 'scanned') ? 'stock' : stock_item.send(attr)) }
       end
     end
   end

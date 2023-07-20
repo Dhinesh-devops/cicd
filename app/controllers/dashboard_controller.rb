@@ -6,9 +6,9 @@ class DashboardController < ApplicationController
       stock_items = DataSheet.last.stock_items
       total_count = stock_items.count
       scanned_percent = stock_items.present? ? DataSheet.cal_percent(total_count, stock_items.scanned.count) : 0
-      missed_percent = stock_items.present? ? DataSheet.cal_percent(total_count, (total_count - stock_items.scanned.count)) : 0
+      missed_percent = stock_items.present? ? DataSheet.cal_percent(total_count, (total_count - (stock_items.scanned.count + stock_items.sold.count))) : 0
       scanned_count = stock_items.present? ? stock_items.scanned.count : 0
-      missed_count = stock_items.present? ? (total_count - stock_items.scanned.count) : 0
+      missed_count = stock_items.present? ? (total_count - (stock_items.scanned.count + stock_items.sold.count)) : 0
       sold_percent = stock_items.present? ? DataSheet.cal_percent(total_count, stock_items.sold.count) : 0
       sold_count = stock_items.present? ? stock_items.sold.count : 0
     else

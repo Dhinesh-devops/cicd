@@ -32,7 +32,7 @@ class DataSheetsController < ApplicationController
       params[:rfid_values].each_with_index do | rfid_value, index |
         stock_item_id = params[:stock_item_ids][index]
         stock_item = StockItem.find_by(id: stock_item_id) if stock_item_id.present?
-        stock_item.update!(rfid_number: rfid_value)
+        stock_item.update!(rfid_number: rfid_value) unless stock_item.sold?
       end
     end
     response_success('RFID numbers updated successfully.', 200, ActiveModelSerializers::SerializableResource.new(DataSheet.last, serializer: RfidCountSerializer))
