@@ -1,5 +1,5 @@
 class DataSheetsController < ApplicationController
-  skip_before_action :verify_authenticity_token, only: [:create, :update_rfid_number]
+  skip_before_action :verify_authenticity_token, only: [:create, :update_rfid_number, :delete_data_sheet]
   before_action :authenticate_user!
 
   def new
