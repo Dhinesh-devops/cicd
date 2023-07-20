@@ -186,7 +186,7 @@ $(document).ready(function(){
   }
 
   $('#deleteDataSheet').on('click', function() {
-    var status = confirm("Are you sure, you want delete recently imported data sheet?");
+    var status = confirm("Are you sure, you want delete imported data sheet?");
     if(status){
       $.ajax({
         type:'delete',
