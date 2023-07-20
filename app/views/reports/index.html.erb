@@ -13,7 +13,7 @@
                     <div class="form-group">
                       <select class="form-select form-control form-control-sm" id="reportCategory">
                         <option value="">Category</option>
-                        <option value="scanned">Scanned</option>
+                        <option value="scanned">Stock</option>
                         <option value="missed">Missed</option>
                         <option value="sold">Sold</option>
                       </select>
@@ -136,7 +136,7 @@ $(document).ready(function(){
               if(data == null) {
                 return "Missed";
               } else if (data == "scanned") {
-                return "Scanned";
+                return "Stock";
               } else {
                 return "Sold";
               }
