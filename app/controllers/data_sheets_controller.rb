@@ -41,7 +41,8 @@ class DataSheetsController < ApplicationController
   end
 
   def delete_data_sheet
-    if DataSheet.last.delete
+    DataSheet.active.last.stock_items.update(soft_delete: true)
+    if DataSheet.active.last.update(soft_delete: true)
       response_success('Data sheet deleted successfully.', 200)
     else
       response_failure('Unable to delete data sheet', 409)
@@ -51,8 +52,8 @@ class DataSheetsController < ApplicationController
   end
 
   def get_stock_items
-    if DataSheet.last.present?
-      stock_items = DataSheet.last.stock_items.order(id: :desc)
+    if DataSheet.active.last.present? && DataSheet.active.last.stock_items.present?
+      stock_items = DataSheet.active.last.stock_items.order(id: :desc)
     else
       stock_items = []
     end

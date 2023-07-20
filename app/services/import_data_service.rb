@@ -14,7 +14,7 @@ class ImportDataService
         stock_item_exist = check_stock_item(row)
         create_stock_items(row) unless stock_item_exist
       end
-      StockItem.update(data_sheet_id: @data_sheet_id)
+      StockItem.update_all(data_sheet_id: @data_sheet_id, soft_delete: false)
       data_sheet = DataSheet.find_by(id: @data_sheet_id)
       data_sheet.update(stock_count: data_sheet.stock_items.count)
     end

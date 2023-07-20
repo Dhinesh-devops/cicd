@@ -139,7 +139,8 @@ $(document).ready(function(){
       stock_item_ids.push($(this).val());
     });
 
-    var duplicateRfids = checkDuplicateRFIDs(rfid_values.filter(Boolean))
+    filtered_values = rfid_values.filter(Boolean);
+    var duplicateRfids = filtered_values.filter((item, index) => index !== filtered_values.indexOf(item));
 
     if (duplicateRfids.length > 0) {
       toastr.error("Having duplicate RFID Numbers. Please check.<br>" + duplicateRfids.toString());
@@ -163,16 +164,6 @@ $(document).ready(function(){
       });
     }
   });
-
-  function checkDuplicateRFIDs(rfidNumbers) {
-    var duplicateRfids = [];
-    for (var i = 0; i < rfidNumbers.length - 1; i++) {
-      if (rfidNumbers[i + 1] == rfidNumbers[i]) {
-        duplicateRfids.push(rfidNumbers[i]);
-      }
-    }
-    return duplicateRfids;
-  }
 
   function changeRowColor() {
     var trs = table.$("tbody tr");
