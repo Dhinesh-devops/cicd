@@ -3,22 +3,9 @@ class DashboardController < ApplicationController
 
   def index
     if DataSheet.last.present? && DataSheet.last.stock_items.present?
-      stock_items = DataSheet.last.stock_items
-      total_count = stock_items.count
-      scanned_percent = stock_items.present? ? DataSheet.cal_percent(total_count, stock_items.scanned.count) : 0
-      missed_percent = stock_items.present? ? DataSheet.cal_percent(total_count, (total_count - (stock_items.scanned.count + stock_items.sold.count))) : 0
-      scanned_count = stock_items.present? ? stock_items.scanned.count : 0
-      missed_count = stock_items.present? ? (total_count - (stock_items.scanned.count + stock_items.sold.count)) : 0
-      sold_percent = stock_items.present? ? DataSheet.cal_percent(total_count, stock_items.sold.count) : 0
-      sold_count = stock_items.present? ? stock_items.sold.count : 0
+      total_count, scanned_percent, missed_percent, scanned_count, missed_count, sold_percent, sold_count = DataSheet.calc_count
     else
-      total_count = 0
-      scanned_percent = 0
-      missed_percent = 0
-      scanned_count = 0
-      missed_count = 0
-      sold_percent = 0
-      sold_count = 0
+      total_count, scanned_percent, missed_percent, scanned_count, missed_count, sold_percent, sold_count = 0, 0, 0, 0, 0, 0, 0
     end
     @total_stock_count = total_count
     @scanned_stocks = scanned_percent.round(2).to_s + "%"
