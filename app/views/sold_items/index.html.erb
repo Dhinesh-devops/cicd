@@ -9,7 +9,7 @@
               <%= form_with(url: '/update_sold_status', method: :patch, class: "form-group", id:"soldItemForm", local: true) do |form| %>
                 <div class="form-group">
                   <label>Add multiple Sold RFID/EPC Numbers with comma separated.</label>
-                  <textarea class="form-control" name="rfid_values" rows="4"></textarea>
+                  <textarea class="form-control" name="rfid_values" id="rfidNumbers" rows="4"></textarea>
                 </div>
                 <button type="submit" id="soldItemSubmit" class="btn btn-primary mr-2">Submit</button>
                 <%= link_to "Cancel", dashboard_path, class: "btn btn-light" %>
@@ -43,6 +43,16 @@ $(document).ready( function() {
     } else {
       return false;
     }
+  });
+
+  $("#rfidNumbers").on('paste', function() {
+    var element = this;
+    setTimeout(function () {
+      var text = $(element).val();
+      text = text.replace(/\s*$/,"");
+      text = text.replace(/\s+/g, ",");
+      $("#rfidNumbers").val(text);
+    }, 100);
   });
 });
 </script>
