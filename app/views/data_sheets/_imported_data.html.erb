@@ -4,8 +4,8 @@
       <div class="card-body">
         <%= render partial: "stock_count_tiles", :locals => {:total_count => stock_items.count, :with_rfid_count => stock_items.with_rfid.count, :without_rfid_count => stock_items.without_rfid.count} %>
         <div class="row" style="margin-bottom: 20px;">
-          <div class="col-md-6"><p class="card-title">Imported Data</p></div>
-          <div class="col-md-6"><button class="btn btn-primary edit-import-data" style="float: right;">Edit</button><button class="btn btn-success save-import-data" style="float: right; margin-right: 10px; display: none;">Submit</button><button type="button" class="btn btn-danger delete-data-sheet" id="deleteDataSheet" style="float: right; margin-right: 10px;">Delete Data Sheet</button></div>
+          <div class="col-md-3"><p class="card-title">Imported Data</p></div>
+          <div class="col-md-9"><button class="btn btn-primary edit-import-data" style="float: right;">Edit</button><button class="btn btn-success save-import-data" style="float: right; margin-right: 10px; display: none;">Submit</button><button class="btn btn-info add-import-data" data-bs-toggle="modal" data-bs-target="#addStockModal" style="float: right; margin-right: 10px;">Add Stock</button><button type="button" class="btn btn-danger delete-data-sheet" id="deleteDataSheet" style="float: right; margin-right: 10px;">Delete Data Sheet</button></div>
         </div>
         <div class="row">
           <div class="col-12">
@@ -208,5 +208,43 @@ $(document).ready(function(){
       return false;
     }
   });
+
+  var validator = $("form#addStockForm").validate({
+    rules: {
+      'stock_item[plant]': 'required',
+      'stock_item[plant2]': 'required',
+      'stock_item[plant3]': 'required',
+      'stock_item[retek_class]': 'required',
+      'stock_item[retek_subclass]': 'required',
+      'stock_item[season]': 'required',
+      'stock_item[ean_number]': 'required',
+      'stock_item[variant_size]': 'required',
+      'stock_item[style_code]': 'required',
+      'stock_item[st_loc]': 'required',
+      'stock_item[variant]': 'required',
+      'stock_item[mrp]': 'required',
+      'stock_item[soh_blocked_stock]': 'required',
+      'stock_item[soh_without_blocked_stock]': 'required',
+      'stock_item[soh_quantity]': 'required',
+      'stock_item[soh_value]': 'required'
+    },
+    errorPlacement: function (error, element) {
+      error.insertAfter(element);
+    }
+  });
+
+  $("#addStockSubmit").on("click", function() {
+    if($('form#addStockForm').valid()) {
+      return true;
+    } else {
+      return false;
+    }
+  });
+
+  $('#addStockModal').on('show.bs.modal', function(e) {
+    $('#addStockForm')[0].reset();
+    validator.resetForm();
+  })
+
 })
 </script>

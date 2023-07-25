@@ -1,5 +1,5 @@
 class DataSheetsController < ApplicationController
-  skip_before_action :verify_authenticity_token, only: [:create, :update_rfid_number, :delete_data_sheet]
+  skip_before_action :verify_authenticity_token, only: [:create, :update_rfid_number, :delete_data_sheet, :create_stock_items]
   before_action :authenticate_user!
 
   def new
@@ -60,10 +60,28 @@ class DataSheetsController < ApplicationController
     response_success("Data ready", 200, stock_items)
   end
 
+  def create_stock_items
+    stock = StockItem.new(stock_params)
+    if stock.save
+      flash[:notice] = 'Stock added successfully.'
+      redirect_to new_data_sheet_path
+    else
+      flash[:error] = 'Unable to add stock'
+      redirect_to new_data_sheet_path
+    end
+  rescue Exception => e
+    flash[:error] = "Something went wrong. Please try again."
+    redirect_to new_data_sheet_path
+  end
+
   private
 
   # Only allow a list of trusted parameters through.
   def data_sheet_params
     params.require(:data_sheet).permit(:sheet_name, :imported_by)
+  end
+
+  def stock_params
+    params.require(:stock_item).permit(:data_sheet_id, :plant, :plant2, :plant3, :retek_class, :retek_subclass, :season, :ean_number, :rfid_number, :variant_size, :style_code, :st_loc, :variant, :mrp, :soh_blocked_stock, :soh_without_blocked_stock, :soh_quantity, :soh_value)
   end
 end

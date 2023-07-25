@@ -30,4 +30,8 @@ class StockItem < ApplicationRecord
 
     {:autumn_seasons => autumn_seasons, :autumn_with_count => autumn_with_count, :spring_seasons => spring_seasons, :spring_with_count => spring_with_count, :sizes => sizes, :size_count => size_count, :scanned_count => scanned_count, :missed_count => missed_count, :sold_count => sold_count, :sold_dates => sold_format_dates, :sold_date_wise_count => sold_date_wise_count, :retek_subclasses => retek_subclasses, :retek_subclass_count => retek_subclass_count }
   end
+
+  def self.get_column_names
+    self.column_names.excluding("soft_delete", "status", "id", "created_at", "updated_at", "data_sheet_id")
+  end
 end

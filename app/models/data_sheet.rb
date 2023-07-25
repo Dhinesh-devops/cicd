@@ -36,7 +36,7 @@ class DataSheet < ApplicationRecord
   end
 
   def self.is_valid?(file_path)
-    valid_headers = ["Plant", "Retek Group", "Retek Dept.", "Retek Class", "Retek Subclass", "Season", "EAN", "Size", "Sleeve", "Style Code", "St.Loc", "Variant", "MRP", "SOH blocked stock", "SOH without Blocked Stk", "SOH Qty.", "Value"]
+    valid_headers = ["Plant", "Retek Group", "Retek Dept.", "Retek Class", "Retek Subclass", "Season", "EAN", "Size", "Sleeve", "Style Code", "St.Loc", "Variant", "MRP", "SOH blocked stock", "SOH without Blocked Stk", "SOH Qty.", "Value", "RFID Number"]
     xlsx = Roo::Spreadsheet.open(file_path, extension: :xlsx)
     if xlsx
       xlsx_headers = xlsx.row(1)
