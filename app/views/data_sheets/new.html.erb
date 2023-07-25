@@ -39,7 +39,7 @@
     <% if DataSheet.active.last.present? && DataSheet.active.last.stock_items.present? %>
       <%= render partial: "imported_data", :locals => {:stock_items => DataSheet.active.last.stock_items.order(id: :desc)} %>
     <% end %>
-
+    <%= render partial: "add_stock_modal" %>
     <!-- content ends -->
   </div>
   <!-- content-wrapper ends -->

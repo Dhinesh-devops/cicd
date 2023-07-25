@@ -8,11 +8,12 @@ class ImportDataService
   def process
     xlsx = Roo::Spreadsheet.open(@xlsx_path, extension: :xlsx)
     if xlsx
-      xlsx.sheet(0).each_with_index(plant: 'Plant', plant2: 'Retek Group', plant3: 'Retek Dept.', retek_class: 'Retek Class', retek_subclass: 'Retek Subclass', season: 'Season', ean_number: 'EAN', variant_size: 'Size', style_code: 'Style Code', st_loc: 'St.Loc', variant: 'Variant', mrp: 'MRP', soh_blocked_stock: 'SOH blocked stock', soh_without_blocked_stock: 'SOH without Blocked Stk', soh_quantity: 'SOH Qty.', soh_value: 'Value') do |row, row_index|   
+      xlsx.sheet(0).each_with_index(plant: 'Plant', plant2: 'Retek Group', plant3: 'Retek Dept.', retek_class: 'Retek Class', retek_subclass: 'Retek Subclass', season: 'Season', ean_number: 'EAN', variant_size: 'Size', style_code: 'Style Code', st_loc: 'St.Loc', variant: 'Variant', mrp: 'MRP', soh_blocked_stock: 'SOH blocked stock', soh_without_blocked_stock: 'SOH without Blocked Stk', soh_quantity: 'SOH Qty.', soh_value: 'Value', rfid_number: 'RFID Number') do |row, row_index|
         next if row_index == 0
 
-        stock_item_exist = check_stock_item(row)
-        create_stock_items(row) unless stock_item_exist
+        # stock_item_exist = check_stock_item(row)
+        # create_stock_items(row) unless stock_item_exist
+        create_stock_items(row)
       end
       StockItem.update_all(data_sheet_id: @data_sheet_id, soft_delete: false)
       data_sheet = DataSheet.find_by(id: @data_sheet_id)
@@ -38,7 +39,8 @@ class ImportDataService
       soh_blocked_stock: cell_format(row[:soh_blocked_stock]).to_i,
       soh_without_blocked_stock: cell_format(row[:soh_without_blocked_stock]).to_i,
       soh_quantity: cell_format(row[:soh_quantity]).to_i,
-      soh_value: cell_format(row[:soh_value]).to_i
+      soh_value: cell_format(row[:soh_value]).to_i,
+      rfid_number: cell_format(row[:rfid_number])
     )
   end
 
