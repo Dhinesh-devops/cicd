@@ -30,17 +30,4 @@
     </button>
   </div>
 </nav>
-<script>
-  $("#profileDropdown").on("click", function(){
-    $(".profile-list").show();
-  });
-  $(document).mouseup(function(e) {
-    var container = new Array();
-    container.push($(".profile-list"));
-    $.each(container, function(key, value) {
-      if (!$(value).is(e.target) && $(value).has(e.target).length === 0) {
-        $(value).hide();
-      }
-    })
-  });
-</script>
+<script src="../assets/custom.js"></script>

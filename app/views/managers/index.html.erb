@@ -57,17 +57,4 @@
   <!-- content-wrapper ends -->
 </div>
 <!-- main-panel ends -->
-<script src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
-<script>
-$(document).ready(function(){
-  $('.dataTable').DataTable({
-    pagingType: 'full_numbers',
-    lengthChange: false,
-    order: [[3, 'desc']],
-    "aoColumnDefs": [
-        { "bSortable": false, "aTargets": [ 4 ] },
-        { "bSearchable": false, "aTargets": [ 4 ] }
-    ]
-  });
-})
-</script>
+<script src="../assets/manager.js"></script>

@@ -156,3 +156,18 @@
 .error {
   color: red !important;
 }
+#loginForm label.error {
+  color: red;
+}
+#loginForm .login-input {
+  padding-left: 15px;
+  padding-right: 15px;
+}
+#loginForm .field-icon {
+  float: right;
+  right: 10px;
+  margin-top: -35px;
+  position: relative;
+  z-index: 2;
+  cursor: pointer;
+}

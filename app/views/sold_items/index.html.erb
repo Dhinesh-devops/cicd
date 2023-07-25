@@ -21,28 +21,4 @@
     </div>
   </div>
 </div>
-<style>
-.error {
-  color: red !important;
-}
-</style>
-<script type="text/javascript">
-$(document).ready( function() {
-  $("form#soldItemForm").validate({
-    rules: {
-      'rfid_values': 'required'
-    },
-    errorPlacement: function (error, element) {
-      error.insertAfter(element);
-    }
-  });
-
-  $("#soldItemSubmit").on("click", function() {
-    if($('form#soldItemForm').valid()) {
-      return true;
-    } else {
-      return false;
-    }
-  });
-});
-</script>
+<script src="../assets/custom.js"></script>
