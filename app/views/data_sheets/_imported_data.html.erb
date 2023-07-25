@@ -3,7 +3,7 @@
     <div class="card" id="imported_data_card">
       <div class="card-body">
         <%= render partial: "stock_count_tiles", :locals => {:total_count => stock_items.count, :with_rfid_count => stock_items.with_rfid.count, :without_rfid_count => stock_items.without_rfid.count} %>
-        <div class="row" style="margin-bottom: 20px;">
+        <div class="row mb-3">
           <div class="col-md-6"><p class="card-title">Imported Data</p></div>
           <div class="col-md-6"><button class="btn btn-primary edit-import-data" style="float: right;">Edit</button><button class="btn btn-success save-import-data" style="float: right; margin-right: 10px; display: none;">Submit</button><button type="button" class="btn btn-danger delete-data-sheet" id="deleteDataSheet" style="float: right; margin-right: 10px;">Delete Data Sheet</button></div>
         </div>
