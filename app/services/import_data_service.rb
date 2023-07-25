@@ -22,6 +22,7 @@ class ImportDataService
   end
 
   def create_stock_items(row)
+    stock_item_exist = check_stock_item_with_rfid(row)
     StockItem.create(
       data_sheet_id: @data_sheet_id,
       plant: cell_format(row[:plant]).to_i,
@@ -40,12 +41,17 @@ class ImportDataService
       soh_without_blocked_stock: cell_format(row[:soh_without_blocked_stock]).to_i,
       soh_quantity: cell_format(row[:soh_quantity]).to_i,
       soh_value: cell_format(row[:soh_value]).to_i,
-      rfid_number: cell_format(row[:rfid_number])
+      rfid_number: stock_item_exist ? "" : cell_format(row[:rfid_number])
     )
   end
 
   def check_stock_item(row)
     stock_item = StockItem.find_by(ean_number: cell_format(row[:ean_number]).to_i)
+    return stock_item.present?
+  end
+
+  def check_stock_item_with_rfid(row)
+    stock_item = StockItem.find_by(rfid_number: cell_format(row[:rfid_number]))
     return stock_item.present?
   end
 

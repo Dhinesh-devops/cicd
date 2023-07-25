@@ -9,11 +9,37 @@
       <div class="modal-body">
         <%= form_with(url: '/create_stock_items', method: :post, class: "form-group", id:"addStockForm", local: true) do |form| %>
         <div class="row">
-          <%= form.hidden_field "stock_item[data_sheet_id]", value: DataSheet.last.id %>
+          <%= form.hidden_field "stock_item[data_sheet_id]", value: DataSheet.last.present? ? DataSheet.last.id : "" %>
           <% StockItem.get_column_names.each do |column_name| %>
-            <% title = column_name.titleize %>
+            <% if column_name == "plant2"
+                title = "Retek Group"
+              elsif column_name == "plant3"
+                title = "Retek Dept."
+              elsif column_name == "mrp"
+                title = column_name.upcase
+              elsif column_name == "variant_size"
+                title = "Size"
+              elsif column_name == "soh_value"
+                title = "Value"
+              elsif column_name == "ean_number"
+                title = "EAN"
+              elsif column_name == "rfid_number"
+                title = "RFID Number"
+              elsif column_name == "soh_blocked_stock"
+                title = "SOH Blocked Stock"
+              elsif column_name == "soh_without_blocked_stock"
+                title = "SOH Without Blocked Stock"
+              elsif column_name == "soh_quantity"
+                title = "SOH Qty."
+              else
+                title = column_name.titleize
+              end %>
             <div class="form-group col-md-3">
-              <label for="exampleInputName1"><%= title %></label>
+              <label for="exampleInputName1"><%= title %>
+              <% if column_name != "rfid_number" %>
+                <span style="color: red;">*</span>
+              <% end %>
+              </label>
               <%= form.text_field "stock_item[#{column_name}]", class: "form-control form-control-sm", placeholder: "#{title}", autocomplete: "off"  %>
             </div>
           <% end %>

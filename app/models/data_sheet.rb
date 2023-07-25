@@ -15,7 +15,7 @@ class DataSheet < ApplicationRecord
 
   def self.to_report_csv(params)
     attributes = %w{plant plant2 plant3 retek_class retek_subclass season ean_number rfid_number variant_size style_code st_loc variant mrp soh_blocked_stock soh_without_blocked_stock soh_quantity soh_value status}
-    headers = ['Plant', 'Plant2', 'Plant3', 'Retek Class', 'Retek Subclass', 'Season', 'EAN', 'RFID Number', 'Size', 'Style Code', 'St.loc', 'Variant', 'MRP', 'SOH blocked stock', 'SOH without blocked stock', 'SOH Qty.', 'Value', 'Status']
+    headers = ['Plant', "Retek Group", "Retek Dept.", 'Retek Class', 'Retek Subclass', 'Season', 'EAN', 'RFID Number', 'Size', 'Style Code', 'St.loc', 'Variant', 'MRP', 'SOH blocked stock', 'SOH without blocked stock', 'SOH Qty.', 'Value', 'Status']
     stock_items = self.get_stock_items(params)
 
     CSV.generate(headers: true) do |csv|

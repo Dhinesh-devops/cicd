@@ -62,6 +62,10 @@ class DataSheetsController < ApplicationController
 
   def create_stock_items
     stock = StockItem.new(stock_params)
+    if stock_params[:rfid_number].present?
+      stock_item = StockItem.find_by(rfid_number: stock_params[:rfid_number])
+      stock.rfid_number = "" if stock_item.present?
+    end
     if stock.save
       flash[:notice] = 'Stock added successfully.'
       redirect_to new_data_sheet_path
