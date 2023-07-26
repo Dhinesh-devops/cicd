@@ -14,11 +14,10 @@
 
  // Custom bootstrap variables must be set or imported *before* bootstrap.
 @import "bootstrap";
-@import "toastr";
 
 @import "./theme/feather/feather";
 @import "./theme/ti-icons/css/themify-icons";
 @import "./theme/datatables.net-bs4/dataTables.bootstrap4";
-@import "./theme/select.dataTables.min";
 @import "./theme/style";
 @import "./custom";
+@import "./toastr";
