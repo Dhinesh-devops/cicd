@@ -1,14 +1,5 @@
 <div class="main-panel">
   <div class="content-wrapper">
-    <!-- <div class="row">
-      <div class="col-md-12 grid-margin">
-        <div class="row">
-          <div class="col-12 col-xl-8 mb-4 mb-xl-0">
-            <h3 class="font-weight-bold">Import Data Sheet</h3>
-          </div>
-        </div>
-      </div>
-    </div> -->
     <!-- content start -->
     <div class="row">
       <div class="col-12 grid-margin stretch-card">
@@ -43,62 +34,7 @@
     <!-- content ends -->
   </div>
   <!-- content-wrapper ends -->
-  <!-- partial:partials/_footer.html -->
-    <%# render partial: "layouts/footer" %>
-  <!-- partial -->
 </div>
 <!-- main-panel ends -->
-<style>
-.error {
-  color: red;
-}
-</style>
 <script src="../assets/modules/file-upload.js"></script>
-<script src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
-<script>
-$(document).ready(function() {
-  $("form#importDataSheetForm").validate({
-    rules: {
-      'data_sheet[file]': {
-        checkFile: true
-      }
-    },
-    errorPlacement: function (error, element) {
-      error.insertAfter('.input-group')
-    }
-  });
-  $.validator.addMethod('checkFile', (function(value, element) {
-    var file = $("#data_sheet_file")[0].files[0];
-    if (file) {
-      var fileType = file["type"];
-      var fileName = file["name"];
-      $("#data_sheet_sheet_name").val(fileName);
-      var validFileTypes = ["application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"];
-      if ($.inArray(fileType, validFileTypes) !== -1) {
-        return true;
-      } else {
-        return false;
-      }
-    } else {
-      return false;
-    }
-  }), 'Please upload only files of type (.xlsx).');
-
-  $("#dataSheetSubmit").on("click", function() {
-    if($('form#importDataSheetForm').valid()) {
-      return true;
-    } else {
-      return false;
-    }
-  });
-
-  $("#dataSheetCancel").on("click", function() {
-    window.location.reload();  
-  });
-
-  $("#data_sheet_file").on("change", function(e) {
-    var files = e.target.files;
-  })
-
-});
-</script>
+<script src="../assets/import-sheet.js"></script>

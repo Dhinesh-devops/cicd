@@ -5,7 +5,7 @@
       <div class="col-md-12 grid-margin stretch-card">
         <div class="card">
           <div class="card-body">
-            <div class="row" style="margin-bottom: 20px;">
+            <div class="row mb-3">
               <div class="col-md-6"><p class="card-title">Create New Manager</p></div>
               <div class="col-md-6"><%= link_to "Back to Users List", managers_path,
               :class => "btn btn-primary float-right" %></div>
@@ -32,33 +32,4 @@
     </div>
   </div>
 </div>
-<style>
-.error {
-  color: red !important;
-}
-</style>
-<script type="text/javascript">
-$(document).ready( function() {
-  $("form#userManageForm").validate({
-    rules: {
-      'first_name': 'required',
-      'last_name': 'required',
-      'email': {
-        required: true,
-        email: true
-      }
-    },
-    errorPlacement: function (error, element) {
-      error.insertAfter(element);
-    }
-  });
-
-  $("#userManageSubmit").on("click", function() {
-    if($('form#userManageForm').valid()) {
-      return true;
-    } else {
-      return false;
-    }
-  });
-});
-</script>
+<script src="../assets/manager.js"></script>

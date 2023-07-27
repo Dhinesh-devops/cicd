@@ -1,20 +1,11 @@
 <div class="main-panel">
   <div class="content-wrapper">
-    <!-- <div class="row">
-      <div class="col-md-12 grid-margin">
-        <div class="row">
-          <div class="col-12 col-xl-8 mb-4 mb-xl-0">
-            <h3 class="font-weight-bold">User Management</h3>
-          </div>
-        </div>
-      </div>
-    </div> -->
     <!-- content start -->
     <div class="row">
       <div class="col-md-12 grid-margin stretch-card">
         <div class="card">
           <div class="card-body">
-            <div class="row" style="margin-bottom: 20px;">
+            <div class="row mb-3">
               <div class="col-md-6"><p class="card-title">User Management</p></div>
               <div class="col-md-6"><%= link_to "Create New Manager", new_manager_path,
               :class => "btn btn-primary float-right" %></div>
@@ -57,17 +48,4 @@
   <!-- content-wrapper ends -->
 </div>
 <!-- main-panel ends -->
-<script src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
-<script>
-$(document).ready(function(){
-  $('.dataTable').DataTable({
-    pagingType: 'full_numbers',
-    lengthChange: false,
-    order: [[3, 'desc']],
-    "aoColumnDefs": [
-        { "bSortable": false, "aTargets": [ 4 ] },
-        { "bSearchable": false, "aTargets": [ 4 ] }
-    ]
-  });
-})
-</script>
+<script src="../assets/manager.js"></script>
