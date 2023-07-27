@@ -1,7 +1,39 @@
+class reportDataTable {
+
+  applyFilters(category, start_date, end_date, reportTable) {
+    $.ajax({
+      type:'get',
+      url:'/get_stock',
+      data: { authenticity_token: $('[name="csrf-token"]')[0].content, category: category,
+      start_date: start_date,
+      end_date: end_date },
+      success: function(result) {
+        if (result) {
+          reportTable.clear().draw();
+          reportTable.rows.add(result.data);
+          reportTable.columns.adjust().draw();
+        }
+      },
+      failure: function(e) {
+        console.log(e);
+      }
+    });
+  }
+
+  exportReport() {
+    var category = $("#reportCategory").val();
+    var start_date = $("#reportStartDate").val();
+    var end_date = $("#reportEndDate").val();
+    toastr.success("Report downloaded successfully");
+    window.location = "/download_report?category=" + category + "&start_date=" + start_date + "&end_date=" + end_date;
+  }
+}
+
 $(function() {
   var category = "";
   var start_date = "";
   var end_date = "";
+  var report_data = new reportDataTable();
 
   var report_table = loadDatatable(category, start_date, end_date);
 
@@ -78,31 +110,11 @@ $(function() {
       toastr.error("Please select any filter.");
     } else {
       var reportTable = report_table;
-      $.ajax({
-        type:'get',
-        url:'/get_stock',
-        data: { authenticity_token: $('[name="csrf-token"]')[0].content, category: category,
-        start_date: start_date,
-        end_date: end_date },
-        success: function(result) {
-          if (result) {
-            reportTable.clear().draw();
-            reportTable.rows.add(result.data);
-            reportTable.columns.adjust().draw();
-          }
-        },
-        failure: function(e) {
-          console.log(e);
-        }
-      });
+      report_data.applyFilters(category, start_date, end_date, reportTable)
     }
   })
 
   $('#exportData').on('click', function() {
-    var category = $("#reportCategory").val();
-    var start_date = $("#reportStartDate").val();
-    var end_date = $("#reportEndDate").val();
-    toastr.success("Report downloaded successfully");
-    window.location = "/download_report?category=" + category + "&start_date=" + start_date + "&end_date=" + end_date;
+    report_data.exportReport();
   });
 })
