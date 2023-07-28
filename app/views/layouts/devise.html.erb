@@ -10,21 +10,11 @@
 
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js" ></script>
   </head>
 
   <body>
     <%= yield %>
 
-    <script type="text/javascript">
-      $(document).ready( function() {
-        <% if flash.any? %>
-          <% flash.each do |key, value| %>
-            <% type = key.to_s.gsub('alert', 'error').gsub('notice', 'success') %>
-            toastr.<%= type %>('<%= value %>')
-          <% end %>
-        <% end %>
-      });
-    </script>
+    <div id="flashData" style="display: none;"><%= flash.any? ? flash.to_json : [] %></div>
   </body>
 </html>

@@ -7,8 +7,8 @@
           <div class="card-body">
             <div class="row mb-3">
               <div class="col-md-6"><p class="card-title">Edit Manager</p></div>
-              <div class="col-md-6"><%= button_to "Back to Users List", managers_path,
-              :class => "btn btn-primary float-right", :method => :get %></div>
+              <div class="col-md-6"><%= link_to "Back to Users List", managers_path,
+              { :class => "btn btn-primary float-right", :'data-turbo' => 'false' } %></div>
             </div>
             <%= form_with(url: '/managers/' + @manager.id.to_s, method: :patch, class: "form-group", id:"userManageForm", local: true) do |form| %>
               <%= form.hidden_field :id, value: @manager.id %>
@@ -24,8 +24,8 @@
                 <label for="exampleInputEmail3">Email ID</label>
                 <%= form.email_field :email, class: "form-control form-control-sm col-md-6", placeholder: "Email ID", autocomplete: "off", value: @manager.email, disabled: true  %>
               </div>
-              <button type="submit" id="userManageSubmit" class="btn btn-primary mr-2">Submit</button>
-              <%= link_to "Cancel", managers_path, :class => "btn btn-light" %>
+              <button type="submit" id="userManageSubmit" class="btn btn-primary mr-2" data-turbo="false">Submit</button>
+              <%= link_to "Cancel", managers_path, { :class => "btn btn-light", :'data-turbo' => 'false' } %>
             <% end %>
           </div>
         </div>
@@ -33,4 +33,3 @@
     </div>
   </div>
 </div>
-<script src="../assets/manager.js"></script>

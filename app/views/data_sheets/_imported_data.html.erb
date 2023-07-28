@@ -5,7 +5,7 @@
         <%= render partial: "stock_count_tiles", :locals => {:total_count => stock_items.count, :with_rfid_count => stock_items.with_rfid.count, :without_rfid_count => stock_items.without_rfid.count} %>
         <div class="row mb-3">
           <div class="col-md-3"><p class="card-title">Imported Data</p></div>
-          <div class="col-md-9"><button class="btn btn-primary edit-import-data" style="float: right;">Edit</button><button class="btn btn-success save-import-data" style="float: right; margin-right: 10px; display: none;">Submit</button><button class="btn btn-info add-import-data" data-bs-toggle="modal" data-bs-target="#addStockModal" style="float: right; margin-right: 10px;">Add Stock</button><button type="button" class="btn btn-danger delete-data-sheet" id="deleteDataSheet" style="float: right; margin-right: 10px;">Delete Data Sheet</button></div>
+          <div class="col-md-9"><button class="btn btn-primary edit-import-data" style="float: right;" data-turbo="false">Edit</button><button class="btn btn-success save-import-data" style="float: right; margin-right: 10px; display: none;" data-turbo="false">Submit</button><button class="btn btn-info add-import-data" data-bs-toggle="modal" data-bs-target="#addStockModal" style="float: right; margin-right: 10px;" data-turbo="false">Add Stock</button><button type="button" class="btn btn-danger delete-data-sheet" id="deleteDataSheet" style="float: right; margin-right: 10px;" data-turbo="false">Delete Data Sheet</button></div>
         </div>
         <div class="row">
           <div class="col-12">
@@ -43,4 +43,3 @@
     </div>
   </div>
 </div>
-<script src="../assets/imported-table.js"></script>

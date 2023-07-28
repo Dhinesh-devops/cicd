@@ -40,4 +40,17 @@ $(function() {
       }
     })
   });
+
+  var flash_msgs = JSON.parse($("#flashData").text());
+
+  if (flash_msgs.length > 0) {
+    var key = flash_msgs[0][0];
+    var value = flash_msgs[0][1];
+
+    if(key == 'error' || key == 'alert') {
+      toastr.error(value);
+    } else if (key == 'success' || key == 'notice') {
+      toastr.success(value);
+    }
+  }
 })

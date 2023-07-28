@@ -40,7 +40,8 @@ class SessionsController < Devise::SessionsController
   #
   def logout
     sign_out(current_user) if current_user.present?
-    redirect_to root_path, notice: 'Logout successful.'
+    flash[:notice] = 'Logout successful.'
+    redirect_to root_path
   end
 
   private

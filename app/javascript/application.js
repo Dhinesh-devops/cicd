@@ -9,3 +9,14 @@ import "jquery.dataTables"
 import "toastr"
 import "chart"
 import "bootstrap-datepicker"
+
+import 'custom'
+import 'imported-table'
+import 'import-sheet'
+import 'report'
+import 'login'
+import 'manager'
+import 'reset-password'
+import 'file-upload'
+import 'chart-data'
+import 'sheet-management'

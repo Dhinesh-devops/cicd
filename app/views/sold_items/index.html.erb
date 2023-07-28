@@ -11,8 +11,8 @@
                   <label>Add multiple Sold RFID/EPC Numbers with comma separated.</label>
                   <textarea class="form-control" name="rfid_values" id="rfidNumbers" rows="4"></textarea>
                 </div>
-                <button type="submit" id="soldItemSubmit" class="btn btn-primary mr-2">Submit</button>
-                <%= link_to "Cancel", dashboard_path, class: "btn btn-light" %>
+                <button type="submit" id="soldItemSubmit" class="btn btn-primary mr-2" data-turbo="false">Submit</button>
+                <%= link_to "Cancel", dashboard_path, { class: "btn btn-light", :'data-turbo' => 'false' } %>
               <% end %>
             </div>
           </div>
@@ -21,4 +21,3 @@
     </div>
   </div>
 </div>
-<script src="../assets/custom.js"></script>
