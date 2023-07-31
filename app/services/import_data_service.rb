@@ -15,7 +15,7 @@ class ImportDataService
         # create_stock_items(row) unless stock_item_exist
         create_stock_items(row)
       end
-      StockItem.update_all(data_sheet_id: @data_sheet_id, soft_delete: false)
+      StockItem.update_all(data_sheet_id: @data_sheet_id)
       data_sheet = DataSheet.find_by(id: @data_sheet_id)
       data_sheet.update(stock_count: data_sheet.stock_items.count)
     end
@@ -51,7 +51,7 @@ class ImportDataService
   end
 
   def check_stock_item_with_rfid(row)
-    stock_item = StockItem.find_by(rfid_number: cell_format(row[:rfid_number]))
+    stock_item = StockItem.active.find_by(rfid_number: cell_format(row[:rfid_number]))
     return stock_item.present?
   end
 

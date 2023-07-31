@@ -1,7 +1,7 @@
 class ManagersController < ApplicationController
-  skip_before_action :verify_authenticity_token, only: [:create, :edit, :update]
+  skip_before_action :verify_authenticity_token, only: [:create, :edit, :update, :destroy]
   before_action :authenticate_user!
-  before_action :find_user, only: [:edit, :update]
+  before_action :find_user, only: [:edit, :update, :destroy]
 
   def index
     @managers = User.managers.order(created_at: :desc)
@@ -43,6 +43,16 @@ class ManagersController < ApplicationController
   rescue Exception => e
     flash[:error] = e.record.errors.full_messages.to_sentence
     redirect_to edit_manager_path(@manager)
+  end
+
+  def destroy
+    if @manager.delete
+      response_success('Manager deleted successfully.', 200)
+    else
+      response_failure('Unable to delete manager', 409)
+    end
+  rescue Exception => e
+    response_failure(e, 500)
   end
 
   private

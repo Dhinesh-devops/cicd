@@ -8,6 +8,7 @@ class StockItem < ApplicationRecord
   scope :without_rfid, -> { where(rfid_number: [nil, '']) }
   scope :last_week, -> { where(updated_at: (Date.today - 7.days).beginning_of_day..Date.today.end_of_day) }
   scope :except_sold, -> { where(status: [1, nil]) }
+  scope :active, -> { where(soft_delete: false) }
 
   enum status: {scanned: 1, sold: 2}
 
