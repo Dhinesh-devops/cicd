@@ -13,4 +13,15 @@ class SheetManagementController < ApplicationController
                         disposition: "attachment"
     end
   end
+
+  def delete_sheet
+    data_sheet = DataSheet.find_by(id: params[:id])
+    if data_sheet.update(soft_delete: true)
+      response_success('Datasheet deleted successfully.', 200)
+    else
+      response_failure('Unable to delete datasheet', 409)
+    end
+  rescue Exception => e
+    response_failure(e, 500)
+  end
 end

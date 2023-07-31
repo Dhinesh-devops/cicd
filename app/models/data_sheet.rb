@@ -91,4 +91,8 @@ class DataSheet < ApplicationRecord
       stock_items = data_sheet.stock_items
     end
   end
+
+  def active_stocks_present?
+    self.stock_items.active.present?
+  end
 end

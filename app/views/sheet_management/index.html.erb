@@ -25,6 +25,7 @@
                         <th>Data sheet</th>
                         <th>Total no. of missed items</th>
                         <th>Total no. of sold items</th>
+                        <th class="text-center">Actions</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -34,6 +35,7 @@
                           <td><%= link_to data_sheet.sheet_name, '/download_sheet/'+data_sheet.id.to_s %></td>
                           <td><%= data_sheet.stock_items.count - (data_sheet.stock_items.scanned.count + data_sheet.stock_items.sold.count) %></td>
                           <td><%= data_sheet.stock_items.sold.count %></td>
+                          <td class="text-center"><%= link_to '/delete_sheet/' + data_sheet.id.to_s, class: "pl-2 delete-sheet #{data_sheet.active_stocks_present? ? 'd-none' : ''}" do %><i class="ti-trash" style="font-size: 17px;"></i><% end %></td>
                         </tr>
                       <% end %>
                     </tbody>
@@ -60,7 +62,37 @@ $(document).ready(function(){
   $('.dataTable').DataTable({
     pagingType: 'full_numbers',
     lengthChange: false,
-    order: [[0, 'desc']]
+    order: [[0, 'desc']],
+    "aoColumnDefs": [
+        { "bSortable": false, "aTargets": [ 4 ] },
+        { "bSearchable": false, "aTargets": [ 4 ] }
+    ]
   });
+
+  $('.delete-sheet').on('click', function(e) {
+    var url = this.href;
+    var status = confirm("Are you sure, you want delete this data sheet?");
+    if(status){
+      e.preventDefault();
+      $.ajax({
+        type:'delete',
+        url: url,
+        data: { authenticity_token: $('[name="csrf-token"]')[0].content },
+        success: function(result) {
+          if (result.message) {
+            toastr.success(result.message);
+            setTimeout(function() {
+              window.location.reload();
+            }, 1000);
+          }
+        },
+        failure: function(e) {
+          console.log(e);
+        }
+      });
+    } else {
+      return false;
+    }
+  })
 })
 </script>

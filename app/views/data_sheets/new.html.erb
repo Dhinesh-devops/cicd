@@ -29,7 +29,7 @@
                 </div>
               </div>
               <button type="submit" id="dataSheetSubmit" class="btn btn-primary mr-2">Submit</button>
-              <button id="dataSheetCancel" class="btn btn-light">Cancel</button>
+              <input type="button" id="dataSheetCancel" class="btn btn-light" value="Cancel" />
             <% end %>
           </div>
         </div>
@@ -93,7 +93,8 @@ $(document).ready(function() {
   });
 
   $("#dataSheetCancel").on("click", function() {
-    window.location.reload();  
+    $("#data_sheet_file").val('');
+    $('#importDataSheetForm .file-upload-info').val('');
   });
 
   $("#data_sheet_file").on("change", function(e) {

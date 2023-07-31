@@ -39,6 +39,7 @@ Rails.application.routes.draw do
   resources :managers, :only => [:index, :new, :create, :edit, :update, :destroy]
   get '/sheet_management', :to => 'sheet_management#index'
   get '/download_sheet/:id', :to => 'sheet_management#download_sheet'
+  delete '/delete_sheet/:id', :to => 'sheet_management#delete_sheet'
   post '/update_rfid_number', :to => 'data_sheets#update_rfid_number'
   delete '/delete_data_sheet', :to => 'data_sheets#delete_data_sheet'
   get '/get_stock_items', :to => 'data_sheets#get_stock_items'
