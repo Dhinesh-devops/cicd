@@ -1,4 +1,5 @@
 class SheetManagementController < ApplicationController
+  skip_before_action :verify_authenticity_token, only: [:delete_sheet]
   before_action :authenticate_user!
 
   def index
