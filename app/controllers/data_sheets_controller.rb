@@ -53,7 +53,7 @@ class DataSheetsController < ApplicationController
 
   def get_stock_items
     if DataSheet.active.last.present? && DataSheet.active.last.stock_items.present?
-      stock_items = DataSheet.active.last.stock_items.order(id: :desc)
+      stock_items = DataSheet.active.last.stock_items.active.order(id: :desc)
     else
       stock_items = []
     end
