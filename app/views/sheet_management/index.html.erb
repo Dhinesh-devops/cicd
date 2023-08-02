@@ -1,14 +1,5 @@
 <div class="main-panel">
   <div class="content-wrapper">
-    <!-- <div class="row">
-      <div class="col-md-12 grid-margin">
-        <div class="row">
-          <div class="col-12 col-xl-8 mb-4 mb-xl-0">
-            <h3 class="font-weight-bold">Sheet Management</h3>
-          </div>
-        </div>
-      </div>
-    </div> -->
     <!-- content start -->
     <div class="row">
       <div class="col-md-12 grid-margin stretch-card">
@@ -51,48 +42,5 @@
     <!-- content ends -->
   </div>
   <!-- content-wrapper ends -->
-  <!-- partial:partials/_footer.html -->
-    <%# render partial: "layouts/footer" %>
-  <!-- partial -->
 </div>
 <!-- main-panel ends -->
-<script src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
-<script>
-$(document).ready(function(){
-  $('.dataTable').DataTable({
-    pagingType: 'full_numbers',
-    lengthChange: false,
-    order: [[0, 'desc']],
-    "aoColumnDefs": [
-        { "bSortable": false, "aTargets": [ 4 ] },
-        { "bSearchable": false, "aTargets": [ 4 ] }
-    ]
-  });
-
-  $('.delete-sheet').on('click', function(e) {
-    var url = this.href;
-    var status = confirm("Are you sure, you want delete this data sheet?");
-    if(status){
-      e.preventDefault();
-      $.ajax({
-        type:'delete',
-        url: url,
-        data: { authenticity_token: $('[name="csrf-token"]')[0].content },
-        success: function(result) {
-          if (result.message) {
-            toastr.success(result.message);
-            setTimeout(function() {
-              window.location.reload();
-            }, 1000);
-          }
-        },
-        failure: function(e) {
-          console.log(e);
-        }
-      });
-    } else {
-      return false;
-    }
-  })
-})
-</script>

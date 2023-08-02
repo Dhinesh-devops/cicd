@@ -11,8 +11,8 @@
                   <label>Add multiple Sold RFID/EPC Numbers with comma separated.</label>
                   <textarea class="form-control" name="rfid_values" id="rfidNumbers" rows="4"></textarea>
                 </div>
-                <button type="submit" id="soldItemSubmit" class="btn btn-primary mr-2">Submit</button>
-                <%= link_to "Cancel", dashboard_path, class: "btn btn-light" %>
+                <button type="submit" id="soldItemSubmit" class="btn btn-primary mr-2" data-turbo="false">Submit</button>
+                <%= link_to "Cancel", dashboard_path, { class: "btn btn-light", :'data-turbo' => 'false' } %>
               <% end %>
             </div>
           </div>
@@ -21,38 +21,3 @@
     </div>
   </div>
 </div>
-<style>
-.error {
-  color: red !important;
-}
-</style>
-<script type="text/javascript">
-$(document).ready( function() {
-  $("form#soldItemForm").validate({
-    rules: {
-      'rfid_values': 'required'
-    },
-    errorPlacement: function (error, element) {
-      error.insertAfter(element);
-    }
-  });
-
-  $("#soldItemSubmit").on("click", function() {
-    if($('form#soldItemForm').valid()) {
-      return true;
-    } else {
-      return false;
-    }
-  });
-
-  $("#rfidNumbers").on('paste', function() {
-    var element = this;
-    setTimeout(function () {
-      var text = $(element).val();
-      text = text.replace(/\s*$/,"");
-      text = text.replace(/\s+/g, ",");
-      $("#rfidNumbers").val(text);
-    }, 100);
-  });
-});
-</script>

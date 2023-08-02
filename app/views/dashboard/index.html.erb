@@ -163,5 +163,5 @@
   <!-- content-wrapper ends -->
 </div>
 <!-- main-panel ends -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
-<%= render partial: "charts", :locals => StockItem.get_chart_data(@scanned_stocks_count, @missed_stocks_count, @sold_stocks_count) %>
+<% chart_data = StockItem.get_chart_data(@scanned_stocks_count, @missed_stocks_count, @sold_stocks_count) %>
+<div id="chartData" style="display: none;"><%= chart_data.to_json %></div>

@@ -17,18 +17,21 @@ class SessionsController < Devise::SessionsController
   #
   def create
     user = User.find_by(email: params['user']['email'], role_id: 2)
-    if user.present?
+    if user.present? && user.valid_password?(params['user']['password'])
       auth_options.merge(scope: :user)
       warden.authenticate!(auth_options)
 
       redirect_to dashboard_path
     else
-      redirect_to root_path, notice: 'Invalid email or password'
+      flash[:error] = 'Invalid email or password'
+      redirect_to root_path
     end
   rescue ActiveRecord::RecordInvalid => e
-    redirect_to root_path, notice: e.record.errors.full_messages.to_sentence
+    flash[:error] = e.record.errors.full_messages.to_sentence
+    redirect_to root_path
   rescue Exception => e
-    redirect_to root_path, notice: e.record.errors.full_messages.to_sentence
+    flash[:error] = "Something went wrong. Please try again."
+    redirect_to root_path
   end
 
   #
@@ -37,7 +40,8 @@ class SessionsController < Devise::SessionsController
   #
   def logout
     sign_out(current_user) if current_user.present?
-    redirect_to root_path, notice: 'Logout successful.'
+    flash[:notice] = 'Logout successful.'
+    redirect_to root_path
   end
 
   private

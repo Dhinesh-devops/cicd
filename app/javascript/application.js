@@ -2,19 +2,21 @@
 import "@hotwired/turbo-rails"
 import "controllers"
 
-import "jquery"
-import "script"
-import "toastr"
-global.toastr = require("toastr")
-import "jquery_ujs"
-import "popper"
+import 'jquery3'
 import "bootstrap"
-import "./modules/off-canvas"
-import "./modules/hoverable-collapse"
-import "./modules/template"
-import "./modules/settings"
-import "./modules/todolist"
-import "./modules/dashboard"
-import "./modules/Chart.roundedBarCharts"
-import "./dataTables/jquery.dataTables";
+import "jquery.validate"
+import "jquery.dataTables"
+import "toastr"
+import "chart"
+import "bootstrap-datepicker"
 
+import 'custom'
+import 'imported-table'
+import 'import-sheet'
+import 'report'
+import 'login'
+import 'manager'
+import 'reset-password'
+import 'file-upload'
+import 'chart-data'
+import 'sheet-management'
