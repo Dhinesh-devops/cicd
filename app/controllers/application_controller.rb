@@ -41,7 +41,8 @@ class ApplicationController < ActionController::Base
   #
   def authenticate_user!
     unless current_user
-      redirect_to root_path, notice: 'You need to sign in to access'
+      flash[:error] = 'You need to sign in to access'
+      redirect_to root_path
     end
   end
 

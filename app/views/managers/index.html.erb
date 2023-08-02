@@ -1,23 +1,14 @@
 <div class="main-panel">
   <div class="content-wrapper">
-    <!-- <div class="row">
-      <div class="col-md-12 grid-margin">
-        <div class="row">
-          <div class="col-12 col-xl-8 mb-4 mb-xl-0">
-            <h3 class="font-weight-bold">User Management</h3>
-          </div>
-        </div>
-      </div>
-    </div> -->
     <!-- content start -->
     <div class="row">
       <div class="col-md-12 grid-margin stretch-card">
         <div class="card">
           <div class="card-body">
-            <div class="row" style="margin-bottom: 20px;">
+            <div class="row mb-3">
               <div class="col-md-6"><p class="card-title">User Management</p></div>
               <div class="col-md-6"><%= link_to "Create New Manager", new_manager_path,
-              :class => "btn btn-primary float-right" %></div>
+              { :class => "btn btn-primary float-right", :'data-turbo' => 'false' } %></div>
             </div>
             <div class="row">
               <div class="col-12">
@@ -39,7 +30,7 @@
                           <td><%= manager.last_name %></td>
                           <td><%= manager.email %></td>
                           <td><%= manager.created_at.to_date.strftime("%d-%m-%Y") %></td>
-                          <td class="text-center"><%= link_to edit_manager_path(manager) do %><i class="ti-pencil-alt" style="font-size: 17px;"></i><% end %> <%= link_to  manager_path(manager), class: "pl-2 delete-manager" do %><i class="ti-trash" style="font-size: 17px;"></i><% end %></td>
+                          <td class="text-center"><%= link_to edit_manager_path(manager), data: { turbo: false } do %><i class="ti-pencil-alt" style="font-size: 17px;"></i><% end %> <%= link_to  manager_path(manager), class: "pl-2 delete-manager", data: { turbo: false } do %><i class="ti-trash" style="font-size: 17px;"></i><% end %></td>
                         </tr>
                       <% end %>
                     </tbody>
@@ -57,43 +48,3 @@
   <!-- content-wrapper ends -->
 </div>
 <!-- main-panel ends -->
-<script src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
-<script>
-$(document).ready(function(){
-  $('.dataTable').DataTable({
-    pagingType: 'full_numbers',
-    lengthChange: false,
-    order: [[3, 'desc']],
-    "aoColumnDefs": [
-        { "bSortable": false, "aTargets": [ 4 ] },
-        { "bSearchable": false, "aTargets": [ 4 ] }
-    ]
-  });
-
-  $('.delete-manager').on('click', function(e) {
-    var url = this.href;
-    var status = confirm("Are you sure, you want delete this manager?");
-    if(status){
-      e.preventDefault();
-      $.ajax({
-        type:'delete',
-        url: url,
-        data: { authenticity_token: $('[name="csrf-token"]')[0].content },
-        success: function(result) {
-          if (result.message) {
-            toastr.success(result.message);
-            setTimeout(function() {
-              window.location.reload();
-            }, 1000);
-          }
-        },
-        failure: function(e) {
-          console.log(e);
-        }
-      });
-    } else {
-      return false;
-    }
-  })
-})
-</script>
