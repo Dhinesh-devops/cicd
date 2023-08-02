@@ -2,7 +2,6 @@ $(function() {
   $('#sheet_management').DataTable({
     pagingType: 'full_numbers',
     lengthChange: false,
-    order: [[0, 'desc']],
     "aoColumnDefs": [
         { "bSortable": false, "aTargets": [ 4 ] },
         { "bSearchable": false, "aTargets": [ 4 ] }
