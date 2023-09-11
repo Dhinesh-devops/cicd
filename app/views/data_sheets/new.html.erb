@@ -1,0 +1,38 @@
+<div class="main-panel">
+  <div class="content-wrapper">
+    <!-- content start -->
+    <div class="row">
+      <div class="col-12 grid-margin stretch-card">
+        <div class="card">
+          <div class="card-body">
+            <h4 class="card-title">Import Data Sheet</h4>
+            <%= form_with(model: @data_sheet, class: "form-group", id:"importDataSheetForm", local: true) do |form| %>
+              <%= form.hidden_field :sheet_name %>
+              <%= form.hidden_field :imported_by, value: current_user.id %>
+              <div class="form-group">
+                <label>Upload sheets only of type .xlsx only</label>
+                <%= form.file_field :file, class: "file-upload-default" %>
+                <div class="input-group col-xs-12">
+                  <input type="text" class="form-control file-upload-info" disabled placeholder="Upload Data Sheet">
+                  <span class="input-group-append">
+                    <button class="file-upload-browse btn btn-primary" type="button">Upload</button>
+                  </span>
+                </div>
+              </div>
+              <button type="submit" id="dataSheetSubmit" class="btn btn-primary mr-2" data-turbo="false">Submit</button>
+              <input type="button" id="dataSheetCancel" class="btn btn-light" value="Cancel" />
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <% if DataSheet.active.last.present? && DataSheet.active.last.stock_items.present? %>
+      <%= render partial: "imported_data", :locals => {:stock_items => DataSheet.active.last.stock_items.active.order(id: :desc)} %>
+    <% end %>
+    <%= render partial: "add_stock_modal" %>
+    <!-- content ends -->
+  </div>
+  <!-- content-wrapper ends -->
+</div>
+<!-- main-panel ends -->

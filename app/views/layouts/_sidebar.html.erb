@@ -1,0 +1,41 @@
+<nav class="sidebar sidebar-offcanvas" id="sidebar">
+  <% url = url_for(only_path: false) %>
+  <ul class="nav">
+    <li class="nav-item <%= 'active' if url.include?(dashboard_path) %>">
+      <a class="nav-link" href="<%= dashboard_path %>" data-turbo="false">
+        <i class="icon-grid menu-icon"></i>
+        <span class="menu-title">Dashboard</span>
+      </a>
+    </li>
+    <li class="nav-item <%= 'active' if url.include?(new_data_sheet_path) %>">
+      <a class="nav-link" href="<%= new_data_sheet_path %>" data-turbo="false">
+        <i class="icon-upload menu-icon"></i>
+        <span class="menu-title">Import Data Sheet</span>
+      </a>
+    </li>
+    <li class="nav-item <%= 'active' if url.include?(sheet_management_path) %>">
+      <a class="nav-link" href="<%= sheet_management_path %>" data-turbo="false">
+        <i class="icon-layout menu-icon"></i>
+        <span class="menu-title">Sheet Management</span>
+      </a>
+    </li>
+    <li class="nav-item <%= 'active' if url.include?(sold_items_path) %>">
+      <a class="nav-link" href="<%= sold_items_path %>" data-turbo="false">
+        <i class="icon-briefcase menu-icon"></i>
+        <span class="menu-title">Sold Items</span>
+      </a>
+    </li>
+    <li class="nav-item <%= 'active' if url.include?(reports_path) %>">
+      <a class="nav-link" href="<%= reports_path %>" data-turbo="false">
+        <i class="icon-paper menu-icon"></i>
+        <span class="menu-title">Reports</span>
+      </a>
+    </li>
+    <li class="nav-item <%= 'active' if url.include?(managers_path) %>">
+      <a class="nav-link" href="<%= managers_path %>" data-turbo="false">
+        <i class="icon-head menu-icon"></i>
+        <span class="menu-title">User Management</span>
+      </a>
+    </li>
+  </ul>
+</nav>

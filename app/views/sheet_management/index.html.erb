@@ -1,0 +1,46 @@
+<div class="main-panel">
+  <div class="content-wrapper">
+    <!-- content start -->
+    <div class="row">
+      <div class="col-md-12 grid-margin stretch-card">
+        <div class="card">
+          <div class="card-body">
+            <p class="card-title">Sheet Management</p>
+            <div class="row">
+              <div class="col-12">
+                <div class="table-responsive">
+                  <table id="sheet_management" class="display expandable-table dataTable" style="width:100%">
+                    <thead>
+                      <tr>
+                        <th>Date</th>
+                        <th>Data sheet</th>
+                        <th>Total no. of missed items</th>
+                        <th>Total no. of sold items</th>
+                        <th class="text-center">Actions</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <% @data_sheets && @data_sheets.each do | data_sheet | %>
+                        <tr>
+                          <td><%= data_sheet.created_at.to_date.strftime("%d-%m-%Y") %></td>
+                          <td><%= link_to data_sheet.sheet_name, '/download_sheet/'+data_sheet.id.to_s %></td>
+                          <td><%= data_sheet.stock_items.count - (data_sheet.stock_items.scanned.count + data_sheet.stock_items.sold.count) %></td>
+                          <td><%= data_sheet.stock_items.sold.count %></td>
+                          <td class="text-center"><%= link_to '/delete_sheet/' + data_sheet.id.to_s, class: "pl-2 delete-sheet #{data_sheet.active_stocks_present? ? 'd-none' : ''}" do %><i class="ti-trash" style="font-size: 17px;"></i><% end %></td>
+                        </tr>
+                      <% end %>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- content ends -->
+  </div>
+  <!-- content-wrapper ends -->
+</div>
+<!-- main-panel ends -->

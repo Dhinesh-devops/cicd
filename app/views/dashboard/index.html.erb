@@ -1,0 +1,167 @@
+<div class="main-panel">
+  <div class="content-wrapper">
+    <div class="row">
+      <div class="col-md-12 grid-margin">
+        <div class="row">
+          <div class="col-12 col-xl-8 mb-4 mb-xl-0">
+            <h3 class="font-weight-bold">Welcome Admin</h3>
+            <h6 class="font-weight-normal mb-0">Today stock details on <span class="text-primary"><%= Time.now().strftime('%d-%m-%Y'); %></span></h6>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6 grid-margin stretch-card">
+        <div class="card">
+          <div class="card-body">
+            <h4 class="card-title">Stock-wise chart</h4>
+            <canvas id="stockPieChart" style="width: 421px; height: 210px;"></canvas>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6 grid-margin transparent">
+        <div class="row">
+          <div class="col-md-6 mb-4 stretch-card transparent">
+            <div class="card card-tale">
+              <div class="card-body">
+                <p class="mb-4">Total Number of Stocks</p>
+                <p class="fs-30 mb-2"><%= @total_stock_count %></p>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6 mb-4 stretch-card transparent">
+            <div class="card card-dark-blue">
+              <div class="card-body">
+                <p class="mb-4">Total Number of Scanned In-Stock Count</p>
+                <p class="fs-30 mb-2"><%= @scanned_stocks_count %></p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6 mt-4 stretch-card transparent">
+            <div class="card card-light-blue">
+              <div class="card-body">
+                <p class="mb-4">Total Number of Missed Stock Count</p>
+                <p class="fs-30 mb-2"><%= @missed_stocks_count %></p>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6 mt-4 stretch-card transparent">
+            <div class="card" style="background: #47A186; color: #FFFFFF;">
+              <div class="card-body">
+                <p class="mb-4">Total Number of Sold Stock Count</p>
+                <p class="fs-30 mb-2"><%= @sold_stocks_count %></p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-4 mb-4 stretch-card transparent">
+        <div class="card  card-light-danger">
+          <div class="card-body">
+            <p class="mb-4">Total Number of Scanned In-Stock(%)</p>
+            <p class="fs-30 mb-2"><%= @scanned_stocks %></p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4 mb-4 stretch-card transparent">
+        <div class="card" style="background: #EC548D; color: #ffffff;">
+          <div class="card-body">
+            <p class="mb-4">Total Number of Missed Stock(%)</p>
+            <p class="fs-30 mb-2"><%= @missed_stocks %></p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4 mb-4 stretch-card transparent">
+        <div class="card" style="background: #19ABDE; color: #ffffff;">
+          <div class="card-body">
+            <p class="mb-4">Total Number of Sold Stock(%)</p>
+            <p class="fs-30 mb-2"><%= @sold_stocks %></p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-6 grid-margin stretch-card">
+        <div class="card">
+          <div class="card-body">
+            <div class="d-flex justify-content-between">
+            <p class="card-title">Sales Chart</p>
+            </div>
+            <p class="font-weight-500">The total number of sales within last 7 days of time showing as date-wise.</p>
+            <div id="sales-legend" class="chartjs-legend mt-2 mb-2"></div>
+            <canvas id="sales-chart"></canvas>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-6 grid-margin stretch-card">
+        <div class="card">
+          <div class="card-body">
+            <div class="d-flex justify-content-between">
+            <p class="card-title">Size-wise Chart</p>
+            </div>
+            <p class="font-weight-500">The total number of scanned in-stock count in size-wise.</p>
+            <div id="sizes-legend" class="chartjs-legend mt-2 mb-2"></div>
+            <canvas id="sizes-chart"></canvas>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-6 grid-margin stretch-card">
+        <div class="card">
+          <div class="card-body">
+            <div class="d-flex justify-content-between">
+            <p class="card-title">Season-wise Chart</p>
+            </div>
+            <p class="font-weight-500">The total number of scanned in-stock count of Autumn winter season.</p>
+            <div id="autumn-legend" class="chartjs-legend mt-2 mb-2"></div>
+            <canvas id="autumn-chart"></canvas>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-6 grid-margin stretch-card">
+        <div class="card">
+          <div class="card-body">
+            <div class="d-flex justify-content-between">
+            <p class="card-title">Season-wise Chart</p>
+            </div>
+            <p class="font-weight-500">The total number of scanned in-stock count of Spring Summer season.</p>
+            <div id="spring-legend" class="chartjs-legend mt-2 mb-2"></div>
+            <canvas id="spring-chart"></canvas>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-lg-12 grid-margin stretch-card">
+        <div class="card">
+          <div class="card-body">
+            <div class="row">
+              <div class="col-md-6 border-right">
+                <h4 class="card-title">Retek SubClass-wise chart</h4>
+                <p class="font-weight-500">The total number of in-stock count Retek sub-class wise.</p>
+                <canvas id="retek-class-chart" style="width: 421px; height: 210px;"></canvas>
+              </div>
+              <div class="col-md-6">
+                <div id="retek-class-legend" class="pt-5"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- content-wrapper ends -->
+</div>
+<!-- main-panel ends -->
+<% chart_data = StockItem.get_chart_data(@scanned_stocks_count, @missed_stocks_count, @sold_stocks_count) %>
+<div id="chartData" style="display: none;"><%= chart_data.to_json %></div>

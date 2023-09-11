@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Retail Inventory Management</title>
+
+    <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+    <%= javascript_importmap_tags %>
+  </head>
+  <body>
+
+    <%= render partial: "layouts/header" %>
+
+    <div class="container-scroller">
+      <div class="container-fluid page-body-wrapper">
+        <%= render partial: "layouts/sidebar" %>
+        <%= yield %>
+      </div>
+    </div>
+    <div id="flashData" style="display: none;"><%= flash.any? ? flash.to_json : [] %></div>
+
+  </body>
+</html>

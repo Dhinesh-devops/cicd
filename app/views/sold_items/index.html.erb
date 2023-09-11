@@ -1,0 +1,23 @@
+<div class="main-panel">
+  <div class="content-wrapper">
+    <div class="row">
+      <div class="col-md-12 grid-margin stretch-card">
+        <div class="card">
+          <div class="card-body">
+            <div class="row">
+              <p class="card-title">Sold Items</p>
+              <%= form_with(url: '/update_sold_status', method: :patch, class: "form-group", id:"soldItemForm", local: true) do |form| %>
+                <div class="form-group">
+                  <label>Add multiple Sold RFID/EPC Numbers with comma separated.</label>
+                  <textarea class="form-control" name="rfid_values" id="rfidNumbers" rows="4"></textarea>
+                </div>
+                <button type="submit" id="soldItemSubmit" class="btn btn-primary mr-2" data-turbo="false">Submit</button>
+                <%= link_to "Cancel", dashboard_path, { class: "btn btn-light", :'data-turbo' => 'false' } %>
+              <% end %>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
