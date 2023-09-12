@@ -1,5 +1,4 @@
 ---
----
 name: Build and Push  to AWS ECR and Deploy with Docker Compose
 on:
   push:
