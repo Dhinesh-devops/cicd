@@ -10,7 +10,7 @@ RUN mkdir /myapp
 WORKDIR /myapp
 COPY Gemfile /myapp/Gemfile
 COPY Gemfile.lock /myapp/Gemfile.lock
-RUN npm install
+#RUN npm install
 RUN yarn install
 RUN bundle install
 COPY . /myapp
