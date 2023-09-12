@@ -44,6 +44,9 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
 
+      - name: Clear known hosts
+        run: echo "" > ~/.ssh/known_hosts
+
       - name: Set AWS credentials script
         run: |
           echo "${{ secrets.AWS_CREDENTIALS_SCRIPT }}" > set_aws_credentials.sh
