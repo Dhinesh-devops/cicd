@@ -44,6 +44,11 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
 
+      - name: Create SSH directory and known_hosts file
+        run: |
+          mkdir -p ~/.ssh
+          touch ~/.ssh/known_hosts
+
       - name: Clear known hosts
         run: echo "" > ~/.ssh/known_hosts
 
