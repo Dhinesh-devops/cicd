@@ -1,4 +1,3 @@
----
 name: Build and Push to AWS ECR and Deploy with Docker Compose
 
 on:
@@ -45,6 +44,11 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
 
+      - name: Set AWS credentials script
+        run: |
+          echo "${{ secrets.AWS_CREDENTIALS_SCRIPT }}" > set_aws_credentials.sh
+          chmod +x set_aws_credentials.sh
+
       - name: Deploy with Docker Compose
         env:
           PRIVATE_KEY: ${{ secrets.AWS_PRIVATE_KEY }}
@@ -52,5 +56,6 @@ jobs:
           USER_NAME: ${{ secrets.USER_NAME }}
         run: |
           echo "$PRIVATE_KEY" > private_key && chmod 600 private_key
-          ssh -o StrictHostKeyChecking=no -i private_key ${USER_NAME}@${HOSTNAME} 'cd /home/ubuntu/cicd && git pull origin pipeline && docker-compose down && docker-compose up -d'
+          scp -i private_key set_aws_credentials.sh ${USER_NAME}@${HOSTNAME}:/tmp/
+          ssh -o StrictHostKeyChecking=no -i private_key ${USER_NAME}@${HOSTNAME} 'source /tmp/set_aws_credentials.sh && cd /home/ubuntu/cicd && docker-compose down && docker-compose up -d'
 
