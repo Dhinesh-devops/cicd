@@ -1,5 +1,5 @@
 ---
-name: Build and Push  to AWS ECR and Deploy with Docker Compose
+name: Build and Push to AWS ECR and Deploy with Docker Compose
 on:
   push:
     branches:
@@ -35,8 +35,19 @@ jobs:
           docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
           docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
 
-      # Add a step to SSH into your EC2 instance and deploy with Docker Compose
-      - name: Deploy with Docker Compose
+  Deploy:
+    needs: build
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2 
+      - name: Deploy in EC2
+        env:
+            PRIVATE_KEY: ${{ secrets.AWS_PRIVATE_KEY  }}
+            HOSTNAME : ${{ secrets.HOSTNAME  }}
+            USER_NAME : ${{ secrets.USER_NAME  }}
+            
         run: |
-          ssh -i ${{ secrets.SSH_PRIVATE_KEY }} ubuntu@3.95.32.60 'cd /home/ubuntu/cicd && docker-compose down && docker-compose up -d'
+          echo "$PRIVATE_KEY" > private_key && chmod 600 private_key
+          ssh -o StrictHostKeyChecking=no -i private_key ${USER_NAME}@${HOSTNAME} '
 
