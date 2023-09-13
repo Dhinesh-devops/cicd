@@ -54,6 +54,7 @@ jobs:
           ssh -o StrictHostKeyChecking=no -i private_key ${USER_NAME}@${HOSTNAME} 'bash -s' <<EOF
           source /tmp/set_aws_credentials.sh
           cd /home/ubuntu/cicd
+          git pull origin pipeline
           docker-compose down
           docker-compose up -d
           EOF
