@@ -53,9 +53,7 @@ jobs:
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         run: |
           echo "$PRIVATE_KEY" > private_key && chmod 600 private_key
-          scp -i private_key set_aws_credentials.sh ${USER_NAME}@${HOSTNAME}:/tmp/
           ssh -o StrictHostKeyChecking=no -i private_key ${USER_NAME}@${HOSTNAME} 'bash -s' <<EOF
-          source /tmp/set_aws_credentials.sh
           cd /home/ubuntu/cicd
           eval $(aws ecr get-login --no-include-email --region us-east-1)
           git pull origin pipeline
