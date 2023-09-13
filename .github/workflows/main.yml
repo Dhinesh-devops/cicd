@@ -44,26 +44,14 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
 
-      - name: Create SSH directory and known_hosts file
-        run: |
-          mkdir -p ~/.ssh
-          touch ~/.ssh/known_hosts
-
-      - name: Clear known hosts
-        run: echo "" > ~/.ssh/known_hosts
-
-      - name: Set AWS credentials script
-        run: |
-          echo "${{ secrets.AWS_CREDENTIALS_SCRIPT }}" > set_aws_credentials.sh
-          chmod +x set_aws_credentials.sh
-
       - name: Deploy with Docker Compose
         env:
           PRIVATE_KEY: ${{ secrets.AWS_PRIVATE_KEY }}
           HOSTNAME: ${{ secrets.HOSTNAME }}
           USER_NAME: ${{ secrets.USER_NAME }}
         run: |
-          echo "$PRIVATE_KEY" > private_key && chmod 600 private_key
-          scp -i private_key set_aws_credentials.sh ${USER_NAME}@${HOSTNAME}:/tmp/
-          ssh -o StrictHostKeyChecking=no -i private_key ${USER_NAME}@${HOSTNAME} 'source /tmp/set_aws_credentials.sh && cd /home/ubuntu/cicd && docker-compose down && docker-compose up -d'
+          echo "$PRIVATE_KEY" > private_key.pem
+          chmod 600 private_key.pem
+          scp -i private_key.pem set_aws_credentials.sh ${USER_NAME}@${HOSTNAME}:/tmp/
+          ssh -i private_key.pem ${USER_NAME}@${HOSTNAME} 'source /tmp/set_aws_credentials.sh && cd /home/***/cicd && docker-compose down && docker-compose up -d'
 
