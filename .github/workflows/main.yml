@@ -55,7 +55,7 @@ jobs:
           echo "$PRIVATE_KEY" > private_key && chmod 600 private_key
           ssh -o StrictHostKeyChecking=no -i private_key ${USER_NAME}@${HOSTNAME} 'bash -s' <<EOF
           cd /home/ubuntu/cicd
-          eval $(aws ecr get-login --no-include-email --region us-east-1)
+          aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 650623132949.dkr.ecr.us-east-1.amazonaws.com
           git pull origin pipeline
           docker-compose down
           docker-compose up -d
