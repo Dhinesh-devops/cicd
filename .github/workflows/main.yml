@@ -55,6 +55,7 @@ jobs:
           source /tmp/set_aws_credentials.sh
           cd /home/ubuntu/cicd
           git pull origin pipeline
+          eval $(aws ecr get-login --no-include-email --region us-east-1)
           docker-compose down
           docker-compose up -d
           EOF
